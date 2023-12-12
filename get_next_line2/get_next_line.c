@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:03:27 by vdomasch          #+#    #+#             */
-/*   Updated: 2023/12/12 15:30:36 by vdomasch         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:19:53 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ int	findnline(char *str)
 	return (0);
 }
 
+size_t	strendl(const char *str)
+{
+	size_t	endl;
+
+	endl = 0;
+	while (str[endl] && str[endl] != '\n')
+		endl++;
+	if (str[endl] == '\n')
+		endl++;
+	return (endl);
+}
+
 char	*get_current_line(const char *stack)
 {
 	size_t		i;
@@ -34,7 +46,7 @@ char	*get_current_line(const char *stack)
 	static char	memory[BUFFER_SIZE + 1];
 
 	i = 0;
-	endl = 0;
+	str = NULL;
 	if (!stack)
 	{
 		str = ft_strdup(memory);
@@ -43,10 +55,7 @@ char	*get_current_line(const char *stack)
 		return (str);
 	}
 	str = ft_strdup(stack);
-	while (str[endl] && str[endl] != '\n')
-		endl++;
-	if (str[endl] == '\n')
-		endl++;
+	endl = strendl(str);
 	line = ft_strndup(str, 0, endl);
 	i = 0;
 	while (str[endl])
@@ -66,13 +75,14 @@ char	*get_next_line(int fd)
 	size_t	i;
 
 	i = 0;
-	if (BUFFER_SIZE > 100000)
-		return (NULL);
+	stack = NULL;
 	while (i <= BUFFER_SIZE)
 		buffer[i++] = '\0';
-	if (read(fd, buffer, 0) == -1)
+	if (fd < 0 || read(fd, buffer, BUFFER_SIZE) == -1 || !buffer[0])
 		return (NULL);
-	stack = get_current_line(NULL);
+	temp = get_current_line(NULL);
+	stack = ft_strjoin(temp, buffer);
+	free(temp);
 	while (!findnline(stack) && !(read(fd, buffer, BUFFER_SIZE) == 0))
 	{
 		temp = ft_strjoin(stack, buffer);

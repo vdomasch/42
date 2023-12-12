@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:04:11 by vdomasch          #+#    #+#             */
-/*   Updated: 2023/12/12 15:29:47 by vdomasch         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:19:57 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ char	*ft_strdup(const char *s);
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_strndup(const char *s, int start, int end);
 size_t	ft_strlen(const char *s);
+size_t	strendl(const char *str);
+
 
 #endif
