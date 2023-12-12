@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:03:27 by vdomasch          #+#    #+#             */
-/*   Updated: 2023/12/11 16:09:03 by vdomasch         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:30:36 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	findnline(char *str)
 	return (0);
 }
 
-char	*get_line(char *stack)
+char	*get_current_line(const char *stack)
 {
 	size_t		i;
 	size_t		endl;
@@ -35,61 +35,69 @@ char	*get_line(char *stack)
 
 	i = 0;
 	endl = 0;
-	if (memory[0] == '\n')
-	{
-		while (i + 1 < BUFFER_SIZE)
-			memory[i] = memory[i + 1];
-		return ("\n\0");
-	}
 	if (!stack)
-		return (NULL);
-	if (memory[0] != '\0')
-		str = ft_strjoin(memory, stack);
-	else 
-		str = ft_strdup(stack);
+	{
+		str = ft_strdup(memory);
+		while (i <= BUFFER_SIZE + 1)
+			memory[i++] = '\0';
+		return (str);
+	}
+	str = ft_strdup(stack);
 	while (str[endl] && str[endl] != '\n')
+		endl++;
+	if (str[endl] == '\n')
 		endl++;
 	line = ft_strndup(str, 0, endl);
 	i = 0;
-	while (str[endl++])
-		memory[i] = str[endl++];
-	while (i < BUFFER_SIZE + 1)
+	while (str[endl])
+		memory[i++] = str[endl++];
+	free(str);
+	while (i <= BUFFER_SIZE + 1)
 		memory[i++] = '\0';
 	return (line);
 }
 
 char	*get_next_line(int fd)
 {
-	int		i;
 	char	*stack;
 	char	*temp;
+	char	*line;
 	char	buffer[BUFFER_SIZE + 1];
+	size_t	i;
 
 	i = 0;
+	if (BUFFER_SIZE > 100000)
+		return (NULL);
+	while (i <= BUFFER_SIZE)
+		buffer[i++] = '\0';
 	if (read(fd, buffer, 0) == -1)
 		return (NULL);
-	stack = get_line(NULL);
-	if (stack == NULL)
-		stack = ft_strdup(buffer);
-	while (!findnline(stack) && read(fd, buffer, BUFFER_SIZE) != 0)
+	stack = get_current_line(NULL);
+	while (!findnline(stack) && !(read(fd, buffer, BUFFER_SIZE) == 0))
 	{
 		temp = ft_strjoin(stack, buffer);
 		free(stack);
 		stack = ft_strdup(temp);
 		free(temp);
 	}
-	return (get_line(stack));
+	line = get_current_line(stack);
+	return (free(stack), line);
 }
 
-int main(void)
+/*int	main(void)
 {
-	int	i = 11;
-	int	fd;
-	
+	int		i;
+	int		fd;
+	char	*str;
+
+	i = 15;
 	fd = open("test.txt", O_RDWR);
 	while (i--)
 	{
-		printf("%s", get_next_line(fd));
+		str = get_next_line(fd);
+		//printf("(%zu)", ft_strlen(str));
+		printf("%s", str);
+		free(str);
 	}
-	return (0);		
-}
+	return (0);
+}*/

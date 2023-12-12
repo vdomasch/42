@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:25:20 by vdomasch          #+#    #+#             */
-/*   Updated: 2023/12/11 15:31:45 by vdomasch         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:29:42 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,19 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	while (s[i])
-		i++;
+	if (s)
+		while (s[i])
+			i++;
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
 	size_t	i;
 	char	*str;
 
 	i = ft_strlen(s1) + ft_strlen(s2);
-	str = (char *)malloc(sizeof(char) * (i + 1));
+	str = malloc(sizeof(char) * (i + 1));
 	if (str == NULL)
 		return (NULL);
 	i = 0;
@@ -46,7 +47,7 @@ char	*ft_strdup(const char *s)
 	int		i;
 
 	i = 0;
-	dest = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	dest = malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (dest == NULL)
 		return (NULL);
 	while (s[i])
@@ -64,7 +65,7 @@ char	*ft_strndup(const char *s, int start, int end)
 	int		i;
 
 	i = 0;
-	dest = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	dest = malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (dest == NULL)
 		return (NULL);
 	while (start < end)
