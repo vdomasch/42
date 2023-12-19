@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:03:27 by vdomasch          #+#    #+#             */
-/*   Updated: 2023/12/12 17:19:53 by vdomasch         ###   ########.fr       */
+/*   Updated: 2023/12/18 13:50:20 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*get_next_line(int fd)
 	temp = get_current_line(NULL);
 	stack = ft_strjoin(temp, buffer);
 	free(temp);
-	while (!findnline(stack) && !(read(fd, buffer, BUFFER_SIZE) == 0))
+	while (!findnline(stack) && read(fd, buffer, BUFFER_SIZE) >= 0)
 	{
 		temp = ft_strjoin(stack, buffer);
 		free(stack);

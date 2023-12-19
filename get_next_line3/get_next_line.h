@@ -6,20 +6,25 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 11:34:07 by vdomasch          #+#    #+#             */
-/*   Updated: 2023/12/13 13:06:42 by vdomasch         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:22:11 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <stdio.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 8
+# endif 
+
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <stdio.h>
 
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(const char *s1, const char *s2);
+char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);
 
 #endif
