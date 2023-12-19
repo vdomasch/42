@@ -6,11 +6,11 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 11:35:52 by vdomasch          #+#    #+#             */
-/*   Updated: 2023/12/19 17:51:24 by vdomasch         ###   ########.fr       */
+/*   Updated: 2023/12/19 17:48:21 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static int	findnline(const char *str)
 {
@@ -89,22 +89,22 @@ char	*get_next_line(int fd)
 {
 	char		*line;
 	char		*stack;
-	static char	buffer[BUFFER_SIZE + 1];
+	static char	buffer[1005][BUFFER_SIZE + 1];
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buffer, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buffer[fd], 0) < 0)
 		return (NULL);
-	if (buffer[0] == '\n')
+	if (buffer[fd][0] == '\n')
 	{
-		extract_memory(buffer);
+		extract_memory(buffer[fd]);
 		line = malloc(sizeof(char) * 2);
 		return (line[0] = '\n', line[1] = '\0', line);
 	}
-	stack = ft_strdup(buffer);
-	stack = read_line(fd, buffer, stack);
+	stack = ft_strdup(buffer[fd]);
+	stack = read_line(fd, buffer[fd], stack);
 	if (!stack)
-		return (extract_memory(buffer), line = NULL, line);
+		return (extract_memory(buffer[fd]), line = NULL, line);
 	line = extract_line(stack);
-	extract_memory(buffer);
+	extract_memory(buffer[fd]);
 	free(stack);
 	return (line);
 }
