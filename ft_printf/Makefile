@@ -6,7 +6,7 @@
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/28 14:41:54 by vdomasch          #+#    #+#              #
-#    Updated: 2023/11/29 19:01:33 by vdomasch         ###   ########.fr        #
+#    Updated: 2024/01/17 15:19:16 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ $(OBJ_DIR):
 
 clean:
 	rm -rf $(OBJ_FILES) 
-	rmdir $(OBJ_DIR) 
+	rm -rf $(OBJ_DIR) 
 
 fclean:	clean
 	rm -rf $(NAME)
