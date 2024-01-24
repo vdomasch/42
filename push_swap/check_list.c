@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 15:01:59 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/01/23 18:55:44 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:59:49 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	*list_of_two(int *list)
 {
 	if (list[1] < list[0])
 		return (list);
-	list = _sasb(list, 2);
+	list = _sasb(list, 2, 'a');
 	printf("sa\n");
 	return (list);
 }
@@ -47,11 +47,11 @@ int	*list_of_three(int *list)
 		return (list);
 	else if ((list[2] < list[1] && list[2] < list[0] && list[1] > list[0])
 		|| (list[2] < list[1] && list[2] > list[0] && list[1] > list[0]))
-		list = _rrarrb(list, 3);
+		list = _rrarrb(list, 3, 'a');
 	else if (list[2] > list[1] && list[2] > list[0])
-		list = _rarb(list, 3);
+		list = _rarb(list, 3, 'a');
 	if (list[2] > list[1] && list[2] < list[0] && list[1] < list[0])
-		list = _sasb(list, 3);
+		list = _sasb(list, 3, 'a');
 	return (list);
 }
 
@@ -73,14 +73,14 @@ int	*list_of_four(int *list_a, int *list_b, int len)
 		i++;
 	}
 	if (location == 0)
-		list_a = _rrarrb(list_a, len);
+		list_a = _rrarrb(list_a, len, 'a');
 	else if (location == 1)
 	{
-		list_a = _rarb(list_a, len);
+		list_a = _rarb(list_a, len, 'a');
 		location = 2;
 	}
 	if (location == 2)
-		list_a = _sasb(list_a, len);
+		list_a = _sasb(list_a, len, 'a');
 	_papb(&list_a, &list_b, 4, 0);
 	printf("pb\n");
 	list_a = list_of_three(list_a);
@@ -92,19 +92,17 @@ int	*list_of_four(int *list_a, int *list_b, int len)
 int	*long_list(int *list_a, int *list_b, int len_a)
 {
 	int	len_b;
+	int j;
 
 	len_b = 0;
 	_papb(&list_a, &list_b, len_a--, len_b++);
 	_papb(&list_a, &list_b, len_a--, len_b++);
-	list_b = lowest_at_bottom(list_b, len_b);
-	while (len_a > 5)
-	{	
-		list_b = lowest_at_bottom(list_b, len_b);
+	while (len_a > 3)
 		sort_number(&list_a, &list_b, len_a--, len_b++);
-	}
-	//list_a = list_of_three(list_a);
-	//while (len_b >= 0)
-	//	sort_number(&list_b, &list_a, len_b--, len_a++);
+	list_b = lowest_at_bottom(list_b, len_b);
+	list_a = list_of_three(list_a);
+	/*while (len_b >= 0)
+		sort_number_list_a(&list_b, &list_a, len_b--, len_a++);*/
 	return (list_a);
 }
 
@@ -115,6 +113,19 @@ void	sort_number(int **list_a, int **list_b, int len_a, int len_b)
 	index = check_number_steps(*list_a, *list_b, len_a, len_b);
 	rotate_a(*list_a, len_a, index);
 	rotate_b(*list_a, *list_b, index, len_b);
+	_papb(list_a, list_b, len_a, len_b);
+}
+
+void	sort_number_list_a(int **list_a, int **list_b, int len_a, int len_b)
+{
+	int	index;
+
+	index = len_a - 1;
+	//index = check_number_steps(*list_a, *list_b, len_a, len_b);
+	//printf("rotate a\n");
+	//rotate_a(*list_a, len_a, index);
+	rotate_b(*list_b, *list_a, index, len_a);
+	//printf("pb\n");
 	_papb(list_a, list_b, len_a, len_b);
 }
 
@@ -133,7 +144,6 @@ int		check_number_steps(int *list_a, int *list_b, int len_a, int len_b)
 		j = 0;
 		while (list_a[i] > list_b[j] && j < len_b)
 			j++;
-		//printf("i: %d; len_b: %d; j: %d\n", i, len_b, j);
 		temp = number_steps(len_b, j) + number_steps(len_a, i) + 1;
 		if (temp < nb_stps || location == -1)
 		{
@@ -141,7 +151,6 @@ int		check_number_steps(int *list_a, int *list_b, int len_a, int len_b)
 			location = i;
 		}
 	}
-	printf("location: %d\n", location);
 	return (location);
 }
 
@@ -154,27 +163,40 @@ int		number_steps(int len, int i)
 
 void	rotate_a(int *list_a, int len_a, int index)
 {
-	if (number_steps(len_a, index) < len_a / 2)
-		while (index++ < len_a)
-			list_a = _rarb(list_a, len_a);
-	else
+	if (index < len_a / 2)
 		while (index-- >= 0)
-			list_a = _rrarrb(list_a, len_a);
+			list_a = _rrarrb(list_a, len_a, 'a');
+	else
+		while (index++ < len_a)
+			list_a = _rarb(list_a, len_a, 'a');
 }
 			
 void	rotate_b(int *list_a, int *list_b, int index, int len_b)
 {
 	int	j;
+	int i;
 
 	j = 0;
+	i = 0;
 	while (list_a[index] > list_b[j] && j < len_b)
 		j++;
-	if (j - 1 < len_b / 2)
-		while (j++ - 1 < len_b)
-			list_b = _rarb(list_b, len_b);
+	if (j == 0 && list_a[index] < list_b[len_b - 1])
+	{
+		while (list_a[index] < list_b[len_b - j - 1] && j < len_b)
+			j++;
+		if (j == len_b)
+		list_b = lowest_at_bottom(list_b, len_b);
+		while (j-- > 0)			
+			list_b = _rarb(list_b, len_b, 'b');
+	}
+	else if (j == len_b)
+		list_b = lowest_at_bottom(list_b, len_b);
+	else if (j <= len_b / 2)
+		while (j-- > 0)
+			list_b = _rrarrb(list_b, len_b, 'b');
 	else
-		while (j-- - 1 >= 0)
-			list_b = _rrarrb(list_b, len_b);
+		while (j++ < len_b)
+			list_b = _rarb(list_b, len_b, 'b');
 }
 
 int	*lowest_at_bottom(int *list, int len)
@@ -194,15 +216,13 @@ int	*lowest_at_bottom(int *list, int len)
 			location = i;
 		}
 	}
+	if (location == 0)
+		return (list);
 	if (location < len / 2)
-		while (location++ < len)
-			list = _rarb(list, len);
-	else
 		while (location-- > 0)
-			list = _rrarrb(list, len);
-	i = -1;
-	while (++i < len)
-		printf("%d ", list[i]);
-	printf("\n");
+			list = _rrarrb(list, len, 'b');
+	else
+		while (location++ < len)
+			list = _rarb(list, len, 'b');
 	return (list);
 }

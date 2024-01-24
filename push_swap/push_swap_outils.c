@@ -6,27 +6,30 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:24:13 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/01/23 17:20:52 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/01/24 13:55:14 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	*_sasb(int *list, int len)
+int	*_sasb(int *list, int len, char c)
 {
 	int	temp;
 
+	if (c == 'a')
+		printf("sa\n");
+	else if (c == 'b')
+		printf("sb\n");
 	temp = list[len - 1];
 	list[len - 1] = list[len - 2];
 	list[len - 2] = temp;
-	printf("sa\n");
 	return (list);
 }
 
 void	_ss(int **list_a, int **list_b, int len)
 {
-	*list_a = _sasb(*list_a, len);
-	*list_b = _sasb(*list_b, len);
+	*list_a = _sasb(*list_a, len, 0);
+	*list_b = _sasb(*list_b, len, 0);
 	printf("ss\n");
 }
 
@@ -36,6 +39,7 @@ void	_papb(int **push, int **pull, int len_push, int len_pull)
 	int	*list_push;
 	int	*list_pull;
 
+	printf("pb\n");
 	i = 0;
 	list_push = *push;
 	list_pull = *pull;
@@ -43,10 +47,14 @@ void	_papb(int **push, int **pull, int len_push, int len_pull)
 	list_push[len_push - 1] = 0;
 }
 
-int	*_rarb(int *list, int len)
+int	*_rarb(int *list, int len, char c)
 {
 	int	temp;
 
+	if (c == 'a')
+		printf("ra\n");
+	else if (c == 'b')
+		printf("rb\n");
 	len--;
 	temp = list[len];
 	while (len > 0)
@@ -55,22 +63,25 @@ int	*_rarb(int *list, int len)
 		len--;
 	}
 	list[len] = temp;
-	//printf("ra\n");
 	return (list);
 }
 
 void	_rr(int **list_a, int **list_b, int len)
 {
-	*list_a = _rarb(*list_a, len);
-	*list_b = _rarb(*list_b, len);
-	//printf("rr\n");
+	*list_a = _rarb(*list_a, len, 0);
+	*list_b = _rarb(*list_b, len, 0);
+	printf("rr\n");
 }
 
-int	*_rrarrb(int *list, int len)
+int	*_rrarrb(int *list, int len, char c)
 {
 	int	temp;
 	int	i;
 
+	if (c == 'a')
+		printf("rra\n");
+	else if (c == 'b')
+		printf("rrb\n");
 	len--;
 	i = 0;
 	temp = list[i];
@@ -80,12 +91,12 @@ int	*_rrarrb(int *list, int len)
 		i++;
 	}
 	list[i] = temp;
-	//printf("rra\n");
 	return (list);
 }
 
 void	_rrr(int **list_a, int **list_b, int len)
 {
-	*list_a = _rrarrb(*list_a, len);
-	*list_b = _rrarrb(*list_b, len);
+	*list_a = _rrarrb(*list_a, len, 0);
+	*list_b = _rrarrb(*list_b, len, 0);
+	printf("rrr\n");
 }

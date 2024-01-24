@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:19:24 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/01/23 14:25:36 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/01/24 12:56:12 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ int	main(int argc, char **argv)
 	while (j-- > 0)
 		printf("\n%d  %d", list_a[j], list_b[j]);
 	free(list_b);
+	free(list_a);
 	return (0);
 }

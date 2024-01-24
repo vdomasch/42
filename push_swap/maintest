@@ -1,0 +1,98 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   maintest.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/24 10:53:46 by vdomasch          #+#    #+#             */
+/*   Updated: 2024/01/24 11:00:17 by vdomasch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+# include <stdio.h>
+# include <stdlib.h>
+
+int	*_rarb(int *list, int len)
+{
+	int	temp;
+
+	len--;
+	temp = list[len];
+	while (len > 0)
+	{
+		list[len] = list[len - 1];
+		len--;
+	}
+	list[len] = temp;
+	//printf("ra\n");
+	return (list);
+}
+
+int	*_rrarrb(int *list, int len)
+{
+	int	temp;
+	int	i;
+
+	len--;
+	i = 0;
+	temp = list[i];
+	while (i < len)
+	{
+		list[i] = list[i + 1];
+		i++;
+	}
+	list[i] = temp;
+	//printf("rra\n");
+	return (list);
+}
+
+int	*lowest_at_bottom(int *list, int len)
+{
+	int	i;
+	int	temp;
+	int location;
+
+	i = 0;
+	temp = list[i];
+	location = i;
+	while (++i < len)
+	{
+		if (list[i] < temp)
+		{
+			temp = list[i];
+			location = i;
+		}
+	}
+	if (location < len / 2)
+		while (location++ < len)
+			list = _rarb(list, len);
+	else
+		while (location-- > 0)
+			list = _rrarrb(list, len);
+	return (list);
+}
+
+int	main(int argc, char **argv)
+{
+	int	j;
+	int	len;
+	int	*list;
+
+	j = 1;
+	len = argc - 1;
+	list = malloc(sizeof(int) * len);
+	if (!list)
+		return (0);
+	while (j <= len)
+	{
+		list[len - j] = atoi(argv[j]);
+		j++;
+	}
+	while (--j > 0)
+		printf("%d\n", list[j - 1]);
+	list = lowest_at_bottom(list, len);
+	while (--len + 1 > 0)
+		printf("\n%d", list[len]);
+	return (0);
+}
