@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 11:34:07 by vdomasch          #+#    #+#             */
-/*   Updated: 2023/12/19 17:00:15 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:56:06 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10000000
+#  define BUFFER_SIZE 1000
 # endif 
 
 # include <unistd.h>
