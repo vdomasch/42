@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 11:35:52 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/01/15 13:21:55 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/02 08:28:44 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@ static int	findnline(const char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i])
+	if (str)
 	{
-		if (str[i] == '\n')
-			return (i + 1);
-		i++;
+		while (str[i])
+		{
+			if (str[i] == '\n')
+				return (i + 1);
+			i++;
+		}
 	}
 	return (0);
 }
@@ -29,21 +32,24 @@ static int	findnline(const char *str)
 static char	*read_line(int fd, char *buffer, char *stack)
 {
 	char	*tmp;
-	size_t	empty;
-	size_t	value;
+	int		empty;
+	int		value;
 
 	empty = 0;
 	value = 1;
 	while (!findnline(stack) && value > 0)
 	{
 		value = read(fd, buffer, BUFFER_SIZE);
-		buffer[value] = '\0';
+		if (value != -1)
+			buffer[value] = '\0';
 		if (value > 0)
 		{
 			tmp = ft_strjoin(stack, buffer);
-			free(stack);
+			if (stack)
+				free(stack);
 			stack = ft_strdup(tmp);
-			free(tmp);
+			if (tmp)
+				free(tmp);
 			empty = 1;
 		}
 	}
@@ -63,6 +69,8 @@ static char	*extract_line(char	*stack)
 	if (!endl)
 		return (ft_strdup(stack));
 	line = malloc(sizeof(char) * (endl + 1));
+	if (!line)
+		return (NULL);
 	line[endl] = '\0';
 	while (i < endl)
 	{
@@ -79,10 +87,13 @@ static void	extract_memory(char buffer[BUFFER_SIZE + 1])
 
 	i = 0;
 	endl = findnline(buffer);
-	while (buffer[endl])
-		buffer[i++] = buffer[endl++];
-	while (i <= BUFFER_SIZE)
-		buffer[i++] = '\0';
+	if (endl)
+	{
+		while (buffer[endl])
+			buffer[i++] = buffer[endl++];
+		while (i <= BUFFER_SIZE)
+			buffer[i++] = '\0';
+	}
 }
 
 char	*get_next_line(int fd)
@@ -96,34 +107,36 @@ char	*get_next_line(int fd)
 	if (buffer[0] == '\n')
 	{
 		extract_memory(buffer);
-		line = malloc(sizeof(char) * 2);
-		return (line[0] = '\n', line[1] = '\0', line);
+		return (line_feed());
 	}
 	stack = ft_strdup(buffer);
 	stack = read_line(fd, buffer, stack);
 	if (!stack)
-		return (extract_memory(buffer), line = NULL, line);
+	{
+		extract_memory(buffer);
+		return (NULL);
+	}
 	line = extract_line(stack);
 	extract_memory(buffer);
 	free(stack);
 	return (line);
 }
 
-/*int	main(void)
-{
-	int		i;
-	int		fd;
-	char	*line;
+// int	main(void)
+// {
+// 	int		i;
+// 	int		fd;
+// 	char	*line;
 
-	fd = open("test.txt", O_RDWR);
-	i = 3;
-	while (i)
-	{
-		line = get_next_line(fd);
-		printf("%s", line);
-		free(line);
-		i--;
-	}
-	close(fd);
-	return (0);
-}*/
+// 	fd = open("text.txt", O_RDWR);
+// 	i = 3;
+// 	while (i)
+// 	{
+// 		line = get_next_line(fd);
+// 		printf("%s", line);
+// 		free(line);
+// 		i--;
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
