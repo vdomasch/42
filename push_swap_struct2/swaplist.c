@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 15:53:22 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/05 13:46:58 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:29:37 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_swaplist	*lstnew_swap(int content, t_swaplist *prev)
 	if (list == NULL)
 		return (NULL);
 	list->content = content;
+	list->rank = -1;
 	list->next = NULL;
 	list->prev = prev;
 	return (list);

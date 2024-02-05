@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:19:24 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/05 15:09:46 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:45:22 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ int	main(int argc, char **argv)
 	//tmp2 = list2;
 	while (tmp)
 	{
-		printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
+		printf("|%-2d(%-2d)|  ", tmp->content, tmp->rank);
+		//printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
 		tmp = tmp->next;
 	}
 	// printf("\n");
@@ -84,18 +85,18 @@ int	main(int argc, char **argv)
 	// }
 	//tmp = list->next;
 	//tmp2 = list2;
-	rule_all(list, NULL, "rrr");
+	//rule_all(list, NULL, "rrr");
 	//list2 = list2->prev;
 	//tmp2 = list2;
-	list = list->prev;
+	//list = list->prev;
+	rank_list(list, 6);
 	tmp = list;
-	rule_all(NULL, list, "rrr");
-	list = list->prev;
-	tmp = list;
-	printf("_________\n\n");
+	//printf("_________\n\n");
+	printf("\n");
 	while (tmp)
 	{
-		printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
+		printf("|%-2d(% 2d)|  ", tmp->content, tmp->rank);
+		//printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
 		tmp = tmp->next;
 	}
 	// printf("\n");
