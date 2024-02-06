@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 11:34:07 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/02 08:19:17 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/06 10:35:52 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <stdio.h>
 
 char	*ft_strdup(const char *s);
-char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_strjoin(char *s1, const char *s2);
 char	*get_next_line(int fd);
 char	*line_feed(void);
 size_t	ft_strlen(const char *s);

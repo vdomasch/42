@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 11:35:52 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/02 08:28:52 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/06 10:41:30 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	findnline(const char *str)
 
 static char	*read_line(int fd, char *buffer, char *stack)
 {
-	char	*tmp;
 	int		empty;
 	int		value;
 
@@ -44,17 +43,15 @@ static char	*read_line(int fd, char *buffer, char *stack)
 			buffer[value] = '\0';
 		if (value > 0)
 		{
-			tmp = ft_strjoin(stack, buffer);
-			if (stack)
-				free(stack);
-			stack = ft_strdup(tmp);
-			if (tmp)
-				free(tmp);
+			stack = ft_strjoin(stack, buffer);
 			empty = 1;
 		}
 	}
 	if (!empty && !stack[0])
-		return (free(stack), NULL);
+	{
+		free(stack);
+		return (NULL);
+	}
 	return (stack);
 }
 
@@ -126,18 +123,18 @@ char	*get_next_line(int fd)
 // {
 // 	int		i;
 // 	int		fd;
-//	int		fd1;
+// 	int		fd1;
 // 	char	*line;
 
-// 	fd = open("test.txt", O_RDWR);
-//	fd1 = open("", O_RDWR);
-// 	i = 3;
+// 	fd = open("text.txt", O_RDWR);
+// 	fd1 = open("", O_RDWR);
+// 	i = 25;
 // 	while (i)
 // 	{
 // 		line = get_next_line(fd);
 // 		printf("%s", line);
 // 		free(line);
-//		line = get_next_line(fd1);
+// 		line = get_next_line(fd1);
 // 		printf("%s", line);
 // 		free(line);
 // 		i--;
