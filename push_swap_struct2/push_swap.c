@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:19:24 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/06 17:25:00 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:48:29 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ int	main(int argc, char **argv)
 		tmp = tmp->next;
 	}
 	printf("________\n\n");
-	rank_list(list, 3);
-	//sort_number(list, 6);
+	rank_list(list, 6);
+	sort_number(list, 6);
 	//printf("here\n");
-	sort_list_of_three(list);
+	//sort_list_of_three(list);
 	while (list->prev)
 		list = list->prev;
 	tmp = list;
