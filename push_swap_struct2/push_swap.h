@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:50:09 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/05 15:40:30 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:21:17 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ void	reverse_rotate(t_swaplist *stack, char c);
 void	rule_all(t_swaplist *a, t_swaplist *b, char *str);
 
 void	rank_list(t_swaplist *list, int argc);
+void	sort_number(t_swaplist *list_a, int argc);
+void	sort_list_of_three(t_swaplist *list);
+
 
 // void	type_list(t_tablist a, t_tablist b);
 // void	short_list(t_tablist a, t_tablist b);

@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:19:24 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/06 15:04:11 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:25:00 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	free_list(t_swaplist *list)
 int	main(int argc, char **argv)
 {
 	t_swaplist	*list;
-	t_swaplist	*list_b;
 	t_swaplist	*tmp;
 
 	if (argc == 1)
@@ -71,37 +70,23 @@ int	main(int argc, char **argv)
 	while (tmp)
 	{
 		printf("| %d |", tmp->content);
-		//printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
+		printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
 		tmp = tmp->next;
 	}
-	printf("\n________\n");
-	list_b = list;
-	list = list->next;
-	push(list->prev, list_b, 'b');
-	// list = list->next;
-	// push(list->prev, list_b, 'b');
-	// list = list->next;
-	// list_b = list_b->prev; 
-	// push(list->prev, list_b, 'b');
+	printf("________\n\n");
+	rank_list(list, 3);
+	//sort_number(list, 6);
+	//printf("here\n");
+	sort_list_of_three(list);
+	while (list->prev)
+		list = list->prev;
 	tmp = list;
-	printf("\n");
 	while (tmp)
 	{
-		printf("| v:%d |", tmp->content);
-		//printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
-		tmp = tmp->next;
-	}
-	printf("\n");
-	while (list_b->prev)
-		list_b = list_b->prev;
-	tmp = list_b;
-	while (tmp)
-	{
-		printf("| v:%d |", tmp->content);
-	//	printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
+		printf("| rank:%d |", tmp->rank);
+		printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
 		tmp = tmp->next;
 	}
 	free_list(list);
-	free_list(list_b);
 	return (0);
 }
