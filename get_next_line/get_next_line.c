@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 11:35:52 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/06 10:41:37 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/06 10:53:29 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static char	*read_line(int fd, char *buffer, char *stack)
 	}
 	if (!empty && !stack[0])
 	{
-		free(stack);
+		if (stack)
+			free(stack);
 		return (NULL);
 	}
 	return (stack);
@@ -115,7 +116,8 @@ char	*get_next_line(int fd)
 	}
 	line = extract_line(stack);
 	extract_memory(buffer);
-	free(stack);
+	if (stack)
+		free(stack);
 	return (line);
 }
 
@@ -126,7 +128,7 @@ char	*get_next_line(int fd)
 // 	char	*line;
 
 // 	fd = open("text.txt", O_RDWR);
-// 	i = 3;
+// 	i = 10;
 // 	while (i)
 // 	{
 // 		line = get_next_line(fd);

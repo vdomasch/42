@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:04:58 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/06 10:30:56 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/06 10:43:32 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ char	*line_feed(void)
 	char	*line;
 
 	line = malloc(sizeof(char) * 2);
+	if (!line)
+		return (NULL);
 	line[0] = '\n';
 	line[1] = '\0';
 	return (line);
