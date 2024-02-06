@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:24:13 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/05 15:49:41 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:00:05 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,19 @@ void	swap(t_swaplist *stack, char c)
 
 void	push(t_swaplist *push, t_swaplist *pull, char c)
 {
-	t_swaplist	*push_next;
-
 	if (c == 'a')
 		write(1, "pa\n", 3);
 	if (c == 'b')
 		write(1, "pb\n", 3);
-	push_next = push->next;
-	push_next->prev = NULL;
-	pull->prev = push;
-	push->next = pull;
-	printf("||%d %d||", pull->content, pull->prev->content);
+	push->next->prev = NULL;
+	if (push != pull)
+	{
+		pull->prev = push;
+		push->next = pull;
+	}
+	else
+		push->next = NULL;
+	//printf("||%d %d||", pull->content, pull->prev->content);
 }
 
 void	rotate(t_swaplist *stack, char c)

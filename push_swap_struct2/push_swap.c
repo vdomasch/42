@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:19:24 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/05 15:45:22 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:04:11 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,89 +61,47 @@ void	free_list(t_swaplist *list)
 int	main(int argc, char **argv)
 {
 	t_swaplist	*list;
-	//t_swaplist	*list2;
+	t_swaplist	*list_b;
 	t_swaplist	*tmp;
-	//t_swaplist	*tmp2;
 
-	//list2 = lstnew_swap(0, NULL);
 	if (argc == 1)
 		return (printf("\nPAS D'ARGUMENTS\n\n"), 0);
 	list = initialize(argc, argv);
 	tmp = list;
-	//tmp2 = list2;
 	while (tmp)
 	{
-		printf("|%-2d(%-2d)|  ", tmp->content, tmp->rank);
+		printf("| %d |", tmp->content);
 		//printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
 		tmp = tmp->next;
 	}
-	// printf("\n");
-	// while (tmp2)
-	// {
-	// 	printf("v:%d||p:%p||c:%p||n:%p\n", tmp2->content, tmp2->prev, tmp2, tmp2->next);
-	// 	tmp2 = tmp2->next;
-	// }
-	//tmp = list->next;
-	//tmp2 = list2;
-	//rule_all(list, NULL, "rrr");
-	//list2 = list2->prev;
-	//tmp2 = list2;
-	//list = list->prev;
-	rank_list(list, 6);
+	printf("\n________\n");
+	list_b = list;
+	list = list->next;
+	push(list->prev, list_b, 'b');
+	// list = list->next;
+	// push(list->prev, list_b, 'b');
+	// list = list->next;
+	// list_b = list_b->prev; 
+	// push(list->prev, list_b, 'b');
 	tmp = list;
-	//printf("_________\n\n");
 	printf("\n");
 	while (tmp)
 	{
-		printf("|%-2d(% 2d)|  ", tmp->content, tmp->rank);
+		printf("| v:%d |", tmp->content);
 		//printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
 		tmp = tmp->next;
 	}
-	// printf("\n");
-	// while (tmp2)
-	// {
-	// 	printf("v:%d||p:%p||c:%p||n:%p\n", tmp2->content, tmp2->prev, tmp2, tmp2->next);
-	// 	tmp2 = tmp2->next;
-	// }
-	free_list(list);
-	//free_list(list2);
-	return (0);
-
-	/*int		i;
-	int		j;
-	t_tablist	a;
-	t_tablist	b;
-
-	i = 0;
-	j = 1;
-	if (argc == 2)
-		a.list = string_input(argv[1]);
-	else
+	printf("\n");
+	while (list_b->prev)
+		list_b = list_b->prev;
+	tmp = list_b;
+	while (tmp)
 	{
-		a.len = argc - 1;
-		b.len = 0;
-		a.list = malloc(sizeof(int) * a.len);
-		if (!a.list)
-			return (0);
-		b.list = malloc(sizeof(int) * a.len);
-		if (!b.list)
-		{
-			free(a.list);
-			return (0);
-		}
-		while (j <= a.len)
-		{
-			a.list[a.len - j] = ft_atoi(argv[j]);
-			b.list[j - 1] = j - 1;
-			j++;
-		}
+		printf("| v:%d |", tmp->content);
+	//	printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
+		tmp = tmp->next;
 	}
-	type_list(a, b);
-	j--;
-	printf("\n la | lb\n---------");
-	while (j-- > 0)
-		printf("\n%3d | %d", a.list[j], b.list[j]);
-	//free(b.list);
-	free(a.list);
-	return (0);*/
+	free_list(list);
+	free_list(list_b);
+	return (0);
 }
