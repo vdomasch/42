@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:24:13 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/06 15:00:05 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:36:36 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	push(t_swaplist *push, t_swaplist *pull, char c)
 		write(1, "pa\n", 3);
 	if (c == 'b')
 		write(1, "pb\n", 3);
-	push->next->prev = NULL;
+	if (push->next)
+		push->next->prev = NULL;
 	if (push != pull)
 	{
 		pull->prev = push;

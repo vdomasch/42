@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:22:31 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/06 17:52:29 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:07:51 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ void	sort_number(t_swaplist *list_a, int argc)
 	int			chunk;
 	int			num;
 	int			count;
+	int			detain;
 	
 	list_b = list_a;
 	chunk = 0.000000053 * argc * argc + 0.03 * argc + 14.5;
 	num = 0;
 	while (argc > 3)
 	{
+		//printf("list_a->rank: %d ; num: %d\n",list_a->rank, num);
 		if (list_a->rank <= num)
 		{
 			list_a = list_a->next;
@@ -43,9 +45,9 @@ void	sort_number(t_swaplist *list_a, int argc)
 		}
 		else
 		{
-			printf("v:%d||p:%p||c:%p||n:%p\n___\n", list_a->content, list_a->prev, list_a, list_a->next);
+			//printf("v:%d||p:%p||c:%p||n:%p\n___\n", list_a->content, list_a->prev, list_a, list_a->next);
 			list_a = list_a->next;
-			printf("v:%d||p:%p||c:%p||n:%p\n", list_a->content, list_a->prev, list_a, list_a->next);
+			//printf("v:%d||p:%p||c:%p||n:%p\n", list_a->content, list_a->prev, list_a, list_a->next);
 			rotate(list_a->prev, 'a');
 		}
 		argc--;
@@ -55,12 +57,59 @@ void	sort_number(t_swaplist *list_a, int argc)
 	sort_list_of_three(list_a);
 	while (list_a->prev)
 		list_a = list_a->prev;
-	printf("here\n");
+	//printf("here\n");
+	detain = 0;
 	while (num > 0)
 	{
-		count = 1;
+		count = 0;
 		last = lstlast_swap(list_a);
-		if (list_b->rank == list_a->rank + 1)
+		if (detain)
+		{
+			last = list_b;
+			while (last->next)
+			{
+				if (last->rank == list_a->rank - 1)
+					break ;
+				last = last->next;
+				count++;
+			}
+			if (count < num * 0.5)
+			{
+				while (count--)
+				{
+					list_b = list_b->next;
+					rotate(list_b->prev, 'b');
+				}
+				if (list_b->next)
+				{
+					list_b = list_b->next;
+					push(list_b->prev, list_a, 'a');
+				}
+				push(list_b, list_a, 'a');
+				list_a = list_a->prev;
+				num--;
+			}
+			else
+			{
+				while (count++ < num)
+				{
+					reverse_rotate(list_b, 'b');
+					list_b = list_b->prev;
+				}
+				list_b = list_b->next;
+				push(list_b->prev, list_a, 'a');
+				list_a = list_a->prev;
+				num--;
+			}
+			last = lstlast_swap(list_a);
+			if (last->rank == list_a->rank - 1)
+			{
+				reverse_rotate(list_a, 'a');
+					list_a = list_a->prev;
+				detain = 0;
+			}
+		}
+		if (list_b->rank == list_a->rank - 1)
 		{
 			if (list_b->next)
 			{
@@ -82,39 +131,8 @@ void	sort_number(t_swaplist *list_a, int argc)
 			else
 				push(list_b, list_a, 'a');
 			rotate(list_a->prev, 'a');
+			detain = 1;
 			num--;
-		}
-		else 
-		{
-			last = list_b;
-			while (last->next)
-				if (last->rank == list_a->rank - 1)
-					break ;
-			count++;
-			if (count < num * 0.5)
-			{
-				while (count--)
-				{
-					list_b = list_b->next;
-					rotate(list_b->prev, 'b');
-				}
-				list_b = list_b->next;
-				push(list_b->prev, list_a, 'a');
-				list_a = list_a->prev;
-				num--;
-			}
-			else
-			{
-				while (count++ < num)
-				{
-					reverse_rotate(list_b, 'b');
-					list_b = list_b->prev;
-				}
-				list_b = list_b->next;
-				push(list_b->prev, list_a, 'a');
-				list_a = list_a->prev;
-				num--;
-			}
 		}
 	}
 }
@@ -125,7 +143,7 @@ void	sort_list_of_three(t_swaplist *list)
 	t_swaplist *second;
 	t_swaplist *third;
 	
-	printf("v:%d||p:%p||c:%p||n:%p\n\n", list->content, list->prev, list, list->next);
+	//printf("v:%d||p:%p||c:%p||n:%p\n\n", list->content, list->prev, list, list->next);
 	first = list;
 	second = list->next;
 	third = list->next->next;

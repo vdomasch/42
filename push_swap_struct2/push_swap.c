@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:19:24 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/06 17:48:29 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:45:23 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,13 @@ void	free_list(t_swaplist *list)
 	free(list);
 }
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	t_swaplist	*list;
 	t_swaplist	*tmp;
+	
+	char *argv[7] = {"3", "2", "1", "5", "6", "9", "7"};
+	int argc = 8;
 
 	if (argc == 1)
 		return (printf("\nPAS D'ARGUMENTS\n\n"), 0);
@@ -69,13 +72,13 @@ int	main(int argc, char **argv)
 	tmp = list;
 	while (tmp)
 	{
-		printf("| %d |", tmp->content);
+		printf("| %d |", tmp->rank);
 		printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
 		tmp = tmp->next;
 	}
 	printf("________\n\n");
-	rank_list(list, 6);
-	sort_number(list, 6);
+	rank_list(list, argc - 1);
+	sort_number(list, argc - 1);
 	//printf("here\n");
 	//sort_list_of_three(list);
 	while (list->prev)
