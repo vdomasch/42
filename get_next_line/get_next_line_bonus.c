@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 11:35:52 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/06 10:53:10 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:41:44 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ static char	*read_line(int fd, char *buffer, char *stack)
 			empty = 1;
 		}
 	}
-	if (!empty && !stack[0])
+	if (stack && !empty && !stack[0])
 	{
-		if (stack)
-			free(stack);
+		free(stack);
 		return (NULL);
 	}
 	return (stack);

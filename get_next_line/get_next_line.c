@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 11:35:52 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/06 10:53:29 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:42:01 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ static char	*read_line(int fd, char *buffer, char *stack)
 			empty = 1;
 		}
 	}
-	if (!empty && !stack[0])
+	if (stack && !empty && !stack[0])
 	{
-		if (stack)
-			free(stack);
+		free(stack);
 		return (NULL);
 	}
 	return (stack);
@@ -63,6 +62,8 @@ static char	*extract_line(char	*stack)
 	char	*line;
 
 	i = 0;
+	if (!stack)
+		return (NULL);
 	endl = findnline(stack);
 	if (!endl)
 		return (ft_strdup(stack));
@@ -121,21 +122,21 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// int	main(void)
-// {
-// 	int		i;
-// 	int		fd;
-// 	char	*line;
+/*int	main(void)
+{
+	int		i;
+	int		fd;
+	char	*line;
 
-// 	fd = open("text.txt", O_RDWR);
-// 	i = 10;
-// 	while (i)
-// 	{
-// 		line = get_next_line(fd);
-// 		printf("%s", line);
-// 		free(line);
-// 		i--;
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+	fd = open("text.txt", O_RDWR);
+	i = 10;
+	while (i)
+	{
+		line = get_next_line(fd);
+		printf("%s", line);
+		free(line);
+		i--;
+	}
+	close(fd);
+	return (0);
+}*/
