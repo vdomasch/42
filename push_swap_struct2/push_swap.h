@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:50:09 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/06 16:21:17 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:16:16 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ void	rule_all(t_swaplist *a, t_swaplist *b, char *str);
 void	rank_list(t_swaplist *list, int argc);
 void	sort_number(t_swaplist *list_a, int argc);
 void	sort_list_of_three(t_swaplist *list);
+
+
+t_swaplist	*push_to_b(t_swaplist *list_a, t_swaplist *list_b, int chunk, int rank_max);
+
 
 
 // void	type_list(t_tablist a, t_tablist b);
