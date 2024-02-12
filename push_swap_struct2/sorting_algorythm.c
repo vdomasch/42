@@ -6,11 +6,39 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:22:31 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/08 18:15:08 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/12 12:26:02 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+/*void	push_to_b(t_swaplist *list_a, t_swaplist *list_b, int argc, int *num)
+{
+	int rank_max;
+	int	chunk;
+	
+	chunk = 0.000000053 * argc * argc + 0.03 * argc + 14.5;
+	rank_max = argc - 3;
+	while (list_a->prev)
+		list_a = list_a->prev;
+	list_a = list_a->next;
+	if (list_a->rank <= *num && list_a->rank < rank_max)
+	{
+		push(list_a->prev, list_b, 'b');
+		if (list_b->prev)
+			list_b = list_b->prev;
+		*num += 1;
+	}
+	else if (list_a->rank <= (*num + chunk) && list_a->rank < rank_max)
+	{
+		push(list_a->prev, list_b, 'b');
+		if (list_b->prev)			
+			rotate(list_b->prev, 'b');
+		*num += 1;
+	}
+	else
+		rotate(list_a->prev, 'a');
+}*/
 
 void	sort_number(t_swaplist *list_a, int argc)
 {
@@ -20,16 +48,18 @@ void	sort_number(t_swaplist *list_a, int argc)
 	int			count;
 	int			chunk;
 	int			num;
+	int			nb_elements;
 	int			rank_max;
 	
 	list_b = list_a;
 	chunk = 0.000000053 * argc * argc + 0.03 * argc + 14.5;
 	num = 0;
+	nb_elements = argc;
 	rank_max = argc - 3;
 	//printf("rank_max: %d\n", rank_max);
-	while (argc > 3)
+	while (nb_elements > 3)
 	{
-		/*//printf("list_a->rank: %d ; num: %d\n",list_a->rank, num);
+		//printf("list_a->rank: %d ; num: %d\n",list_a->rank, num);
 		if (list_a->rank <= num && list_a->rank < rank_max)
 		{
 			list_a = list_a->next;
@@ -52,12 +82,14 @@ void	sort_number(t_swaplist *list_a, int argc)
 			list_a = list_a->next;
 			//printf("v:%d||p:%p||c:%p||n:%p\n", list_a->content, list_a->prev, list_a, list_a->next);
 			rotate(list_a->prev, 'a');
-		}*/
-		list_a = push_to_b(list_a, list_b, chunk, num);
-		argc--;
+		}
+		nb_elements--;
 	}
+	printf("here\n");
 	while (list_a->prev)
 		list_a = list_a->prev;
+	while (list_b->prev)
+		list_b = list_b->prev;
 	sort_list_of_three(list_a);
 	while (list_a->prev)
 		list_a = list_a->prev;
@@ -140,31 +172,6 @@ void	sort_number(t_swaplist *list_a, int argc)
 	}
 }
 
-t_swaplist	*push_to_b(t_swaplist *list_a, t_swaplist *list_b, int chunk, int rank_max)
-{
-	int	num;
-	//printf("list_a->rank: %d ; num: %d\n",list_a->rank, num);
-	while (list_a->prev)
-		list_a = list_a->prev;
-	num = 0;
-	if (list_a->rank <= (num + chunk) && list_a->rank < rank_max)
-	{
-		list_a = list_a->next;
-		push(list_a->prev, list_b, 'b');
-		if (list_b->prev && list_a->rank <= num)
-			rotate(list_a->prev, 'a');
-		else if (list_b->prev)
-			list_b = list_b->prev;
-		num++;
-	}
-	else
-	{
-		//printf("v:%d||p:%p||c:%p||n:%p\n___\n", list_a->content, list_a->prev, list_a, list_a->next);
-		list_a = list_a->next;
-		//printf("v:%d||p:%p||c:%p||n:%p\n", list_a->content, list_a->prev, list_a, list_a->next);
-	}
-	return (list_a);
-}
 
 void	sort_list_of_three(t_swaplist *first)
 {

@@ -6,7 +6,7 @@
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/28 14:41:54 by vdomasch          #+#    #+#              #
-#    Updated: 2024/01/17 15:19:16 by vdomasch         ###   ########.fr        #
+#    Updated: 2024/02/12 15:16:27 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 NAME			= libftprintf.a
 
 #Directories
-OBJ_DIR = objs
+OBJ_DIR = objs/
 
 # Compiler and Flags
 CC		= cc

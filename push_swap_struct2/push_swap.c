@@ -6,40 +6,11 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:19:24 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/08 14:57:12 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:08:52 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-/*char	*argv_to_str(char **argv)
-{
-	int		i;
-	int		len;
-	char	*str;
-	
-	len = 0;
-	while (argv[i])
-			len += str_len(argv[i++]);
-	
-
-}*/
-
-/*int	*string_input(char *str)
-{
-	char	**args;
-	int		*stack;
-	int		i;
-
-	i = 0;
-	args = ft_split(str, ' ');
-	while (args[i])
-	{
-		stack[i] = ft_atoi(args[i]);
-		i++;
-	}
-	return (stack);
-}*/
 
 t_swaplist	*initialize(int argc, char **argv)
 {

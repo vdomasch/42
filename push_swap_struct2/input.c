@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 14:53:16 by vdomasch          #+#    #+#             */
-/*   Updated: 2023/11/13 15:18:26 by vdomasch         ###   ########.fr       */
+/*   Created: 2024/02/12 15:09:17 by vdomasch          #+#    #+#             */
+/*   Updated: 2024/02/12 15:11:50 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
-void	ft_putendl_fd(char *s, int fd)
+/*char	**input(char **argv, int argc)
 {
-	ft_putstr_fd(s, fd);
-	write(fd, "\n", 1);
-}
+	int		i;
+	char	*str;
+
+	i = 0;
+	while (++i < argc)
+		str = ft_strjoin()
+		
+}*/
