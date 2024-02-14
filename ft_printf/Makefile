@@ -6,45 +6,73 @@
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/28 14:41:54 by vdomasch          #+#    #+#              #
-#    Updated: 2024/02/12 15:16:27 by vdomasch         ###   ########.fr        #
+#    Updated: 2024/02/14 17:23:08 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Makefile
-NAME			= libftprintf.a
+########################################################################################################################
+#                                                       VARIABLE                                                       #
+########################################################################################################################
 
-#Directories
-OBJ_DIR = objs/
+SRCS		:=	ft_printf.c					\
+				printf_utils.c
 
-# Compiler and Flags
-CC		= cc
-FLAGS	= -Wall -Werror -Wextra
+SRCS_D		:=	srcs/
 
-# Files
-SRC_FILES	=	ft_printf.c		pf_char.c		pf_decimal.c		\
-				pf_ptr.c		pf_str.c		pf_base.c
-HEADER		=	ft_printf.h
-OBJ_FILES	=	$(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
+OBJS_D		:=	objs/
 
-.PHONY:	all clean fclean re	
+OBJS		:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
-# Rules
-$(OBJ_DIR)/%.o: %.c	$(HEADER)
-				$(CC) $(FLAGS) -c $< -o $@
+HEAD		:=	ft_printf.h
 
-all: 			$(OBJ_DIR) $(NAME)
+#HEAD_D		:=
 
-$(NAME):		$(OBJ_FILES)
-				ar rcs $(NAME) $(OBJ_FILES)	
+CFLAGS		:=	-Wall -Wextra -Werror -g3 
 
-$(OBJ_DIR):
-				mkdir -p $(OBJ_DIR)	
+NAME		:=	libftprintf.a
 
-clean:
-	rm -rf $(OBJ_FILES) 
-	rm -rf $(OBJ_DIR) 
+########################################################################################################################
+#                                                         LIB                                                          #
+########################################################################################################################
 
-fclean:	clean
-	rm -rf $(NAME)
+LIB		:=	libft.a
 
-re:	fclean all
+LIB_D		:=	../Libft/
+
+#LIB_I		:=	$(LIB_D)
+
+#LIB_H		:=	$(LIB_I)libft.h
+
+#LIB_A		:=	$(addprefix $(LIB_D), $(LIB))
+
+########################################################################################################################
+#                                                        RULES                                                         #
+########################################################################################################################
+
+all			:	$(NAME)
+
+$(NAME)		:	$(OBJS_D) $(OBJS) $(HEAD)
+				$(MAKE) -C $(LIB_D)
+				ar rcs $(NAME) $(OBJS) $(LIB_D)/libft.a -o
+
+$(OBJS)		:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD)
+				$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJS_D)	:
+				@mkdir -p $(OBJS_D)
+
+########################################################################################################################
+#                                                        COMMANDS                                                      #
+########################################################################################################################
+
+clean		:
+				rm -rf $(OBJS) $(OBJS_D)
+				cd $(LIB_D) && $(MAKE) clean
+
+fclean		:	clean
+				rm -rf $(NAME)
+				cd $(LIB_D) && $(MAKE) fclean
+
+re			:	fclean all
+
+.PHONY: all clean fclean re lib
