@@ -3,54 +3,106 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: vdomasch <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/14 13:34:24 by vdomasch          #+#    #+#              #
-#    Updated: 2023/11/20 15:27:52 by vdomasch         ###   ########.fr        #
+#    Created: 2024/02/14 16:09:45 by vdomasch          #+#    #+#              #
+#    Updated: 2024/02/14 16:38:50 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= libft.a
+########################################################################################################################
+#                                                       VARIABLE                                                       #
+########################################################################################################################
 
-FILES		= ft_atoi.c		ft_isalnum.c	ft_isalpha.c	ft_isdigit.c	ft_isprint.c	\
-			ft_isascii.c	ft_memcmp.c		ft_tolower.c	ft_toupper.c	ft_strncmp.c	\
-			ft_itoa.c		ft_split.c		ft_strchr.c		ft_strdup.c		ft_strjoin.c	\
-			ft_strmapi.c	ft_strnstr.c	ft_strrchr.c	ft_strtrim.c	ft_substr.c		\
-			ft_bzero.c		ft_calloc.c		ft_memchr.c		ft_memcpy.c		ft_memmove.c	\
-			ft_memset.c		ft_putchar_fd.c	ft_putendl_fd.c	ft_putnbr_fd.c	ft_putstr_fd.c	\
-			ft_striteri.c	ft_strlcat.c	ft_strlcpy.c	ft_strlen.c
+SRCS		:=	ft_atoi.c								\
+				ft_bzero.c								\
+				ft_calloc.c								\
+				ft_isalnum.c							\
+				ft_isalpha.c							\
+				ft_isascii.c							\
+				ft_isdigit.c							\
+				ft_isprint.c							\
+				ft_itoa.c								\
+				ft_memchr.c								\
+				ft_memcmp.c								\
+				ft_memcpy.c								\
+				ft_memmove.c							\
+				ft_memset.c								\
+				ft_putchar_fd.c							\
+				ft_putendl_fd.c							\
+				ft_putnbr_fd.c							\
+				ft_putstr_fd.c							\
+				ft_split.c								\
+				ft_strchr.c								\
+				ft_strdup.c								\
+				ft_striteri.c							\
+				ft_strjoin.c							\
+				ft_strlcat.c							\
+				ft_strlcpy.c							\
+				ft_strlen.c								\
+				ft_strmapi.c							\
+				ft_strncmp.c							\
+				ft_strnstr.c							\
+				ft_strrchr.c							\
+				ft_strtrim.c							\
+				ft_substr.c								\
+				ft_tolower.c							\
+				ft_toupper.c
 
-BONUS_FILES	= ft_lstnew_bonus.c		ft_lstadd_front_bonus.c		ft_lstsize_bonus.c		\
-			ft_lstlast_bonus.c		ft_lstadd_back_bonus.c		ft_lstdelone_bonus.c	\
-			ft_lstiter_bonus.c		ft_lstclear_bonus.c			ft_lstmap_bonus.c
+SRCS_D		:=	srcs/
 
-OBJS		= $(FILES:.c=.o)
+OBJS_D		:=	objs/
 
-BONUS_OBJS	= $(BONUS_FILES:.c=.o)
+OBJS		:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
-FLAGS		= -Wall -Werror -Wextra
+HEAD		:=	libft.h
 
-CC			= cc 
+#HEAD_D		:=	
 
-HEADER		= libft.h
+CFLAGS		:=	-Wall -Wextra -Werror -g3
 
-%.o:    	%.c $(HEADER)
-		$(CC) $(FLAGS) -c $< -o $@
+NAME		:=	libft.a
 
-all:		$(NAME)
+########################################################################################################################
+#                                                         LIB                                                          #
+########################################################################################################################
 
-$(NAME):	 $(OBJS)
-		ar rcs $(NAME) $(OBJS)
+#LIB		:=	
 
-clean:
-		rm -rf $(OBJS) $(BONUS_OBJS)
+#LIB_D		:=	
 
-fclean: 	clean
-		rm -rf $(NAME)
+#LIB_I		:=	$(LIB_D)
 
-re:		fclean all
+#LIB_H		:=	$(LIB_I)libft.h
 
-bonus:
-		$(MAKE) $(NAME) FILES="$(BONUS_FILES) $(FILES)"
+#LIB_A		:=	$(addprefix $(LIB_D), $(LIB))
 
-.PHONY:	all fclean clean re bonus
+########################################################################################################################
+#                                                        RULES                                                         #
+########################################################################################################################
+
+all			:	$(NAME)
+
+$(NAME)		:	$(OBJS_D) $(OBJS) $(HEAD)
+				ar rcs $(NAME) $(OBJS)
+
+$(OBJS)		:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD)
+				$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJS_D)	:
+				@mkdir -p $(OBJS_D)
+
+########################################################################################################################
+#                                                        COMMANDS                                                      #
+########################################################################################################################
+
+clean		:
+				rm -rf $(OBJS) $(OBJS_D)
+
+fclean		:	clean
+				rm -rf $(NAME)
+				$(MAKE) clean
+
+re			:	fclean all
+
+.PHONY: all clean fclean re lib
