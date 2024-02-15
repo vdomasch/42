@@ -6,13 +6,13 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:01:10 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/08 18:00:32 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:56:47 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
-void	rank_list(t_swaplist *list, int argc)
+void	rank_list(t_swaplist *list, int argc, t_swaplist **save)
 {
 	int			i;
 	int			temp;
@@ -34,6 +34,8 @@ void	rank_list(t_swaplist *list, int argc)
 			list = list->next;
 		}
 		min_unrank->rank = i;
+		if (i == 0)
+			*save = min_unrank;
 		list = start;
 	}
 }

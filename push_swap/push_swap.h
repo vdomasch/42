@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:50:09 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/12 12:17:54 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:56:42 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
-# include "Libft/libft.h"
-# include "ft_printf/ft_printf.h"
+# include "../Libft/libft.h"
+# include "../ft_printf/ft_printf.h"
 
 
 typedef struct s_swaplist
@@ -45,8 +45,8 @@ void	reverse_rotate(t_swaplist *stack, char c);
 // void	reverse_rotate_all(t_swaplist *a, t_swaplist *b);
 void	rule_all(t_swaplist *a, t_swaplist *b, char *str);
 
-void	rank_list(t_swaplist *list, int argc);
-void	sort_number(t_swaplist *list_a, int argc);
+void	rank_list(t_swaplist *list, int argc, t_swaplist **save);
+void	sort_number(t_swaplist *list_a, int argc, int num);
 void	sort_list_of_three(t_swaplist *list);
 
 

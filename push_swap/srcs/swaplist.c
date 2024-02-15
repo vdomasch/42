@@ -6,11 +6,11 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 15:53:22 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/05 15:29:37 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:04:54 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
 t_swaplist	*lstnew_swap(int content, t_swaplist *prev)
 {

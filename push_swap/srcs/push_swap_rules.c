@@ -6,11 +6,11 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:24:13 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/07 14:36:36 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:04:05 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
 void	swap(t_swaplist *stack, char c)
 {
@@ -111,7 +111,7 @@ void	rule_all(t_swaplist *a, t_swaplist *b, char *str)
 		swap(a, 0);
 		//if (b)
 		swap(b, 0);
-		printf("ss\n");
+		write(1, "ss\n", 3);
 	}
 	else if (strncmp(str, "rr", 3) == 0)
 	{

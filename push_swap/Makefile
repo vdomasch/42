@@ -6,45 +6,78 @@
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/28 14:41:54 by vdomasch          #+#    #+#              #
-#    Updated: 2024/02/12 15:12:30 by vdomasch         ###   ########.fr        #
+#    Updated: 2024/02/15 13:17:04 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Makefile
-NAME			= push_swap
+########################################################################################################################
+#                                                       VARIABLE                                                       #
+########################################################################################################################
 
-# Compiler and Flags
-CC		= cc
-FLAGS	= -Wall -Werror -Wextra
+SRCS		:=	push_swap.c							\
+				push_swap_rules.c					\
+				rank_list.c							\
+				sorting_algorythm.c					\
+				swaplist.c							\
 
-# Files
-SRC_FILES	=	push_swap.c push_swap_outils.c
-OBJ_FILES	=	$(FILES:.c=.o)
-HEADER		=	push_swap.h
-DLIB		=	Libft/
-DPRINT		=	ft_printf/
+SRCS_D		:=	srcs/
 
-.PHONY:	all clean fclean re	
+OBJS_D		:=	objs/
 
-# Rules
-%.o: 		%.c	$(HEADER)
-			$(CC) $(FLAGS) -c $< -o $@
+OBJS		:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
-all: 			$(NAME)
+HEAD		:=	push_swap.h
 
-$(NAME):		$(OBJ_FILES)
-				$(MAKE) -C $(DLIB)
-				$(MAKE) -C $(DPRINT)
-				$(CC) $^ $(FLAGS) $(DLIB)/libft.a $(DPRINT)/libftprintf.a -o $(NAME)
+#HEAD_D		:=
 
-clean:
-	rm -rf $(OBJ_FILES)
-	cd $(DLIB) && make clean
-	cd $(DPRINT) && make clean
+CC			:=	cc
 
-fclean:	clean
-	rm -rf $(NAME)
-	cd $(DLIB) && make fclean
-	cd $(DPRINT) && make fclean
+CFLAGS		:=	-Wall -Wextra -Werror -g3 
 
-re:	fclean $(MAKE) all
+NAME		:=	push_swap
+
+########################################################################################################################
+#                                                         LIB                                                          #
+########################################################################################################################
+
+LIB		:=	libft.a
+
+LIB_D		:=	../Libft/
+
+#LIB_I		:=	$(LIB_D)
+
+#LIB_H		:=	$(LIB_I)libft.h
+
+#LIB_A		:=	$(addprefix $(LIB_D), $(LIB))
+
+########################################################################################################################
+#                                                        RULES                                                         #
+########################################################################################################################
+
+all			:	$(NAME)
+
+$(NAME)		:	$(OBJS_D) $(OBJS)
+				$(MAKE) -C $(LIB_D)
+				$(CC) $(CFLAGS) $(OBJS) $(LIB_D)/libft.a -o $(NAME)
+
+$(OBJS)		:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD)
+				$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJS_D)	:
+				@mkdir -p $(OBJS_D)
+
+########################################################################################################################
+#                                                        COMMANDS                                                      #
+########################################################################################################################
+
+clean		:
+				rm -rf $(OBJS) $(OBJS_D)
+				cd $(LIB_D) && $(MAKE) clean
+
+fclean		:	clean
+				rm -rf $(NAME)
+				cd $(LIB_D) && $(MAKE) fclean
+
+re			:	fclean all
+
+.PHONY: all clean fclean re lib
