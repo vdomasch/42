@@ -6,17 +6,16 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 14:19:24 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/15 18:57:29 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:49:45 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-
-t_swaplist	*initialize(int argc, char **argv, int i)
+t_swap	*initialize(int argc, char **argv, int i)
 {
-	t_swaplist	*list;
-	t_swaplist	*temp;
+	t_swap	*list;
+	t_swap	*temp;
 
 	list = lstnew_swap(atoi(argv[i]), NULL);
 	temp = list;
@@ -28,12 +27,13 @@ t_swaplist	*initialize(int argc, char **argv, int i)
 	return (temp);
 }
 
-void	free_all(t_swaplist *list, char **argv, int is_split)
+void	free_all(t_swap *list, char **argv, int is_split)
 {
-	t_swaplist	*temp;
-	int			i;
-	
+	t_swap	*temp;
+	int		i;
+
 	i = 0;
+	list = lstfirst_swap(list);
 	while (list->next)
 	{
 		temp = list->next;
@@ -43,23 +43,50 @@ void	free_all(t_swaplist *list, char **argv, int is_split)
 	free(list);
 	if (!is_split)
 	{
-		while(argv[i])
+		while (argv[i])
 			free(argv[i++]);
 		free(argv);
 	}
 }
 
+bool	check_error(int argc, char **argv)
+{
+	size_t	i;
+	int	j;
+
+	i = 0;
+	if (argc == 1)
+		return (1);
+	if (argc == 2)
+		if (argv[1][0] == '\0')
+			return (1);
+	while (argv[++i])
+	{
+		j = -1;
+		while (argv[i][++j])
+		{
+			if (!ft_isdigit(argv[i][j]) && !ft_isspace(argv[i][j]) && !(argv[i][j] == '-'))
+				return (1);
+			if (argv[i][j] == '-' && !ft_isdigit(argv[i][j + 1]))
+				return (1);
+		}
+	}
+	return (0);
+}
+
+
 int	main(int argc, char **argv)
 {
-	t_swaplist *save;
-	
-	t_swaplist	*list;
-	t_swaplist	*tmp;
-	int			is_split;
-	
+	t_swap	*list;
+	int		is_split;
+// t_swap	*tmp;
+
+	if (check_error(argc, argv))
+	{
+		write(1, "Error\n", 6);
+		return (1);
+	}
 	is_split = 1;
-	if (argc == 1)
-		return (printf("\nPAS D'ARGUMENTS\n\n"), 0);
 	if (argc == 2)
 	{
 		argv = ft_split(argv[1], ' ');
@@ -69,30 +96,15 @@ int	main(int argc, char **argv)
 		is_split = 0;
 	}
 	list = initialize(argc, argv, is_split);
-	tmp = list;
-	while (tmp)
-	{
-		printf("| %d |", tmp->rank);
-		printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
-		tmp = tmp->next;
-	}
-	printf("________\n\n");
-	rank_list(list, argc - is_split, &save);
+	rank_list(list, argc - is_split);
 	sort_number(list, argc - is_split, 0);
-	//sort_number2(&list, argc - is_split);
-	//printf("here\n");
-	//sort_list_of_three(list);
-	while (list->prev)
-		list = list->prev;
-	tmp = list;
-	while (tmp)
-	{
-		printf("| rank:%d |", tmp->rank);
-		printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
-		tmp = tmp->next;
-	}
-	printf("\n\n| rank:%d |", save->rank);
-	printf("v:%d||p:%p||c:%p||n:%p\n", save->content, save->prev, save, save->next);
+/*tmp = lstfirst_swap(list);
+while (tmp)
+{
+printf("| rank:%d |", tmp->rank);
+printf("v:%d||p:%p||c:%p||n:%p\n", tmp->content, tmp->prev, tmp, tmp->next);
+tmp = tmp->next;
+}*/
 	free_all(list, argv, is_split);
 	return (0);
 }

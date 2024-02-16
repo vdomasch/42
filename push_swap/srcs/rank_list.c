@@ -6,18 +6,18 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:01:10 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/15 18:56:47 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:21:39 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	rank_list(t_swaplist *list, int argc, t_swaplist **save)
+void	rank_list(t_swap *list, int argc)
 {
-	int			i;
-	int			temp;
-	t_swaplist	*start;
-	t_swaplist	*min_unrank;
+	t_swap	*min_unrank;
+	t_swap	*start;
+	int		temp;
+	int		i;
 
 	i = -1;
 	start = list;
@@ -34,8 +34,28 @@ void	rank_list(t_swaplist *list, int argc, t_swaplist **save)
 			list = list->next;
 		}
 		min_unrank->rank = i;
-		if (i == 0)
-			*save = min_unrank;
 		list = start;
 	}
+}
+
+int	count_position(t_swap *list, int rank, int num)
+{
+	int	count;
+
+	count = 0;
+	list = lstfirst_swap(list);
+	while (list->rank != rank - 1)
+	{
+		list = list->next;
+		count++;
+	}
+	if (count < num * 0.5)
+		return (count - num);
+	else
+		return (count);
+}
+
+bool	ft_isspace(int c)
+{
+	return((c >= 7 && c <= 13) || c == 32);
 }
