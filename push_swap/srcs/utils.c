@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:01:10 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/19 18:10:10 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/19 20:03:53 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	count_position(t_swap *list, int rank, int num)
 		count++;
 	}
 	if (count < num * 0.5)
-		return (count - num);
-	else
 		return (count);
+	else
+		return (count - num);
 }
 
 bool	ft_isspace(int c)
