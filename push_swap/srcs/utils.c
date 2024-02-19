@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rank_list.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:01:10 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/16 19:21:39 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:10:10 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,30 @@ void	rank_list(t_swap *list, int argc)
 	}
 }
 
+t_swap	*detain_number(t_swap *list_a, t_swap *list_b, int num, int *detain)
+{
+	t_swap	*last;
+	int		count;
+
+	count = 0;
+	last = lstlast_swap(list_a);
+	count = count_position(list_b, list_a->rank, num);
+	if (count > 0)
+		while (count-- > 0)
+			rotate(list_b, 'b');
+	else
+		while (count++ < 0)
+			reverse_rotate(list_b, 'b');
+	list_b = lstfirst_swap(list_b);
+	list_b = push(list_b, list_a, 'a');
+	if (last->rank == list_a->prev->rank - 1)
+	{
+		reverse_rotate(list_a->prev, 'a');
+		*detain = 0;
+	}
+	return (list_b);
+}
+
 int	count_position(t_swap *list, int rank, int num)
 {
 	int	count;
@@ -57,5 +81,5 @@ int	count_position(t_swap *list, int rank, int num)
 
 bool	ft_isspace(int c)
 {
-	return((c >= 7 && c <= 13) || c == 32);
+	return ((c >= 7 && c <= 13) || c == 32);
 }

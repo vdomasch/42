@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_rules.c                                  :+:      :+:    :+:   */
+/*   rules.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:24:13 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/16 18:02:12 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:34:59 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	swap(t_swap *stack, char c)
+void	swap(t_swap *list, char c)
 {
-	t_swap	*stack2;
+	t_swap	*second;
 
+	list = lstfirst_swap(list);
 	if (c == 'a')
 		write(1, "sa\n", 3);
 	else if (c == 'b')
 		write(1, "sb\n", 3);
-	stack2 = stack->next;
-	stack->prev = stack2;
-	stack->next = stack2->next;
-	stack2->next = stack;
-	stack->next->prev = stack;
-	stack2->prev = NULL;
+	second = list->next;
+	list->prev = second;
+	if (second->next)
+	{
+		list->next = second->next;
+		list->next->prev = list;
+	}
+	else
+		list->next = NULL;
+	second->next = list;
+	second->prev = NULL;
 }
 
 /*void	swap_all(t_swap *a, t_swap *b)
@@ -60,7 +66,7 @@ t_swap	*push(t_swap *push, t_swap *pull, char c)
 	return (save);
 }
 
-void	rotate(t_swap *stack, char c)
+void	rotate(t_swap *list, char c)
 {
 	t_swap	*last;
 
@@ -68,12 +74,12 @@ void	rotate(t_swap *stack, char c)
 		write(1, "ra\n", 3);
 	else if (c == 'b')
 		write(1, "rb\n", 3);
-	stack = lstfirst_swap(stack);
-	last = lstlast_swap(stack);
-	last->next = stack;
-	stack->next->prev = NULL;
-	stack->next = NULL;
-	stack->prev = last;
+	list = lstfirst_swap(list);
+	last = lstlast_swap(list);
+	last->next = list;
+	list->next->prev = NULL;
+	list->next = NULL;
+	list->prev = last;
 }
 
 /*void	rotate_all(t_swap *a, t_swap *b)
@@ -85,7 +91,7 @@ void	rotate(t_swap *stack, char c)
 	write(1, "rr\n", 3);
 }*/
 
-void	reverse_rotate(t_swap *stack, char c)
+void	reverse_rotate(t_swap *list, char c)
 {
 	t_swap	*last;
 
@@ -93,11 +99,11 @@ void	reverse_rotate(t_swap *stack, char c)
 		write(1, "rra\n", 4);
 	else if (c == 'b')
 		write(1, "rrb\n", 4);
-	stack = lstfirst_swap(stack);
-	last = lstlast_swap(stack);
-	stack->prev = last;
+	list = lstfirst_swap(list);
+	last = lstlast_swap(list);
+	list->prev = last;
 	last->prev->next = NULL;
-	last->next = stack;
+	last->next = list;
 	last->prev = NULL;
 }
 
@@ -114,25 +120,19 @@ void	rule_all(t_swap *a, t_swap *b, char *str)
 {
 	if (strncmp(str, "ss", 3) == 0)
 	{
-		//if (a)
 		swap(a, 0);
-		//if (b)
 		swap(b, 0);
 		write(1, "ss\n", 3);
 	}
 	else if (strncmp(str, "rr", 3) == 0)
 	{
-		//if (a)
 		rotate(a, 0);
-		//if (b)
 		rotate(b, 0);
 		write(1, "rr\n", 3);
 	}
 	else if (strncmp(str, "rrr", 4) == 0)
 	{
-		//if (a)
 		reverse_rotate(a, 0);
-		//if (b)
 		reverse_rotate(b, 0);
 		write(1, "rrr\n", 4);
 	}

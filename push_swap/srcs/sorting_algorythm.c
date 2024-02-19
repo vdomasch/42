@@ -6,39 +6,11 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:22:31 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/16 19:06:09 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/19 19:06:54 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
-
-/****************************************************************************/
-/*										UTILS								*/
-/****************************************************************************/
-
-t_swap	*detain_number(t_swap *list_a, t_swap *list_b, int num, int *detain)
-{
-	t_swap	*last;
-	int		count;
-
-	count = 0;
-	last = lstlast_swap(list_a);
-	count = count_position(list_b, list_a->rank, num);
-	if (count > 0)
-		while (count-- > 0)
-			rotate(list_b, 'b');
-	else
-		while (count++ < 0)
-			reverse_rotate(list_b, 'b');
-	list_b = lstfirst_swap(list_b);
-	list_b = push(list_b, list_a, 'a');
-	if (last->rank == list_a->prev->rank - 1)
-	{
-		reverse_rotate(list_a->prev, 'a');
-		*detain = 0;
-	}
-	return (list_b);
-}
 
 /****************************************************************************/
 /*									PUSH TO A								*/
@@ -62,7 +34,7 @@ t_swap	*push_to_a(t_swap *list_a, t_swap *list_b, const int num)
 	{
 		list_b = push(list_b, list_a, 'a');
 	}
-	else /*if (list_b->rank < last->rank)*/
+	else
 	{
 		list_b = push(list_b, list_a, 'a');
 		rotate(list_a->prev, 'a');
@@ -106,6 +78,10 @@ void	sort_number(t_swap *list_a, int argc, int num)
 {
 	t_swap	*list_b;
 
+	if (argc == 2)
+		return (sort_list_of_two(list_a));
+	if (check_sorted(list_a, argc))
+		return ;
 	while (argc - num > 3)
 	{
 		if (num == 0)
@@ -123,8 +99,14 @@ void	sort_number(t_swap *list_a, int argc, int num)
 }
 
 /****************************************************************************/
-/*									SORT THREE								*/
+/*									SORT SHORT								*/
 /****************************************************************************/
+
+void	sort_list_of_two(t_swap *list)
+{
+	if (list->next->rank != list->rank + 1)
+		swap(list, 'a');
+}
 
 void	sort_list_of_three(t_swap *l1)
 {

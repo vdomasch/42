@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/28 14:41:54 by vdomasch          #+#    #+#              #
-#    Updated: 2024/02/19 18:18:20 by vdomasch         ###   ########.fr        #
+#    Created: 2024/02/14 16:09:45 by vdomasch          #+#    #+#              #
+#    Updated: 2024/02/19 15:49:50 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,40 @@
 #                                                       VARIABLE                                                       #
 ########################################################################################################################
 
-SRCS		:=	push_swap.c							\
-				checks.c							\
-				rules.c								\
-				utils.c							\
-				sorting_algorythm.c					\
-				swaplist.c							\
+SRCS		:=	ft_atoi.c								\
+				ft_bzero.c								\
+				ft_calloc.c								\
+				ft_isalnum.c							\
+				ft_isalpha.c							\
+				ft_isascii.c							\
+				ft_isdigit.c							\
+				ft_isprint.c							\
+				ft_itoa.c								\
+				ft_memchr.c								\
+				ft_memcmp.c								\
+				ft_memcpy.c								\
+				ft_memmove.c							\
+				ft_memset.c								\
+				ft_putchar_fd.c							\
+				ft_putendl_fd.c							\
+				ft_putnbr_fd.c							\
+				ft_putstr_fd.c							\
+				ft_split.c								\
+				ft_strchr.c								\
+				ft_strdup.c								\
+				ft_striteri.c							\
+				ft_strjoin.c							\
+				ft_strlcat.c							\
+				ft_strlcpy.c							\
+				ft_strlen.c								\
+				ft_strmapi.c							\
+				ft_strncmp.c							\
+				ft_strnstr.c							\
+				ft_strrchr.c							\
+				ft_strtrim.c							\
+				ft_substr.c								\
+				ft_tolower.c							\
+				ft_toupper.c
 
 SRCS_D		:=	srcs/
 
@@ -27,23 +55,21 @@ OBJS_D		:=	objs/
 
 OBJS		:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
-HEAD		:=	push_swap.h
+HEAD		:=	libft.h
 
-#HEAD_D		:=
+#HEAD_D		:=	
 
-CC			:=	cc
+CFLAGS		:=	-Wall -Wextra -Werror -g3
 
-CFLAGS		:=	-Wall -Wextra -Werror -g3 
-
-NAME		:=	push_swap
+NAME		:=	libft.a
 
 ########################################################################################################################
 #                                                         LIB                                                          #
 ########################################################################################################################
 
-LIB		:=	libft.a
+#LIB		:=	
 
-LIB_D		:=	Libft/
+#LIB_D		:=	
 
 #LIB_I		:=	$(LIB_D)
 
@@ -57,9 +83,8 @@ LIB_D		:=	Libft/
 
 all			:	$(NAME)
 
-$(NAME)		:	$(OBJS_D) $(OBJS)
-				$(MAKE) -C $(LIB_D)
-				$(CC) $(CFLAGS) $(OBJS) $(LIB_D)/libft.a -o $(NAME)
+$(NAME)		:	$(OBJS_D) $(OBJS) $(HEAD)
+				ar rcs $(NAME) $(OBJS)
 
 $(OBJS)		:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD)
 				$(CC) $(CFLAGS) -c $< -o $@
@@ -73,11 +98,10 @@ $(OBJS_D)	:
 
 clean		:
 				rm -rf $(OBJS) $(OBJS_D)
-				cd $(LIB_D) && $(MAKE) clean
 
 fclean		:	clean
 				rm -rf $(NAME)
-				cd $(LIB_D) && $(MAKE) fclean
+				$(MAKE) clean
 
 re			:	fclean all
 
