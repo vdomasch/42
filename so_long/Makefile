@@ -6,7 +6,7 @@
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/28 14:41:54 by vdomasch          #+#    #+#              #
-#    Updated: 2024/02/20 17:08:44 by vdomasch         ###   ########.fr        #
+#    Updated: 2024/02/20 15:02:23 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,7 @@
 #                                                       VARIABLE                                                       #
 ########################################################################################################################
 
-SRCS		:=	push_swap.c							\
-				checks.c							\
-				rules.c								\
-				utils.c							\
-				sorting_algorythm.c					\
-				swaplist.c							\
+SRCS		:=	so_long.c
 
 SRCS_D		:=	srcs/
 
@@ -27,7 +22,7 @@ OBJS_D		:=	objs/
 
 OBJS		:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
-HEAD		:=	push_swap.h
+HEAD		:=	so_long.h
 
 #HEAD_D		:=
 
@@ -35,15 +30,15 @@ CC			:=	cc
 
 CFLAGS		:=	-Wall -Wextra -Werror -g3 
 
-NAME		:=	push_swap
+NAME		:=	so_long
 
 ########################################################################################################################
 #                                                         LIB                                                          #
 ########################################################################################################################
 
-LIB			:=	libft.a
+LIB			:=	Libmlx_Linux.a
 
-LIB_D		:=	Libft/
+LIB_D		:=	minilibx-linux/
 
 #LIB_I		:=	$(LIB_D)
 
@@ -59,10 +54,11 @@ all			:	$(NAME)
 
 $(NAME)		:	$(OBJS_D) $(OBJS)
 				$(MAKE) -C $(LIB_D)
-				$(CC) $(CFLAGS) $(OBJS) $(LIB_D)/libft.a -o $(NAME)
+				$(CC) $(CFLAGS) $(OBJS) $(LIB_D)\Libmlx_Linux.a -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 $(OBJS)		:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD)
-				$(CC) $(CFLAGS) -c $< -o $@
+				$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+
 
 $(OBJS_D)	:
 				@mkdir -p $(OBJS_D)
