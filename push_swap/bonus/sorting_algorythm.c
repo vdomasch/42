@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:22:31 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/19 19:06:54 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/22 11:15:46 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@
 t_swap	*push_to_a(t_swap *list_a, t_swap *list_b, const int num)
 {
 	static int	detain = 0;
-	t_swap		*last;
 
-	last = lstlast_swap(list_a);
 	while (list_b->prev)
 		list_b = list_b->prev;
 	while (list_a->prev)

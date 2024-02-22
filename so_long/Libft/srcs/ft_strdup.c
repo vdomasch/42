@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/22 16:37:47 by vdomasch         ###   ########.fr       */
+/*   Created: 2023/11/08 15:22:36 by vdomasch          #+#    #+#             */
+/*   Updated: 2023/11/10 16:15:29 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../libft.h"
 
-# include "./Libft/libft.h"
-# include "./minilibx-linux/mlx.h"
-# include "./minilibx-linux/mlx_int.h"
-
-# include <stdlib.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
-# include <fcntl.h>
-
-# define WIDTH 600
-# define HEIGHT 300
-
-typedef struct s_data
+char	*ft_strdup(const char *s)
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-}	t_data;
+	size_t	i;
+	char	*dest;
 
-#endif
+	i = 0;
+	dest = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (dest == NULL)
+		return (NULL);
+	while (s[i])
+	{
+		dest[i] = s[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}

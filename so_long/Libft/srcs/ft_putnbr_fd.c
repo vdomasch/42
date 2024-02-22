@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/22 16:37:47 by vdomasch         ###   ########.fr       */
+/*   Created: 2023/11/13 14:25:36 by vdomasch          #+#    #+#             */
+/*   Updated: 2023/11/13 14:47:15 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../libft.h"
 
-# include "./Libft/libft.h"
-# include "./minilibx-linux/mlx.h"
-# include "./minilibx-linux/mlx_int.h"
-
-# include <stdlib.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
-# include <fcntl.h>
-
-# define WIDTH 600
-# define HEIGHT 300
-
-typedef struct s_data
+void	ft_putnbr_fd(int n, int fd)
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-}	t_data;
+	int	sign;
 
-#endif
+	sign = 1;
+	if (n < 0)
+	{
+		if (n > -10)
+			write(fd, "-", 1);
+		sign = -1;
+	}
+	if (n > 9 || n < -9)
+		ft_putnbr_fd(n / 10, fd);
+	n = n % 10 * sign + 48;
+	write(fd, &n, 1);
+}

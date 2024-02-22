@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/22 16:37:47 by vdomasch         ###   ########.fr       */
+/*   Created: 2023/11/08 12:08:15 by vdomasch          #+#    #+#             */
+/*   Updated: 2023/11/27 12:27:10 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../libft.h"
 
-# include "./Libft/libft.h"
-# include "./minilibx-linux/mlx.h"
-# include "./minilibx-linux/mlx_int.h"
-
-# include <stdlib.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
-# include <fcntl.h>
-
-# define WIDTH 600
-# define HEIGHT 300
-
-typedef struct s_data
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-}	t_data;
+	char	*ptr1;
+	char	*ptr2;
 
-#endif
+	ptr1 = (char *)dest;
+	ptr2 = (char *)src;
+	if (dest == NULL && src == NULL)
+		return (NULL);
+	if (ptr2 < ptr1)
+		while (n--)
+			ptr1[n] = ptr2[n];
+	else
+		ptr1 = ft_memcpy(ptr1, ptr2, n);
+	return (dest);
+}

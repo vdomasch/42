@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/22 16:37:47 by vdomasch         ###   ########.fr       */
+/*   Created: 2023/11/16 18:57:50 by vdomasch          #+#    #+#             */
+/*   Updated: 2023/11/16 19:11:30 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../libft.h"
 
-# include "./Libft/libft.h"
-# include "./minilibx-linux/mlx.h"
-# include "./minilibx-linux/mlx_int.h"
-
-# include <stdlib.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
-# include <fcntl.h>
-
-# define WIDTH 600
-# define HEIGHT 300
-
-typedef struct s_data
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-}	t_data;
+	t_list	*list;
 
-#endif
+	if (lst && new)
+	{
+		if (*lst)
+		{
+			list = ft_lstlast(*lst);
+			list->next = new;
+		}
+		else
+			*lst = new;
+	}
+}

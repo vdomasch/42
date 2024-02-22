@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/22 16:37:47 by vdomasch         ###   ########.fr       */
+/*   Created: 2023/11/06 15:31:47 by vdomasch          #+#    #+#             */
+/*   Updated: 2023/11/09 11:49:58 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../libft.h"
 
-# include "./Libft/libft.h"
-# include "./minilibx-linux/mlx.h"
-# include "./minilibx-linux/mlx_int.h"
-
-# include <stdlib.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
-# include <fcntl.h>
-
-# define WIDTH 600
-# define HEIGHT 300
-
-typedef struct s_data
+int	ft_isalnum(int c)
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-}	t_data;
-
-#endif
+	return (ft_isalpha(c) || ft_isdigit(c));
+}

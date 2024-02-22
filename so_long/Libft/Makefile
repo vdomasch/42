@@ -6,7 +6,7 @@
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/14 16:09:45 by vdomasch          #+#    #+#              #
-#    Updated: 2024/02/22 13:46:58 by vdomasch         ###   ########.fr        #
+#    Updated: 2024/02/22 16:21:25 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,9 @@ SRCS		:=	ft_atoi.c								\
 				ft_strtrim.c							\
 				ft_substr.c								\
 				ft_tolower.c							\
-				ft_toupper.c
+				ft_toupper.c							\
+				get_next_line.c							\
+				get_next_line_utils.c
 
 SRCS_D		:=	srcs/
 
@@ -57,9 +59,25 @@ OBJS		:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
 HEAD		:=	libft.h
 
+#HEAD_D		:=	
+
 CFLAGS		:=	-Wall -Wextra -Werror -g3
 
 NAME		:=	libft.a
+
+########################################################################################################################
+#                                                         LIB                                                          #
+########################################################################################################################
+
+#LIB		:=	
+
+#LIB_D		:=	
+
+#LIB_I		:=	$(LIB_D)
+
+#LIB_H		:=	$(LIB_I)libft.h
+
+#LIB_A		:=	$(addprefix $(LIB_D), $(LIB))
 
 ########################################################################################################################
 #                                                        RULES                                                         #
@@ -85,6 +103,7 @@ clean		:
 
 fclean		:	clean
 				rm -rf $(NAME)
+				$(MAKE) clean
 
 re			:	fclean all
 

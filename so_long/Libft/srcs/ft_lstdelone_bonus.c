@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 13:58:28 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/20 14:52:42 by vdomasch         ###   ########.fr       */
+/*   Created: 2023/11/16 19:12:32 by vdomasch          #+#    #+#             */
+/*   Updated: 2023/11/16 19:40:12 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../libft.h"
 
-int	main(void)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	void	*mlx;
-	void	*mlx_win;
-
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	mlx_loop(mlx);
+	if (!del)
+	{
+		free(lst);
+		return ;
+	}
+	if (lst)
+	{
+		(*del)(lst->content);
+		free(lst);
+	}
 }

@@ -6,7 +6,7 @@
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/28 14:41:54 by vdomasch          #+#    #+#              #
-#    Updated: 2024/02/20 17:08:44 by vdomasch         ###   ########.fr        #
+#    Updated: 2024/02/22 13:53:21 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,13 +27,17 @@ OBJS_D		:=	objs/
 
 OBJS		:=	$(SRCS:%.c=$(OBJS_D)%.o)
 
-HEAD		:=	push_swap.h
+DEPS_D		:=	deps/
 
-#HEAD_D		:=
+DEPS		:=	$(SRCS:%.c=$(DEPS_D)%.d)
+
+HEAD		:=	push_swap.h
 
 CC			:=	cc
 
-CFLAGS		:=	-Wall -Wextra -Werror -g3 
+CFLAGS		:=	-Wall -Wextra -Werror -g3
+
+DEPFLAGS	:=	-MMD -MP
 
 NAME		:=	push_swap
 
@@ -45,40 +49,44 @@ LIB			:=	libft.a
 
 LIB_D		:=	Libft/
 
-#LIB_I		:=	$(LIB_D)
+LIB_H	:=	$(LIB_D)libft.h
 
-#LIB_H		:=	$(LIB_I)libft.h
-
-#LIB_A		:=	$(addprefix $(LIB_D), $(LIB))
+LIB_A		:=	$(addprefix $(LIB_D), $(LIB))
 
 ########################################################################################################################
 #                                                        RULES                                                         #
 ########################################################################################################################
 
 all			:	$(NAME)
+				
+$(NAME)		:	$(OBJS_D) $(OBJS) $(LIB_H)
+				$(MAKE) -s -C $(LIB_D)
+				$(CC) $(CFLAGS) $(DEPFLAGS) $(OBJS) $(LIB_A) -o $(NAME)
 
-$(NAME)		:	$(OBJS_D) $(OBJS)
-				$(MAKE) -C $(LIB_D)
-				$(CC) $(CFLAGS) $(OBJS) $(LIB_D)/libft.a -o $(NAME)
+#$(DEPS)		:	
 
-$(OBJS)		:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD)
-				$(CC) $(CFLAGS) -c $< -o $@
+$(OBJS)		:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD) $(LIB_H)
+				$(CC) $(CFLAGS) -I/usr/include -I$(LIB_D) -c $< -o $@
 
 $(OBJS_D)	:
 				@mkdir -p $(OBJS_D)
+
+#$(DEPS_D)	:
+#				@mkdir -p $(DEPS_D)
 
 ########################################################################################################################
 #                                                        COMMANDS                                                      #
 ########################################################################################################################
 
-clean		:
+
+clean		:	
 				rm -rf $(OBJS) $(OBJS_D)
-				cd $(LIB_D) && $(MAKE) clean
+				@cd $(LIB_D) && $(MAKE) -s clean
 
 fclean		:	clean
 				rm -rf $(NAME)
-				cd $(LIB_D) && $(MAKE) fclean
+				@cd $(LIB_D) && $(MAKE) -s fclean
 
 re			:	fclean all
 
-.PHONY: all clean fclean re lib
+.PHONY: all clean fclean re

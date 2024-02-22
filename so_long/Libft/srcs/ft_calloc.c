@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/22 16:37:47 by vdomasch         ###   ########.fr       */
+/*   Created: 2023/11/08 15:08:53 by vdomasch          #+#    #+#             */
+/*   Updated: 2023/12/05 13:33:16 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../libft.h"
 
-# include "./Libft/libft.h"
-# include "./minilibx-linux/mlx.h"
-# include "./minilibx-linux/mlx_int.h"
-
-# include <stdlib.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
-# include <fcntl.h>
-
-# define WIDTH 600
-# define HEIGHT 300
-
-typedef struct s_data
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-}	t_data;
+	char	*arr;
+	size_t	i;
 
-#endif
+	i = 0;
+	if (size == 0 || nmemb == 0)
+		return (malloc(0));
+	if ((nmemb * size) / size != nmemb)
+		return (NULL);
+	arr = malloc(size * nmemb);
+	if (arr == NULL)
+		return (NULL);
+	while (i < nmemb * size)
+		arr[i++] = '\0';
+	arr[i] = '\0';
+	return (arr);
+}
