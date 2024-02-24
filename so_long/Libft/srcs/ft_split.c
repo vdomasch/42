@@ -6,11 +6,12 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:57:47 by vdomasch          #+#    #+#             */
-/*   Updated: 2023/11/17 18:02:16 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/23 18:42:21 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
+#include <stdio.h>
 
 static int	count_word(const char *s, char c)
 {

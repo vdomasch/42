@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 16:19:19 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/23 11:46:16 by vdomasch         ###   ########.fr       */
+/*   Created: 2024/02/23 14:20:28 by vdomasch          #+#    #+#             */
+/*   Updated: 2024/02/24 15:04:41 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../so_long.h"
 
-size_t	ft_strlen(const char *s)
+int	check_map(t_map *map)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
+printf("%d,%d\n", map->width, map->height);
+	if (map->e_count != 1 || map->p_count != 1)
+		return (1);
+	while (i < map->width)
+	{
+		if (map->map[0][i] != '1' || map->map[map->height - 1][i] != '1')
+			return (2);
 		i++;
-	return (i);
+	}
+	i = 0;
+	while (i < map->height)
+	{
+		if (map->map[i][0] != '1' || map->map[i][map->width - 1] != '1')
+			return (3);
+		i++;
+	}
+	return (0);
 }
