@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/24 15:06:07 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:01:34 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <unistd.h>
 # include <stdio.h>
 
-# define WIDTH 600
-# define HEIGHT 300
+# define WIDTH 3840
+# define HEIGHT 2074
 
 typedef struct s_map
 {
@@ -43,6 +43,13 @@ typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	void	*collectible_img;
+	void	*exit_img;
+	int		collectible_img_width;
+	int		collectible_img_height;
+	int		exit_img_width;
+	int		exit_img_height;
+	int		movement;
 }	t_data;
 
 int		check_map(t_map *map);
