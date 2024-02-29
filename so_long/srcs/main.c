@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:28 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/24 15:14:52 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/29 10:13:13 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv)
 		free_all(NULL, NULL, map.map);
 		return (write(1, "MAP INVALID!\n", 13));
 	}
-	write(1, "MAP VALID!\n", 11);
+	write(1, "MAP VALID!!!!!!\n", 16);
 	/*data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (1);
