@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:12:16 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/29 10:55:53 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:35:57 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,27 +73,27 @@ int	create_array(t_map *map, const char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (close(fd));
+		return (1);
 	rd = 1024;
 	map_extract = calloc(sizeof(char), 1);
 	if (map_extract == NULL)
-		return (close(fd));
+		return (close(fd) + 2);
 	while (rd == 1024)
 	{
 		rd = read(fd, buff, 1024);
 		if (rd < 0)
-			return (free(map_extract), close(fd));
+			return (free(map_extract), close(fd) + 2);
 		buff[rd] = 0;
 		map_extract = ft_strfreejoin(map_extract, buff);
 		if (map_extract == NULL)
-			return (close(fd));
+			return (close(fd) + 2);
 	}
 	map->map = ft_split(map_extract, '\n');
 	free(map_extract);
-	return (close (fd) + 1);
+	return (close (fd));
 }
 
-void	free_all(char	*str1, char *str2, char **array)
+void	free_all(void *str1, void *str2, char **array)
 {
 	int	i;
 

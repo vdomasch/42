@@ -6,7 +6,7 @@
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/28 14:41:54 by vdomasch          #+#    #+#              #
-#    Updated: 2024/02/23 17:36:39 by vdomasch         ###   ########.fr        #
+#    Updated: 2024/03/08 16:33:34 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@
 SRCS		:=	main.c				\
 				checks.c			\
 				create_array.c		\
+				generate_map.c		\
+				movement.c			\
 
 SRCS_D		:=	srcs/
 

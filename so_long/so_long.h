@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/29 18:01:34 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:55:11 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,40 @@ typedef struct s_map
 	int		player_y;
 }	t_map;
 
+typedef struct s_texture
+{
+	void	*img;
+	int		img_w;
+	int		img_h;
+
+}	t_texture;
+
 typedef struct s_data
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*collectible_img;
-	void	*exit_img;
-	int		collectible_img_width;
-	int		collectible_img_height;
-	int		exit_img_width;
-	int		exit_img_height;
-	int		movement;
+	void		*mlx;
+	void		*win;
+	t_map		map;
+	int			img_width;
+	int			img_height;
+	t_texture	w;
+	t_texture	c;
+	t_texture	e;
+	t_texture	p;
+	t_texture	f;
+	int			collectible;
+	int			movement;
 }	t_data;
 
 int		check_map(t_map *map);
 int		create_array(t_map *map, const char *filename);
 void	map_state(t_map *map);
-void	free_all(char *str1, char *str2, char **array);
+void	map_gen(t_data *data, t_map	*map);
+void	put_texture(t_data *data, char c, int h, int w);
+void	free_all(void *str1, void *str2, char **array);
+void	move_up(t_data *data, t_map *m);
+void	move_down(t_data *data, t_map *m);
+void	move_right(t_data *data, t_map *m);
+void	move_left(t_data *data, t_map *m);
+
 
 #endif

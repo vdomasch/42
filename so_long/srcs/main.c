@@ -6,100 +6,78 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:28 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/29 18:02:53 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:59:37 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-int	no_event(void *data)
+
+void	clean(t_data *data, t_map *map)
 {
-	(void)data;
-	return (0);
+	if (data->w.img)
+		mlx_destroy_image(data->mlx, data->w.img);
+	if (data->c.img)
+		mlx_destroy_image(data->mlx, data->c.img);
+	if (data->e.img)
+		mlx_destroy_image(data->mlx, data->e.img);
+	if (data->p.img)
+		mlx_destroy_image(data->mlx, data->p.img);
+	if (data->f.img)
+		mlx_destroy_image(data->mlx, data->f.img);
+	if (data->win)
+		mlx_destroy_window(data->mlx, data->win);
+	mlx_destroy_display(data->mlx);
+	free_all(data->mlx, NULL, map->map);
 }
 
 int	keypress(int keysym, t_data *data)
 {
-	//if (keysym == XK_space)
-	//	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img, 0, 0);
-	//	mlx_string_put(data->mlx_ptr, data->win_ptr, 0, 0, 0, "test");
 	if (keysym == XK_Escape)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	printf("Keypress: %d|%d\n", keysym, data->movement);
-	data->movement += 1;
+		mlx_loop_end(data->mlx);
+	else if (keysym == XK_w || keysym == XK_W || keysym == XK_Up)
+		move_up(data, &data->map);
+	else if (keysym == XK_s || keysym == XK_S || keysym == XK_Down)
+		move_down(data, &data->map);
+	else if (keysym == XK_d || keysym == XK_D || keysym == XK_Right)
+		move_right(data, &data->map);
+	else if (keysym == XK_a || keysym == XK_A || keysym == XK_Left)
+		move_left(data, &data->map);
+	printf("Keypress: %d\n", keysym);
+	printf("key: %d\n", data->collectible);
 	return (0);
 }
 
-/*int	keyrelease(int keysym, t_data *data)
-{	
-	if (keysym == XK_Escape)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	printf("Keypress: %d\n", keysym);
-	return (0);
-}*/
-
 int	main(int argc, char **argv)
 {
-	//t_map	map;
-t_data	data;
+	t_data	data;
 
-/*////////////    MY MAP    ///////////
-	if (argc > 2)
+////////////    MY MAP    ///////////
+	if (argc != 2)
 		return (write(1, "INVALID NUMBER OF ARGUMENTS\n", 28));
-	if (argc == 2)
+	if (create_array(&data.map, argv[1]))
+		return (write(1, "CREATION MAP FAILED!\n", 23));
+	map_state(&data.map);
+	if (check_map(&data.map))
 	{
-		if (create_array(&map, argv[1]) != 1)
-			return (write(1, "CREATION MAP FAILED!\n", 23));
-		map_state(&map);
-	}
-	if (check_map(&map))
-	{
-		free_all(NULL, NULL, map.map);
+		free_all(NULL, NULL, data.map.map);
 		return (write(1, "MAP INVALID!\n", 13));
 	}
-	write(1, "MAP VALID!!!!!!\n", 16);
-///////////////////////////////////////*/
+///////////////////////////////////////
 
-	(void)argc;
-	(void)argv;
-	//data.collectible_img_width = 16;
-	//data.collectible_img_height = 16;
-	//data.exit_img_width = 16;
-	//data.exit_img_height = 16;
-	data.movement = 1;
-
-////////////    MY WINDOW    ////////////
-	data.mlx_ptr = mlx_init();
-	if (data.mlx_ptr == NULL)
+	data.mlx = mlx_init();
+	if (!data.mlx)
 		return (1);
-
-		
-	data.win_ptr = mlx_new_window(data.mlx_ptr, WIDTH, HEIGHT, "My project!");
-
-	if (data.win_ptr == NULL)
+	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "My project!");
+	if (!data.win)
 	{
-		free(data.win_ptr);
+		mlx_destroy_display(data.mlx);
 		return (1);
 	}
-//data.collectible_img = mlx_xpm_file_to_image(data.mlx_ptr, "sprites/Chest_close.xpm", &data.collectible_img_width, &data.collectible_img_height);
-//data.exit_img = mlx_xpm_file_to_image(data.mlx_ptr, "sprites/Trapdoor_close.xpm", &data.exit_img_width, &data.exit_img_height);
-
-	//mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.collectible_img, 0, 0);
-	//mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.exit_img, 32, 32);
-
-	mlx_loop_hook(data.mlx_ptr, &no_event, &data);
-	
-	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &keypress, &data);
-//mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &keyrelease, &data);
-	
-	mlx_loop(data.mlx_ptr);
-	//mlx_destroy_image(data.mlx_ptr, data.collectible_img);
-	//mlx_destroy_image(data.mlx_ptr, data.exit_img);
-
-	mlx_destroy_display(data.mlx_ptr);
-//////////////////////////////////////////
-
-	//free_all(NULL, NULL, map.map);
-	free(data.mlx_ptr);
+	map_gen(&data, &data.map);
+	mlx_hook(data.win, 17, 1L<<2, mlx_loop_end, data.mlx);
+	mlx_hook(data.win, 2, 1L<<0, keypress, &data);
+	mlx_loop(data.mlx);
+	clean(&data, &data.map);	
 	return (0);
 }
