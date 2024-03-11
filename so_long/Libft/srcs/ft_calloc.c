@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 15:08:53 by vdomasch          #+#    #+#             */
-/*   Updated: 2023/12/05 13:33:16 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/11 19:00:38 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (NULL);
 	while (i < nmemb * size)
 		arr[i++] = '\0';
-	arr[i] = '\0';
 	return (arr);
 }

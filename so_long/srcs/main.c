@@ -6,12 +6,28 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:28 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/08 17:59:37 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/11 19:53:09 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
+void	free_all(void *str1, void *str2, char **array)
+{
+	int	i;
+
+	if (str1)
+		free(str1);
+	if (str2)
+		free(str2);
+	if (!array)
+		return ;
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+	free(array);
+	return ;
+}
 
 void	clean(t_data *data, t_map *map)
 {
@@ -25,6 +41,8 @@ void	clean(t_data *data, t_map *map)
 		mlx_destroy_image(data->mlx, data->p.img);
 	if (data->f.img)
 		mlx_destroy_image(data->mlx, data->f.img);
+	if (data->e_out.img)
+		mlx_destroy_image(data->mlx, data->e_out.img);
 	if (data->win)
 		mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
@@ -33,18 +51,48 @@ void	clean(t_data *data, t_map *map)
 
 int	keypress(int keysym, t_data *data)
 {
+	int	temp;
+
+	temp = data->movement;
 	if (keysym == XK_Escape)
 		mlx_loop_end(data->mlx);
-	else if (keysym == XK_w || keysym == XK_W || keysym == XK_Up)
+	else if (keysym == XK_w || keysym == XK_Up)
 		move_up(data, &data->map);
-	else if (keysym == XK_s || keysym == XK_S || keysym == XK_Down)
+	else if (keysym == XK_s || keysym == XK_Down)
 		move_down(data, &data->map);
-	else if (keysym == XK_d || keysym == XK_D || keysym == XK_Right)
+	else if (keysym == XK_d || keysym == XK_Right)
 		move_right(data, &data->map);
-	else if (keysym == XK_a || keysym == XK_A || keysym == XK_Left)
+	else if (keysym == XK_a || keysym == XK_Left)
 		move_left(data, &data->map);
-	printf("Keypress: %d\n", keysym);
-	printf("key: %d\n", data->collectible);
+	if (data->movement != temp)
+		printf("Movement: %d\n", data->movement);
+	if (data->collectible == data->map.c_count)
+	{
+		put_texture(data, 'e', data->map.exit_x, data->map.exit_y);
+		data->map.map[data->map.exit_x][data->map.exit_y] = '0';
+	}
+	if (data->map.player_x == data->map.exit_x
+		&& data->map.player_y == data->map.exit_y)
+		mlx_loop_end(data->mlx);
+	return (0);
+}
+
+int	mlx_part(t_data *data)
+{
+	data->mlx = mlx_init();
+	if (!data->mlx)
+		return (1);
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "My project!");
+	if (!data->win)
+	{
+		mlx_destroy_display(data->mlx);
+		return (2);
+	}
+	map_gen(data, &data->map);
+	mlx_hook(data->win, 17, 1L << 2, mlx_loop_end, data->mlx);
+	mlx_hook(data->win, 2, 1L << 0, keypress, data);
+	mlx_loop(data->mlx);
+	clean(data, &data->map);
 	return (0);
 }
 
@@ -52,32 +100,23 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-////////////    MY MAP    ///////////
 	if (argc != 2)
-		return (write(1, "INVALID NUMBER OF ARGUMENTS\n", 28));
+	{
+		write(1, "INVALID NUMBER OF ARGUMENTS\n", 28);
+		return (1);
+	}
 	if (create_array(&data.map, argv[1]))
-		return (write(1, "CREATION MAP FAILED!\n", 23));
+	{
+		write (1, "Creation map failed\n", 20);
+		return (2);
+	}
 	map_state(&data.map);
 	if (check_map(&data.map))
 	{
 		free_all(NULL, NULL, data.map.map);
-		return (write(1, "MAP INVALID!\n", 13));
+		write(1, "Map invalid!\n", 13);
+		return (3);
 	}
-///////////////////////////////////////
-
-	data.mlx = mlx_init();
-	if (!data.mlx)
-		return (1);
-	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "My project!");
-	if (!data.win)
-	{
-		mlx_destroy_display(data.mlx);
-		return (1);
-	}
-	map_gen(&data, &data.map);
-	mlx_hook(data.win, 17, 1L<<2, mlx_loop_end, data.mlx);
-	mlx_hook(data.win, 2, 1L<<0, keypress, &data);
-	mlx_loop(data.mlx);
-	clean(&data, &data.map);	
+	mlx_part(&data);
 	return (0);
 }

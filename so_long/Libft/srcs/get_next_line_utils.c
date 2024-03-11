@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:04:58 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/23 17:19:47 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:56:04 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ char	*ft_strfreejoin(char *s1, const char *s2)
 	char	*str;
 
 	str = ft_strjoin(s1, s2);
-	free(s1);
+	if (s1)
+		free(s1);
 	return (str);
 }
 
