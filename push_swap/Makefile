@@ -5,88 +5,64 @@
 #                                                     +:+ +:+         +:+      #
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/28 14:41:54 by vdomasch          #+#    #+#              #
-#    Updated: 2024/02/22 13:53:21 by vdomasch         ###   ########.fr        #
+#    Created: 2024/03/12 17:15:05 by vdomasch          #+#    #+#              #
+#    Updated: 2024/03/12 19:24:25 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-########################################################################################################################
-#                                                       VARIABLE                                                       #
-########################################################################################################################
+OBJS_DIR			=	.objs
+SRCS_DIR			=	srcs
+HEADER_DIR			=	.
+HEADER	 			= 	push_swap.h
 
-SRCS		:=	push_swap.c							\
-				checks.c							\
-				rules.c								\
-				utils.c							\
-				sorting_algorythm.c					\
-				swaplist.c							\
+SRCS				=	$(SRCS_DIR)/push_swap.c						\
+						$(SRCS_DIR)/checks.c						\
+						$(SRCS_DIR)/rules.c							\
+						$(SRCS_DIR)/sorting_algorythm.c				\
+						$(SRCS_DIR)/swaplist.c						\
+						$(SRCS_DIR)/utils.c							\
+						$(SRCS_DIR)/ft_atoi.c						\
+						$(SRCS_DIR)/ft_split.c						\
+						$(SRCS_DIR)/ft_strncmp.c					\
+						$(SRCS_DIR)/ft_isdigit.c					\
 
-SRCS_D		:=	srcs/
+#ifeq ($(BONUS),true)
+#
+#SRCS_DIR			= 	bonus
+#SRCS 				=	$(SRCS_DIR)/_bonus.c				\
+#						
+#
+#HEADER_DIR			=	.
+#HEADER_FILE		=	_bonus.h
+#
+#endif
 
-OBJS_D		:=	objs/
+OBJS				=	$(patsubst $(SRCS_DIR)%.c, $(OBJS_DIR)%.o, $(SRCS))
 
-OBJS		:=	$(SRCS:%.c=$(OBJS_D)%.o)
+CC					=	cc
+RM					=	rm -f
+CFLAGS				=	-Wall -Werror -Wextra -g3
 
-DEPS_D		:=	deps/
+NAME				=	push_swap
 
-DEPS		:=	$(SRCS:%.c=$(DEPS_D)%.d)
+all: $(NAME)
 
-HEAD		:=	push_swap.h
+$(OBJS_DIR)/%.o: 	$(SRCS_DIR)/%.c $(HEADER_DIR)/$(HEADER)
+					@mkdir -p $(@D)
+					@$(CC) $(CFLAGS) -c $< -o $@ -I $(HEADER_DIR)
 
-CC			:=	cc
+$(NAME):			 $(OBJS)
+					@$(CC) $(CFLAGS) $(OBJS) -o $@ -I $(HEADER_DIR)
 
-CFLAGS		:=	-Wall -Wextra -Werror -g3
+clean:
+					@$(RM) $(OBJS) rm -rf $(OBJS_DIR)
 
-DEPFLAGS	:=	-MMD -MP
+fclean:				clean
+					@$(RM) $(NAME)
 
-NAME		:=	push_swap
+re:					fclean $(NAME)
 
-########################################################################################################################
-#                                                         LIB                                                          #
-########################################################################################################################
-
-LIB			:=	libft.a
-
-LIB_D		:=	Libft/
-
-LIB_H	:=	$(LIB_D)libft.h
-
-LIB_A		:=	$(addprefix $(LIB_D), $(LIB))
-
-########################################################################################################################
-#                                                        RULES                                                         #
-########################################################################################################################
-
-all			:	$(NAME)
-				
-$(NAME)		:	$(OBJS_D) $(OBJS) $(LIB_H)
-				$(MAKE) -s -C $(LIB_D)
-				$(CC) $(CFLAGS) $(DEPFLAGS) $(OBJS) $(LIB_A) -o $(NAME)
-
-#$(DEPS)		:	
-
-$(OBJS)		:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD) $(LIB_H)
-				$(CC) $(CFLAGS) -I/usr/include -I$(LIB_D) -c $< -o $@
-
-$(OBJS_D)	:
-				@mkdir -p $(OBJS_D)
-
-#$(DEPS_D)	:
-#				@mkdir -p $(DEPS_D)
-
-########################################################################################################################
-#                                                        COMMANDS                                                      #
-########################################################################################################################
-
-
-clean		:	
-				rm -rf $(OBJS) $(OBJS_D)
-				@cd $(LIB_D) && $(MAKE) -s clean
-
-fclean		:	clean
-				rm -rf $(NAME)
-				@cd $(LIB_D) && $(MAKE) -s fclean
-
-re			:	fclean all
-
-.PHONY: all clean fclean re
+#bonus: 
+#					@$(MAKE) $(NAME) BONUS=true
+	
+.PHONY:				all clean fclean re bonus

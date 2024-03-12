@@ -6,48 +6,11 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:28 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 14:53:15 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:09:16 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
-
-void	free_all(void *str1, void *str2, char **array)
-{
-	int	i;
-
-	if (str1)
-		free(str1);
-	if (str2)
-		free(str2);
-	if (!array)
-		return ;
-	i = 0;
-	while (array[i])
-		free(array[i++]);
-	free(array);
-	return ;
-}
-
-void	clean(t_data *data, t_map *map)
-{
-	if (data->w.img)
-		mlx_destroy_image(data->mlx, data->w.img);
-	if (data->c.img)
-		mlx_destroy_image(data->mlx, data->c.img);
-	if (data->e.img)
-		mlx_destroy_image(data->mlx, data->e.img);
-	if (data->p.img)
-		mlx_destroy_image(data->mlx, data->p.img);
-	if (data->f.img)
-		mlx_destroy_image(data->mlx, data->f.img);
-	if (data->e_out.img)
-		mlx_destroy_image(data->mlx, data->e_out.img);
-	if (data->win)
-		mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_display(data->mlx);
-	free_all(data->mlx, NULL, map->map);
-}
 
 int	keypress(int keysym, t_data *data)
 {
@@ -68,12 +31,14 @@ int	keypress(int keysym, t_data *data)
 		printf("Movement: %d\n", data->movement);
 	if (data->collectible == data->map.c_count)
 	{
-		put_texture(data, 'e', data->map.exit_x, data->map.exit_y);
-		data->map.map[data->map.exit_x][data->map.exit_y] = '0';
+		put_texture(data, 'e', data->map.exit_y, data->map.exit_x);
+		data->map.map[data->map.exit_y][data->map.exit_x] = '0';
 	}
 	if (data->map.player_x == data->map.exit_x
 		&& data->map.player_y == data->map.exit_y)
 		mlx_loop_end(data->mlx);
+	if (data->map.m_count == 1)
+		move_monster(data, &data->map);
 	return (0);
 }
 

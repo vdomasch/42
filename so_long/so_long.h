@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 11:12:12 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:13:51 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,14 @@ typedef struct s_map
 	int		c_count;
 	int		e_count;
 	int		p_count;
+	int		m_count;
 	int		reachable_elements;
 	int		exit_x;
 	int		exit_y;
 	int		player_x;
 	int		player_y;
+	int		monster_x;
+	int		monster_y;
 }	t_map;
 
 typedef struct s_texture
@@ -63,6 +66,8 @@ typedef struct s_data
 	t_texture	e_out;
 	t_texture	p;
 	t_texture	f;
+	t_texture	m;
+	t_texture	m2;
 	int			collectible;
 	int			movement;
 }	t_data;
@@ -70,12 +75,17 @@ typedef struct s_data
 int		check_map(t_map *map);
 
 int		create_array(t_map *map, const char *filename);
-void	map_state(t_map *map);
+int	map_state(t_map *map);
 
+int		player_dead(t_data *data, t_map *m);
 void	map_gen(t_data *data, t_map	*map);
 void	put_texture(t_data *data, char c, int h, int w);
+
 void	free_all(void *str1, void *str2, char **array);
+void	clean(t_data *data, t_map *map);
+
 void	move_up(t_data *data, t_map *m);
+void	move_monster(t_data *data, t_map *m);
 void	move_down(t_data *data, t_map *m);
 void	move_right(t_data *data, t_map *m);
 void	move_left(t_data *data, t_map *m);

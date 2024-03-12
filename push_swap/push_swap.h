@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:50:09 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/20 17:24:14 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:21:26 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdbool.h>
-# include "Libft/libft.h"
-# include "../ft_printf/ft_printf.h"
+# include <limits.h>
 
 typedef struct s_swap
 {
@@ -75,6 +74,16 @@ t_swap	*detain_number(t_swap *list_a, t_swap *list_b, int num, int *detain);
 void	sort_number(t_swap *list_a, int argc, int num);
 void	sort_list_of_two(t_swap *list);
 void	sort_list_of_three(t_swap *list);
+
+/****************************************************************************/
+/*										LIBFT								*/
+/****************************************************************************/
+
+int		ft_atoi(const char *str);
+int		ft_isdigit(int c);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	**ft_split(const char *s, char c);
+
 
 /****************************************************************************/
 /*										BONNUS								*/

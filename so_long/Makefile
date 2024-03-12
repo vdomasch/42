@@ -6,7 +6,7 @@
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/28 14:41:54 by vdomasch          #+#    #+#              #
-#    Updated: 2024/03/12 11:05:37 by vdomasch         ###   ########.fr        #
+#    Updated: 2024/03/12 16:52:04 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,10 @@ SRCS		:=	main.c				\
 				create_array.c		\
 				generate_map.c		\
 				movement.c			\
+				monster_movement.c	\
+				utils.c
 
-SRCS_D		:=	srcs/
+SRCS_D		:=	bonus/
 
 OBJS_D		:=	objs/
 

@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:01:10 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/20 11:57:16 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:22:40 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	rank_list(t_swap *list, int argc)
 		temp = INT_MAX;
 		while (list)
 		{
-			if (list->content < temp && list->rank == -1)
+			if (list->content <= temp && list->rank == -1)
 			{
 				temp = list->content;
 				min_unrank = list;

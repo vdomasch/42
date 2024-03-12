@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:12:16 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 14:53:54 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:14:35 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ static void	map_init(t_map *map)
 	map->c_count = 0;
 	map->e_count = 0;
 	map->p_count = 0;
+	map->m_count = 0;
 	map->reachable_elements = 0;
-	map->player_x = 0;
-	map->player_y = 0;
 	if (map)
 	{
 		while (map->map[i])
@@ -45,25 +44,32 @@ static void	save_position(t_map *map, int x, int y, char c)
 		map->exit_y = y;
 		map->e_count++;
 	}
-	if (c == 'p')
+	else if (c == 'p')
 	{
 		map->player_x = x;
 		map->player_y = y;
 		map->p_count++;
 	}
+	else if (c == 'm')
+	{
+		map->map[y][x] = 'm';
+		map->monster_x = x;
+		map->monster_y = y;
+		map->m_count++;
+	}
 }
 
-void	map_state(t_map *map)
+int	map_state(t_map *map)
 {
 	size_t	i;
 	size_t	j;
 
 	map_init(map);
-	i = 0;
-	while (map->map[i])
+	i = -1;
+	while (map->map[++i])
 	{
-		j = 0;
-		while (map->map[i][j])
+		j = -1;
+		while (map->map[i][++j])
 		{
 			if (map->map[i][j] == 'C')
 				map->c_count++;
@@ -71,11 +77,12 @@ void	map_state(t_map *map)
 				save_position(map, j, i, 'e');
 			else if (map->map[i][j] == 'P')
 				save_position(map, j, i, 'p');
-			else if (map->map[i][j] != '1' || map->map[i][j] != '0')
+			else if (map->map[i][j] == 'M')
+				save_position(map, j, i, 'm');
+			else if (map->map[i][j] != '1' && map->map[i][j] != '0' 
+				&& map->map[i][j] != 'm')
 				return (1);
-			j++;
 		}
-		i++;
 	}
 	return (0);
 }

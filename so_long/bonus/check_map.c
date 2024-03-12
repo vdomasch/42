@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 14:20:28 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 14:48:20 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:28:48 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ static void	flood(t_map *m, char **map, int x, int y)
 	if (map[y][x] == 'C')
 		m->reachable_elements += 1;
 	map[y][x] = 'X';
-	if (map[y][x + 1] == '0' || map[y][x + 1] == 'C')
+	if (map[y][x + 1] == '0' || map[y][x + 1] == 'C' || map[y][x + 1] == 'm')
 		flood(m, map, x + 1, y);
-	if (map[y][x - 1] == '0' || map[y][x - 1] == 'C')
+	if (map[y][x - 1] == '0' || map[y][x - 1] == 'C' || map[y][x - 1] == 'm')
 		flood(m, map, x - 1, y);
-	if (map[y + 1][x] == '0' || map[y + 1][x] == 'C')
+	if (map[y + 1][x] == '0' || map[y + 1][x] == 'C' || map[y + 1][x] == 'm')
 		flood(m, map, x, y + 1);
-	if (map[y - 1][x] == '0' || map[y - 1][x] == 'C')
+	if (map[y - 1][x] == '0' || map[y - 1][x] == 'C' || map[y - 1][x] == 'm')
 		flood(m, map, x, y - 1);
 	if (map[y][x + 1] == 'E' || map[y][x - 1] == 'E'
 		|| map[y + 1][x] == 'E' || map[y - 1][x] == 'E')
@@ -105,7 +105,7 @@ int	check_map(t_map *map)
 		return (write(1, "Irregular size.\n", 16));
 	if (check_map_border(map))
 		return (write(1, "Border not standard.\n", 21));
-	if (map->e_count != 1 || map->p_count != 1 || map->c_count < 1)
+	if (map->e_count != 1 || map->p_count != 1 || map-> m_count > 1 || map->c_count < 1)
 		return (write(1, "Incorrect number of entities\n", 29));
 	if (reachable(map))
 		return (write(1, "Collectible or exit unreachable\n", 32));
