@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/11 19:59:15 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:12:12 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <unistd.h>
 # include <stdio.h>
 
-# define WIDTH 1800 //3840
-# define HEIGHT 1200 //2074
+# define WIDTH 3840
+# define HEIGHT 2074
 
 typedef struct s_map
 {

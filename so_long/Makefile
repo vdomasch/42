@@ -6,7 +6,7 @@
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/28 14:41:54 by vdomasch          #+#    #+#              #
-#    Updated: 2024/03/11 19:26:52 by vdomasch         ###   ########.fr        #
+#    Updated: 2024/03/12 11:05:37 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,12 +83,12 @@ $(OBJS_D)	:
 #############################################################################
 
 clean		:
-				@$(RM) -r $(OBJS) $(OBJS_D) $(OBJS_B) $(OBJS_B_D)
+				@$(RM) -r $(OBJS) $(OBJS_D)
 				@$(MAKE) -s clean -C $(LIB_D)
 				@$(MAKE) -s clean -C $(MLX_D)
 
 fclean		:	clean
-				@$(RM) $(NAME) $(NAME_B)
+				@$(RM) $(NAME)
 				@$(MAKE) -s fclean -C $(LIB_D)
 				@$(MAKE) -s clean -C $(MLX_D)
 

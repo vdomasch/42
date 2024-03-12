@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 14:20:28 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/11 20:04:40 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:10:59 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,24 +102,16 @@ static int	reachable(t_map *map)
 int	check_map(t_map *map)
 {
 	if (check_map_size(map))
-	{
-		write(1, "Irregular size.\n", 16);
-		return (1);
-	}
+		return (write(1, "Irregular size.\n", 16));
 	if (check_map_border(map))
-	{
-		write(1, "Border not standard.\n", 21);
-		return (2);
-	}
+		return (write(1, "Border not standard.\n", 21));
 	if (map->e_count != 1 || map->p_count != 1 || map->c_count < 1)
-	{
-		write(1, "Incorrect number of entities\n", 29);
-		return (3);
-	}
+		return (write(1, "Incorrect number of entities\n", 29));
 	if (reachable(map))
-	{
-		write(1, "Collectible or exit unreachable\n", 32);
-		return (4);
-	}
+		return (write(1, "Collectible or exit unreachable\n", 32));
+	if (map->height > 32)
+		return (write(1, "Map height too big.\n", 20));
+	if (map->width > 60)
+		return (write(1, "Map width too big.\n", 19));
 	return (0);
 }
