@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:28 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/13 11:57:49 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:22:55 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	clean(t_data *data, t_map *map)
 		mlx_destroy_image(data->mlx, data->p.img);
 	if (data->f.img)
 		mlx_destroy_image(data->mlx, data->f.img);
-	if (data->e_out.img)
-		mlx_destroy_image(data->mlx, data->e_out.img);
+	if (data->e2.img)
+		mlx_destroy_image(data->mlx, data->e2.img);
 	if (data->win)
 		mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);

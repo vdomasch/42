@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:07:25 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/13 19:00:46 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:23:35 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	clean(t_data *data, t_map *map)
 		mlx_destroy_image(data->mlx, data->p.img);
 	if (data->f.img)
 		mlx_destroy_image(data->mlx, data->f.img);
-	if (data->e_out.img)
-		mlx_destroy_image(data->mlx, data->e_out.img);
+	if (data->e2.img)
+		mlx_destroy_image(data->mlx, data->e2.img);
 	if (data->m.img)
 		mlx_destroy_image(data->mlx, data->m.img);
 	if (data->m2.img)

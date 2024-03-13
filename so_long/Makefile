@@ -6,7 +6,7 @@
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/13 16:58:39 by vdomasch          #+#    #+#              #
-#    Updated: 2024/03/13 18:33:24 by vdomasch         ###   ########.fr        #
+#    Updated: 2024/03/13 19:22:28 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,8 +67,6 @@ MLX			:=	libmlx.a
 MLX_D		:=	minilibx-linux/
 
 MLX_F	:= -L ./minilibx-linux -lmlx -lXext -lX11
-
-MLX_H		:=	$(MLX_D)/mlx.h
 
 MLX_A		:=	$(addprefix $(MLX_D), $(MLX))
 
