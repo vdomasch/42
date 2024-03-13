@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/28 14:41:54 by vdomasch          #+#    #+#              #
-#    Updated: 2024/03/12 16:52:04 by vdomasch         ###   ########.fr        #
+#    Created: 2024/03/13 16:58:39 by vdomasch          #+#    #+#              #
+#    Updated: 2024/03/13 18:33:24 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,37 +14,49 @@
 #									VARIABLE								#
 #############################################################################
 
-SRCS		:=	main.c				\
-				check_map.c			\
-				create_array.c		\
-				generate_map.c		\
-				movement.c			\
-				monster_movement.c	\
-				utils.c
+NAME				=	so_long
 
-SRCS_D		:=	bonus/
+HEADER_DIR			=	.
+SRCS_DIR			=	srcs
+OBJS_DIR			=	.objs
 
-OBJS_D		:=	objs/
+HEADERS				=	so_long.h
 
-OBJS		:=	$(SRCS:%.c=$(OBJS_D)%.o)
+SRCS				=	so_long.c						\
+					create_array.c					\
+					check_map.c						\
+					generate_map.c					\
+					movement.c						
 
-HEAD		:=	so_long.h
+OBJS				=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 
-CFLAGS		:=	-Wall -Wextra -Werror -g3
-
-NAME		:=	so_long
+LIB_D				=	Libft
 
 #############################################################################
-#										LIB									#
+#									COMPILATION								#
 #############################################################################
 
-LIB			:=	libft.a
+CC					=	cc
+FLAGS				=	-Wall -Werror -Wextra -g3
 
-LIB_D		:=	Libft/
+#############################################################################
+#										BONUS								#
+#############################################################################
 
-LIB_H		:=	$(LIB_D)libft.h
+ifeq ($(BONUS),true)
+	SRCS_DIR		=	srcs_bonus
 
-LIB_A		:=	$(addprefix $(LIB_D), $(LIB))
+	SRCS			=	so_long_bonus.c						\
+					create_array_bonus.c			\
+					check_map_bonus.c				\
+					generate_map_bonus.c			\
+					movement_bonus.c				\
+					monster_movement_bonus.c		\
+					utils_bonus.c				
+					
+	OBJS			=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
+
+endif
 
 #############################################################################
 #									MINILIBX								#
@@ -54,9 +66,9 @@ MLX			:=	libmlx.a
 
 MLX_D		:=	minilibx-linux/
 
-MLX_F		:=	-L$(MLX_D) -L/usr/lib -lmlx -lXext -lX11 -lm -lz
+MLX_F	:= -L ./minilibx-linux -lmlx -lXext -lX11
 
-MLX_H		:=	$(MLX_D)mlx.h
+MLX_H		:=	$(MLX_D)/mlx.h
 
 MLX_A		:=	$(addprefix $(MLX_D), $(MLX))
 
@@ -64,36 +76,40 @@ MLX_A		:=	$(addprefix $(MLX_D), $(MLX))
 #										RULES								#
 #############################################################################
 
-all			:	lib
-				@$(MAKE) -s $(NAME)
+all					:	lib $(NAME) 
 
-lib			:
-				@$(MAKE) -s -C $(MLX_D)
-				@$(MAKE) -s -C $(LIB_D)
+lib				:
+							@$(MAKE) -C $(MLX_D)
+							@$(MAKE) -C $(LIB_D)
 
-$(NAME)		:	$(OBJS_D) $(OBJS) $(MLX_A) $(LIB_A) $(HEAD)
-				@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX_A) $(MLX_F) $(LIB_A)
+$(NAME)				:	$(OBJS_DIR) $(OBJS) $(HEADERS) $(LIB_D)/libft.a $(MLX_A)
+							$(CC) $(FLAGS) $(OBJS) $(LIB_D)/libft.a $(MLX_A) $(MLX_F) -o $(NAME)
+							
+$(OBJS_DIR)/%.o		:	$(SRCS_DIR)/%.c $(HEADERS)
+							$(CC) $(FLAGS) -I/usr/include -Iminilibx-linux -c $< -o $@
 
-$(OBJS)		:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD) $(MLX_H) $(LIB_H)
-				@$(CC) $(CFLAGS) -I/usr/include -Iminilibx-linux -c $< -o $@
-
-$(OBJS_D)	:
-				@mkdir -p $(OBJS_D)
+$(OBJS_DIR)			:
+							mkdir -p $(OBJS_DIR)
 
 #############################################################################
 #									COMMANDS								#
 #############################################################################
 
-clean		:
-				@$(RM) -r $(OBJS) $(OBJS_D)
-				@$(MAKE) -s clean -C $(LIB_D)
-				@$(MAKE) -s clean -C $(MLX_D)
+clean				:
+							rm -rf $(OBJS_DIR)
+							$(MAKE) clean -C $(LIB_D)
+							$(MAKE) clean -C $(MLX_D)
 
-fclean		:	clean
-				@$(RM) $(NAME)
-				@$(MAKE) -s fclean -C $(LIB_D)
-				@$(MAKE) -s clean -C $(MLX_D)
+fclean				:
+							$(MAKE) clean
+							rm -rf $(NAME)
+							$(MAKE) fclean -C $(LIB_D)
+							$(MAKE) clean -C $(MLX_D)
 
-re			:	fclean all
+re					:
+							$(MAKE) fclean all
 
-.PHONY: all bonus clean fclean re lib
+bonus				:
+							@$(MAKE) all BONUS=true
+							
+.PHONY: all clean fclean re lib bonus

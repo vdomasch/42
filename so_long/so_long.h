@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 16:13:51 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:02:49 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_data
 	t_texture	w;
 	t_texture	c;
 	t_texture	e;
-	t_texture	e_out;
+	t_texture	e2;
 	t_texture	p;
 	t_texture	f;
 	t_texture	m;
@@ -71,6 +71,7 @@ typedef struct s_data
 	int			collectible;
 	int			movement;
 }	t_data;
+
 
 int		check_map(t_map *map);
 
@@ -84,10 +85,10 @@ void	put_texture(t_data *data, char c, int h, int w);
 void	free_all(void *str1, void *str2, char **array);
 void	clean(t_data *data, t_map *map);
 
-void	move_up(t_data *data, t_map *m);
+void	move_player(int keysym, t_data *data);
 void	move_monster(t_data *data, t_map *m);
-void	move_down(t_data *data, t_map *m);
-void	move_right(t_data *data, t_map *m);
-void	move_left(t_data *data, t_map *m);
+
+char	*ft_itoa(int n);
+size_t	ft_strlen(const char *s);
 
 #endif

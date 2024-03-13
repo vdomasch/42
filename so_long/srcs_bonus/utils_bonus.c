@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:07:25 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 16:13:59 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:00:46 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-int	player_dead(t_data *data, t_map* m)
+int	player_dead(t_data *data, t_map *m)
 {
 	if (m->player_x == m->monster_x && m->player_y == m->monster_y)
 	{

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map.c                                        :+:      :+:    :+:   */
+/*   check_map_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 14:20:28 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 14:28:48 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:11:54 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ int	check_map(t_map *map)
 		return (write(1, "Irregular size.\n", 16));
 	if (check_map_border(map))
 		return (write(1, "Border not standard.\n", 21));
-	if (map->e_count != 1 || map->p_count != 1 || map-> m_count > 1 || map->c_count < 1)
+	if (map->e_count != 1 || map->p_count != 1
+		|| map-> m_count > 1 || map->c_count < 1)
 		return (write(1, "Incorrect number of entities\n", 29));
 	if (reachable(map))
 		return (write(1, "Collectible or exit unreachable\n", 32));

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monster_movement.c                                 :+:      :+:    :+:   */
+/*   monster_movement_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:37:37 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 16:14:30 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:00:39 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	move_monster(t_data *data, t_map *m)
 {
 	static char	c = 0;
 	static int	monster_movement = 0;
-	
+
 	if (player_dead(data, m))
 		return ;
 	if (data->map.map[m->monster_y - 1][m->monster_x] == 'm' && c != 'd')

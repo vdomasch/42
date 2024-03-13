@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:12:16 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 14:53:54 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:47:06 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	save_position(t_map *map, int x, int y, char c)
 	}
 }
 
-void	map_state(t_map *map)
+int	map_state(t_map *map)
 {
 	size_t	i;
 	size_t	j;
@@ -71,7 +71,7 @@ void	map_state(t_map *map)
 				save_position(map, j, i, 'e');
 			else if (map->map[i][j] == 'P')
 				save_position(map, j, i, 'p');
-			else if (map->map[i][j] != '1' || map->map[i][j] != '0')
+			else if (map->map[i][j] != '1' && map->map[i][j] != '0')
 				return (1);
 			j++;
 		}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_array.c                                     :+:      :+:    :+:   */
+/*   create_array_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:12:16 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 15:14:35 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:00:59 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	map_state(t_map *map)
 				save_position(map, j, i, 'p');
 			else if (map->map[i][j] == 'M')
 				save_position(map, j, i, 'm');
-			else if (map->map[i][j] != '1' && map->map[i][j] != '0' 
+			else if (map->map[i][j] != '1' && map->map[i][j] != '0'
 				&& map->map[i][j] != 'm')
 				return (1);
 		}

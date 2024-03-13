@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   generate_map.c                                     :+:      :+:    :+:   */
+/*   generate_map_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:22:48 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 15:50:47 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:03:10 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	put_texture(t_data *data, char c, int h, int w)
 			data->e.img, w * 64, h * 64);
 	if (c == 'e')
 		mlx_put_image_to_window(data->mlx, data->win,
-			data->e_out.img, w * 64, h * 64);
+			data->e2.img, w * 64, h * 64);
 	if (data->map.m_count == 1)
 		mlx_put_image_to_window(data->mlx, data->win,
 			data->m.img, data->map.monster_x * 64, data->map.monster_y * 64);
@@ -49,8 +49,8 @@ int	image_load(t_data *data)
 			"./sprites/player64.xpm", &data->p.img_w, &data->p.img_h);
 	data->f.img = mlx_xpm_file_to_image(data->mlx,
 			"./sprites/floor64.xpm", &data->f.img_w, &data->f.img_h);
-	data->e_out.img = mlx_xpm_file_to_image(data->mlx,
-			"./sprites/chest_open64.xpm", &data->e_out.img_w, &data->e_out.img_h);
+	data->e2.img = mlx_xpm_file_to_image(data->mlx,
+			"./sprites/chest_open64.xpm", &data->e2.img_w, &data->e2.img_h);
 	data->m.img = mlx_xpm_file_to_image(data->mlx,
 			"./sprites/mimic_close64.xpm", &data->m.img_w, &data->m.img_h);
 	data->m2.img = mlx_xpm_file_to_image(data->mlx,
