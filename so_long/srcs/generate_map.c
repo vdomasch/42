@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:22:48 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/13 19:03:18 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:01:56 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	map_gen(t_data *data, t_map	*map)
 	data->movement = 0;
 	if (image_load(data))
 	{
-		write(1, "Load image error\n", 17);
+		write(STDERR_FILENO, "Load image error\n", 17);
 		return ;
 	}
 	h = 0;

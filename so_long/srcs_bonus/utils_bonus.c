@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:07:25 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/13 19:23:35 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:03:12 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	player_dead(t_data *data, t_map *m)
 {
 	if (m->player_x == m->monster_x && m->player_y == m->monster_y)
 	{
-		write(1, "You are dead.\n", 14);
+		write(STDOUT_FILENO, "You are dead.\n", 14);
 		mlx_loop_end(data->mlx);
 		return (1);
 	}

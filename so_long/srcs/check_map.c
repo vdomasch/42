@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 14:20:28 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 14:48:20 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:04:03 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	check_map_border(t_map *map)
 	{
 		if (map->map[0][i] != '1' || map->map[map->height - 1][i] != '1')
 		{
-			write(1, "Wrong width border.\n", 20);
+			write(STDERR_FILENO, "Wrong width border.\n", 20);
 			return (1);
 		}
 		i++;
@@ -47,7 +47,7 @@ static int	check_map_border(t_map *map)
 	{
 		if (map->map[i][0] != '1' || map->map[i][map->width - 1] != '1')
 		{
-			write(1, "Wrong height border.\n", 21);
+			write(STDERR_FILENO, "Wrong height border.\n", 21);
 			return (1);
 		}
 		i++;
@@ -102,16 +102,16 @@ static int	reachable(t_map *map)
 int	check_map(t_map *map)
 {
 	if (check_map_size(map))
-		return (write(1, "Irregular size.\n", 16));
+		return (write(STDERR_FILENO, "Irregular size.\n", 16));
 	if (check_map_border(map))
-		return (write(1, "Border not standard.\n", 21));
+		return (write(STDERR_FILENO, "Border not standard.\n", 21));
 	if (map->e_count != 1 || map->p_count != 1 || map->c_count < 1)
-		return (write(1, "Incorrect number of entities\n", 29));
+		return (write(STDERR_FILENO, "Incorrect number of entities\n", 29));
 	if (reachable(map))
-		return (write(1, "Collectible or exit unreachable\n", 32));
+		return (write(STDERR_FILENO, "Collectible or exit unreachable\n", 32));
 	if (map->height > 32)
-		return (write(1, "Map height too big.\n", 20));
+		return (write(STDERR_FILENO, "Map height too big.\n", 20));
 	if (map->width > 60)
-		return (write(1, "Map width too big.\n", 19));
+		return (write(STDERR_FILENO, "Map width too big.\n", 19));
 	return (0);
 }

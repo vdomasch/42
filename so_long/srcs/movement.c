@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:56 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/13 18:59:55 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:10:16 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,13 @@ void	move_player(int keysym, t_data *data)
 		move_left(data, &data->map);
 	if (data->movement != temp)
 	{
-		write(1, "Movement: ", 10);
+		write(STDOUT_FILENO, "Movement: ", 10);
 		move = ft_itoa(data->movement);
 		if (move)
 		{
-			write(1, move, ft_strlen(move));
+			write(STDOUT_FILENO, move, ft_strlen(move));
 			free(move);
 		}
-		write(1, "\n", 1);
+		write(STDOUT_FILENO, "\n", 1);
 	}
 }

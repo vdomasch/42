@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:28 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/13 19:22:55 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:08:21 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int	keypress(int keysym, t_data *data)
 	}
 	if (data->map.player_x == data->map.exit_x
 		&& data->map.player_y == data->map.exit_y)
-		mlx_loop_end(data->mlx);
+		{
+			write(STDOUT_FILENO, "You won the game!\n", 18);
+			mlx_loop_end(data->mlx);
+		}
 	return (0);
 }
 
@@ -90,18 +93,18 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		write(1, "INVALID NUMBER OF ARGUMENTS\n", 28);
+		write(STDERR_FILENO, "INVALID NUMBER OF ARGUMENTS\n", 28);
 		return (1);
 	}
 	if (create_array(&data.map, argv[1]))
 	{
-		write (1, "Creation map failed\n", 20);
+		write (STDERR_FILENO, "Creation map failed\n", 20);
 		return (2);
 	}
 	if (map_state(&data.map) || check_map(&data.map))
 	{
 		free_all(NULL, NULL, data.map.map);
-		write(1, "Map invalid!\n", 13);
+		write(STDERR_FILENO, "Map invalid!\n", 13);
 		return (3);
 	}
 	mlx_part(&data);

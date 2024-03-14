@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:56 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/13 19:00:30 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:11:23 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,5 @@ void	move_player(int keysym, t_data *data)
 			mlx_string_put(data->mlx, data->win, 36, 13, 0x922B21, move);
 			free(move);
 		}
-		write(1, "\n", 1);
 	}
 }
