@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/13 11:34:07 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/06 10:35:52 by vdomasch         ###   ########.fr       */
+/*   Created: 2023/11/07 14:20:08 by vdomasch          #+#    #+#             */
+/*   Updated: 2023/11/09 13:32:21 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#include "../libft.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10000000
-# endif 
+char	*ft_strrchr(const char *s, int c)
+{
+	size_t	i;
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <stdio.h>
-
-char	*ft_strdup(const char *s);
-char	*ft_strjoin(char *s1, const char *s2);
-char	*get_next_line(int fd);
-char	*line_feed(void);
-size_t	ft_strlen(const char *s);
-
-#endif
+	i = ft_strlen(s);
+	while (i + 1 > 0)
+	{
+		if (s[i] == (char)c)
+			return ((char *)s + i);
+		i--;
+	}
+	return (NULL);
+}

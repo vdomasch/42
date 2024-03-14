@@ -6,21 +6,25 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:24:13 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/20 17:24:09 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/14 08:45:23 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	swap(t_swap *list, char c)
+void	swap(t_swap *list, char c, int *error)
 {
 	t_swap	*second;
 
 	list = lstfirst_swap(list);
 	if (c == 'a')
-		write(1, "sa\n", 3);
+	{
+		if (write(1, "sa\n", 3) == -1)
+			*error = 1;
+	}
 	else if (c == 'b')
-		write(1, "sb\n", 3);
+		if (write(1, "sb\n", 3) == -1)
+			*error = 1;
 	second = list->next;
 	list->prev = second;
 	if (second->next)
@@ -34,16 +38,7 @@ void	swap(t_swap *list, char c)
 	second->prev = NULL;
 }
 
-/*void	swap_all(t_swap *a, t_swap *b)
-{
-	//if (a)
-		swap(a, 0);
-	//if (b)
-		swap(b, 0);
-	printf("ss\n");
-}*/
-
-t_swap	*push(t_swap *push, t_swap *pull, char c)
+t_swap	*push(t_swap *push, t_swap *pull, char c, int *error)
 {
 	t_swap	*save;
 
@@ -51,9 +46,13 @@ t_swap	*push(t_swap *push, t_swap *pull, char c)
 	if (push->next)
 		save = push->next;
 	if (c == 'a')
-		write(1, "pa\n", 3);
-	if (c == 'b')
-		write(1, "pb\n", 3);
+	{
+		if (write(1, "pa\n", 3) == -1)
+			*error = 1;
+	}
+	else if (c == 'b')
+		if (write(1, "pb\n", 3) == -1)
+			*error = 1;
 	if (push->next)
 		push->next->prev = NULL;
 	if (push != pull)
@@ -66,14 +65,18 @@ t_swap	*push(t_swap *push, t_swap *pull, char c)
 	return (save);
 }
 
-void	rotate(t_swap *list, char c)
+void	rotate(t_swap *list, char c, int *error)
 {
 	t_swap	*last;
 
 	if (c == 'a')
-		write(1, "ra\n", 3);
+	{
+		if (write(1, "ra\n", 3) == -1)
+			*error = 1;
+	}
 	else if (c == 'b')
-		write(1, "rb\n", 3);
+		if (write(1, "rb\n", 3) == -1)
+			*error = 1;
 	list = lstfirst_swap(list);
 	last = lstlast_swap(list);
 	last->next = list;
@@ -82,23 +85,18 @@ void	rotate(t_swap *list, char c)
 	list->prev = last;
 }
 
-/*void	rotate_all(t_swap *a, t_swap *b)
-{
-	//if (a)
-		rotate(a, 0);
-	//if (b)
-		rotate(b, 0);
-	write(1, "rr\n", 3);
-}*/
-
-void	reverse_rotate(t_swap *list, char c)
+void	reverse_rotate(t_swap *list, char c, int *error)
 {
 	t_swap	*last;
 
 	if (c == 'a')
-		write(1, "rra\n", 4);
+	{
+		if (write(1, "rra\n", 4) == -1)
+			*error = 1;
+	}
 	else if (c == 'b')
-		write(1, "rrb\n", 4);
+		if (write(1, "rrb\n", 4) == -1)
+			*error = 1;
 	list = lstfirst_swap(list);
 	last = lstlast_swap(list);
 	list->prev = last;
@@ -107,36 +105,29 @@ void	reverse_rotate(t_swap *list, char c)
 	last->prev = NULL;
 }
 
-/*void	reverse_rotate_all(t_swap *a, t_swap *b)
-{
-	if (a)
-		reverse_rotate(a, 0);
-	if (b)
-		reverse_rotate(b, 0);
-	write(1, "rrr\n", 4);
-}*/
-
-void	rule_all(t_swap *a, t_swap *b, char *str, bool print)
+void	rule_all(t_swap *a, t_swap *b, char *str, int *error)
 {
 	if (ft_strncmp(str, "ss", 3) == 0)
 	{
-		swap(a, 0);
-		swap(b, 0);
-		if (print == 1)
-			write(1, "ss\n", 3);
+		if (a)
+			swap(a, 0, error);
+		if (b)
+			swap(b, 0, error);
 	}
 	else if (ft_strncmp(str, "rr", 3) == 0)
 	{
-		rotate(a, 0);
-		rotate(b, 0);
-		if (print == 1)
-			write(1, "rr\n", 3);
+		if (a)
+			rotate(a, 0, error);
+		if (b)
+			rotate(b, 0, error);
 	}
 	else if (ft_strncmp(str, "rrr", 4) == 0)
 	{
-		reverse_rotate(a, 0);
-		reverse_rotate(b, 0);
-		if (print == 1)
-			write(1, "rrr\n", 4);
+		if (a)
+			reverse_rotate(a, 0, error);
+		if (b)
+			reverse_rotate(b, 0, error);
 	}
+	if (write(1, str, ft_strlen(str)) == -1)
+		*error = 1;
 }

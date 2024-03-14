@@ -6,11 +6,12 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:57:47 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 19:19:26 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/23 18:42:21 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../libft.h"
+#include <stdio.h>
 
 static int	count_word(const char *s, char c)
 {

@@ -6,13 +6,14 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:50:09 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 19:21:26 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/14 08:43:51 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+# include "../Libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -41,14 +42,11 @@ t_swap	*find_rank(t_swap *list, int rank_to_find);
 /*										RULES								*/
 /****************************************************************************/
 
-t_swap	*push(t_swap *push, t_swap *pull, char c);
-void	swap(t_swap *stack, char c);
-// void	swap_all(t_swap *a, t_swap *b);
-void	rotate(t_swap *stack, char c);
-// void	rotate_all(t_swap *a, t_swap *b);
-void	reverse_rotate(t_swap *stack, char c);
-// void	reverse_rotate_all(t_swap *a, t_swap *b);
-void	rule_all(t_swap *a, t_swap *b, char *str, bool print);
+t_swap	*push(t_swap *push, t_swap *pull, char c, int *error);
+void	swap(t_swap *stack, char c, int *error);
+void	rotate(t_swap *stack, char c, int *error);
+void	reverse_rotate(t_swap *stack, char c, int *error);
+void	rule_all(t_swap *a, t_swap *b, char *str, int *error);
 
 /****************************************************************************/
 /*										CHECKS								*/
@@ -72,18 +70,6 @@ t_swap	*detain_number(t_swap *list_a, t_swap *list_b, int num, int *detain);
 /****************************************************************************/
 
 void	sort_number(t_swap *list_a, int argc, int num);
-void	sort_list_of_two(t_swap *list);
-void	sort_list_of_three(t_swap *list);
-
-/****************************************************************************/
-/*										LIBFT								*/
-/****************************************************************************/
-
-int		ft_atoi(const char *str);
-int		ft_isdigit(int c);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	**ft_split(const char *s, char c);
-
 
 /****************************************************************************/
 /*										BONNUS								*/

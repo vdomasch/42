@@ -6,7 +6,7 @@
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/13 16:58:39 by vdomasch          #+#    #+#              #
-#    Updated: 2024/03/13 19:22:28 by vdomasch         ###   ########.fr        #
+#    Updated: 2024/03/14 08:16:53 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,9 @@ SRCS				=	so_long.c						\
 					create_array.c					\
 					check_map.c						\
 					generate_map.c					\
-					movement.c						
-
+					movement.c						\
+					utils.c
+					
 OBJS				=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
 
 LIB_D				=	Libft
@@ -44,6 +45,9 @@ FLAGS				=	-Wall -Werror -Wextra -g3
 #############################################################################
 
 ifeq ($(BONUS),true)
+
+	NAME			=	so_long_bonus
+	
 	SRCS_DIR		=	srcs_bonus
 
 	SRCS			=	so_long_bonus.c						\
@@ -101,8 +105,12 @@ clean				:
 fclean				:
 							$(MAKE) clean
 							rm -rf $(NAME)
+							$(MAKE)	fclean_bonus BONUS=true
 							$(MAKE) fclean -C $(LIB_D)
 							$(MAKE) clean -C $(MLX_D)
+
+fclean_bonus		:		
+							rm -rf $(NAME)
 
 re					:
 							$(MAKE) fclean all
@@ -110,4 +118,4 @@ re					:
 bonus				:
 							@$(MAKE) all BONUS=true
 							
-.PHONY: all clean fclean re lib bonus
+.PHONY: all clean fclean re lib bonus fclean_bonus

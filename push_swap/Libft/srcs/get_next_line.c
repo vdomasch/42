@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 11:35:52 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/02/07 13:41:44 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:22:13 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "../libft.h"
 
 static int	findnline(const char *str)
 {
@@ -43,7 +43,7 @@ static char	*read_line(int fd, char *buffer, char *stack)
 			buffer[value] = '\0';
 		if (value > 0)
 		{
-			stack = ft_strjoin(stack, buffer);
+			stack = ft_strfreejoin(stack, buffer);
 			empty = 1;
 		}
 	}
@@ -62,6 +62,8 @@ static char	*extract_line(char	*stack)
 	char	*line;
 
 	i = 0;
+	if (!stack)
+		return (NULL);
 	endl = findnline(stack);
 	if (!endl)
 		return (ft_strdup(stack));
@@ -97,48 +99,44 @@ char	*get_next_line(int fd)
 {
 	char		*line;
 	char		*stack;
-	static char	buffer[1005][BUFFER_SIZE + 1];
+	static char	buffer[BUFFER_SIZE + 1];
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buffer[fd], 0) < 0 || fd > 1004)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buffer, 0) < 0)
 		return (NULL);
-	if (buffer[fd][0] == '\n')
+	if (buffer[0] == '\n')
 	{
-		extract_memory(buffer[fd]);
+		extract_memory(buffer);
 		return (line_feed());
 	}
-	stack = ft_strdup(buffer[fd]);
-	stack = read_line(fd, buffer[fd], stack);
+	stack = ft_strdup(buffer);
+	stack = read_line(fd, buffer, stack);
 	if (!stack)
 	{
-		extract_memory(buffer[fd]);
+		extract_memory(buffer);
 		return (NULL);
 	}
 	line = extract_line(stack);
-	extract_memory(buffer[fd]);
-	free(stack);
+	extract_memory(buffer);
+	if (stack)
+		free(stack);
 	return (line);
 }
 
-// int	main(void)
-// {
-// 	int		i;
-// 	int		fd;
-// 	int		fd1;
-// 	char	*line;
+/*int	main(void)
+{
+	int		i;
+	int		fd;
+	char	*line;
 
-// 	fd = open("text.txt", O_RDWR);
-// 	fd1 = open("", O_RDWR);
-// 	i = 25;
-// 	while (i)
-// 	{
-// 		line = get_next_line(fd);
-// 		printf("%s", line);
-// 		free(line);
-// 		line = get_next_line(fd1);
-// 		printf("%s", line);
-// 		free(line);
-// 		i--;
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+	fd = open("text.txt", O_RDWR);
+	i = 10;
+	while (i)
+	{
+		line = get_next_line(fd);
+		printf("%s", line);
+		free(line);
+		i--;
+	}
+	close(fd);
+	return (0);
+}*/

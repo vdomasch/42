@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:22:48 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/14 07:01:56 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:54:12 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	put_texture(t_data *data, char c, int h, int w)
 			data->e2.img, w * 64, h * 64);
 }
 
-int	image_load(t_data *data)
+static int	image_load(t_data *data)
 {
 	data->w.img = mlx_xpm_file_to_image(data->mlx,
 			"./sprites/wall64.xpm", &data->w.img_w, &data->w.img_h);
@@ -49,12 +49,12 @@ int	image_load(t_data *data)
 	data->e2.img = mlx_xpm_file_to_image(data->mlx,
 			"./sprites/chest_open64.xpm", &data->e2.img_w, &data->e2.img_h);
 	if (!data->w.img || !data->c.img || !data->e.img
-		|| !data->p.img || !data->f.img)
+		|| !data->p.img || !data->f.img || !data->e2.img)
 		return (1);
 	return (0);
 }
 
-void	map_gen(t_data *data, t_map	*map)
+int	map_gen(t_data *data, t_map	*map)
 {
 	int		h;
 	int		w;
@@ -63,8 +63,8 @@ void	map_gen(t_data *data, t_map	*map)
 	data->movement = 0;
 	if (image_load(data))
 	{
-		write(STDERR_FILENO, "Load image error\n", 17);
-		return ;
+		write(STDERR_FILENO, "Load image error.\n", 18);
+		return (1);
 	}
 	h = 0;
 	while (map->map[h])
@@ -77,4 +77,5 @@ void	map_gen(t_data *data, t_map	*map)
 		}
 		h++;
 	}
+	return (0);
 }

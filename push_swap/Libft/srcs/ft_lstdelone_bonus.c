@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 14:34:23 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 19:19:42 by vdomasch         ###   ########.fr       */
+/*   Created: 2023/11/16 19:12:32 by vdomasch          #+#    #+#             */
+/*   Updated: 2023/11/16 19:40:12 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	while ((*s1 || *s2) && n)
+	if (!del)
 	{
-		if (*s1 != *s2)
-			return (*(unsigned char *)s1 - *(unsigned char *)s2);
-		s1++;
-		s2++;
-		n--;
+		free(lst);
+		return ;
 	}
-	return (0);
+	if (lst)
+	{
+		(*del)(lst->content);
+		free(lst);
+	}
 }

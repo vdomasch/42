@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:01:10 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 19:22:40 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/14 08:54:08 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,27 @@ t_swap	*detain_number(t_swap *list_a, t_swap *list_b, int num, int *detain)
 {
 	t_swap	*last;
 	int		count;
+	int		error;
 
+	error = 0;
 	count = 0;
 	last = lstlast_swap(list_a);
 	count = count_position(list_b, list_a->rank, num);
 	if (count > 0)
 		while (count-- > 0)
-			rotate(list_b, 'b');
+			rotate(list_b, 'b', &error);
 	else
 		while (count++ < 0)
-			reverse_rotate(list_b, 'b');
+			reverse_rotate(list_b, 'b', &error);
 	list_b = lstfirst_swap(list_b);
-	list_b = push(list_b, list_a, 'a');
+	list_b = push(list_b, list_a, 'a', &error);
 	if (last->rank == list_a->prev->rank - 1)
 	{
-		reverse_rotate(list_a->prev, 'a');
+		reverse_rotate(list_a->prev, 'a', &error);
 		*detain = 0;
 	}
+	if (error)
+		*detain += 2;
 	return (list_b);
 }
 

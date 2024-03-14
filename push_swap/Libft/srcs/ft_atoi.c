@@ -6,11 +6,11 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:28:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/12 19:19:20 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:23:22 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../libft.h"
 
 int	ft_atoi(const char *str)
 {

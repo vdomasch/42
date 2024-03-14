@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/13 19:02:49 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:53:55 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,11 @@ typedef struct s_data
 int		check_map(t_map *map);
 
 int		create_array(t_map *map, const char *filename);
-int	map_state(t_map *map);
+int		map_state(t_map *map);
 
 int		player_dead(t_data *data, t_map *m);
-void	map_gen(t_data *data, t_map	*map);
+int	map_gen(t_data *data, t_map	*map);
 void	put_texture(t_data *data, char c, int h, int w);
-
 void	free_all(void *str1, void *str2, char **array);
 void	clean(t_data *data, t_map *map);
 
