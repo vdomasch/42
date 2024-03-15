@@ -18,7 +18,7 @@ int	check_error(int argc, char **argv)
 	int			j;
 
 	if (argc == 2 && argv[1][0] == '\0')
-			return (write(1, "Error\n", 6));
+		return (write(1, "Error\n", 6));
 	while (argv[++i])
 	{
 		j = -1;

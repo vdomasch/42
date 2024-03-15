@@ -16,7 +16,7 @@
 /*									PUSH TO A								*/
 /****************************************************************************/
 
-static t_swap	*push_to_a(t_swap *list_a, t_swap *list_b, const int num, int *error)
+t_swap	*push_to_a(t_swap *list_a, t_swap *list_b, const int num, int *error)
 {
 	static int	detain = 0;
 
@@ -51,7 +51,7 @@ static int	push_to_b(t_swap *list_a, t_swap *list_b, int argc, int *num)
 {
 	const int	rank_max = argc - 3;
 	const int	chunk = 0.000000053 * argc * argc + 0.03 * argc + 14.5;
-	int error;
+	int			error;
 
 	error = 0;
 	if (list_a->rank <= *num && list_a->rank < rank_max)
@@ -72,8 +72,6 @@ static int	push_to_b(t_swap *list_a, t_swap *list_b, int argc, int *num)
 		rotate(list_a, 'a', &error);
 	return (error);
 }
-
-
 
 /****************************************************************************/
 /*									SORT SHORT								*/
