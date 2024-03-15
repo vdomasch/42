@@ -14,15 +14,11 @@
 
 int	check_error(int argc, char **argv)
 {
-	int	i;
-	int	j;
+	static int	i;
+	int			j;
 
-	i = 0;
-	if (argc == 1)
-		return (1);
-	if (argc == 2)
-		if (argv[1][0] == '\0')
-			return (2);
+	if (argc == 2 && argv[1][0] == '\0')
+			return (write(1, "Error\n", 6));
 	while (argv[++i])
 	{
 		j = -1;
@@ -32,6 +28,10 @@ int	check_error(int argc, char **argv)
 			&& !(argv[i][j] == '-'))
 				return (write(1, "Error\n", 6));
 			if (argv[i][j] == '-' && !ft_isdigit(argv[i][j + 1]))
+				return (write(1, "Error\n", 6));
+			if (j > 0 && argv[i][j] == '-' && ft_isdigit(argv[i][j - 1]))
+				return (write(1, "Error\n", 6));
+			if (argc > 2 && ft_isspace(argv[i][j]))
 				return (write(1, "Error\n", 6));
 		}
 	}

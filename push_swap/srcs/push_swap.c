@@ -31,9 +31,12 @@ void	*free_all(t_swap *list, char **argv, int is_split)
 	}
 	if (!is_split)
 	{
-		while (argv[i])
-			free(argv[i++]);
-		free(argv);
+		if (argv)
+		{
+			while (argv[i])
+				free(argv[i++]);
+			free(argv);
+		}
 	}
 	return (NULL);
 }
@@ -78,6 +81,8 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		argv = ft_split(argv[1], ' ');
+		if (!argv || (!(*argv) && free_all(NULL, argv, 0) == NULL))
+			return (write(1, "Error\n", 6));
 		argc = 0;
 		while (argv[argc])
 			argc++;
