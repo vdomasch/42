@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/14 07:53:55 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:19:47 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ typedef struct s_map
 	int		exit_y;
 	int		player_x;
 	int		player_y;
-	int		monster_x;
-	int		monster_y;
+	int		m_x;
+	int		m_y;
 }	t_map;
 
 typedef struct s_texture
@@ -65,6 +65,7 @@ typedef struct s_data
 	t_texture	e;
 	t_texture	e2;
 	t_texture	p;
+	t_texture	p2;
 	t_texture	f;
 	t_texture	m;
 	t_texture	m2;

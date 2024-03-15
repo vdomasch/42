@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:56 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/14 07:11:23 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:25:06 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	move_up(t_data *data, t_map *m)
 		m->player_y -= 1;
 		data->collectible += 1;
 		data->movement += 1;
-		mlx_put_image_to_window(data->mlx, data->win, data->p.img,
+		mlx_put_image_to_window(data->mlx, data->win, data->p2.img,
 			m->player_x * 64, m->player_y * 64);
 		data->map.map[m->player_y][m->player_x] = '0';
 	}
@@ -34,7 +34,7 @@ static void	move_up(t_data *data, t_map *m)
 		m->player_y -= 1;
 		data->movement += 1;
 		mlx_put_image_to_window(data->mlx, data->win,
-			data->p.img, m->player_x * 64, m->player_y * 64);
+			data->p2.img, m->player_x * 64, m->player_y * 64);
 	}
 }
 
@@ -73,8 +73,6 @@ static void	move_right(t_data *data, t_map *m)
 		m->player_x += 1;
 		data->collectible += 1;
 		data->movement += 1;
-		mlx_put_image_to_window(data->mlx, data->win, data->p.img,
-			m->player_x * 64, m->player_y * 64);
 		data->map.map[m->player_y][m->player_x] = '0';
 	}
 	else if (data->map.map[m->player_y][m->player_x + 1] == '0'
@@ -85,9 +83,9 @@ static void	move_right(t_data *data, t_map *m)
 			m->player_x * 64, m->player_y * 64);
 		m->player_x += 1;
 		data->movement += 1;
+	}
 		mlx_put_image_to_window(data->mlx, data->win,
 			data->p.img, m->player_x * 64, m->player_y * 64);
-	}
 }
 
 static void	move_left(t_data *data, t_map *m)
@@ -99,8 +97,6 @@ static void	move_left(t_data *data, t_map *m)
 		m->player_x -= 1;
 		data->collectible += 1;
 		data->movement += 1;
-		mlx_put_image_to_window(data->mlx, data->win, data->p.img,
-			m->player_x * 64, m->player_y * 64);
 		data->map.map[m->player_y][m->player_x] = '0';
 	}
 	else if (data->map.map[m->player_y][m->player_x - 1] == '0'
@@ -111,9 +107,9 @@ static void	move_left(t_data *data, t_map *m)
 			m->player_x * 64, m->player_y * 64);
 		m->player_x -= 1;
 		data->movement += 1;
-		mlx_put_image_to_window(data->mlx, data->win,
-			data->p.img, m->player_x * 64, m->player_y * 64);
 	}
+		mlx_put_image_to_window(data->mlx, data->win,
+			data->p2.img, m->player_x * 64, m->player_y * 64);
 }
 
 void	move_player(int keysym, t_data *data)

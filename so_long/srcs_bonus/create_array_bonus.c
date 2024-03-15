@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:12:16 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/13 19:00:59 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:20:17 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static void	save_position(t_map *map, int x, int y, char c)
 	else if (c == 'm')
 	{
 		map->map[y][x] = 'm';
-		map->monster_x = x;
-		map->monster_y = y;
+		map->m_x = x;
+		map->m_y = y;
 		map->m_count++;
 	}
 }
@@ -65,6 +65,8 @@ int	map_state(t_map *map)
 	size_t	j;
 
 	map_init(map);
+	if (map->height > 32 || map->width > 60)
+		return (1);
 	i = -1;
 	while (map->map[++i])
 	{

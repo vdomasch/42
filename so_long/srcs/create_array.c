@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:12:16 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/13 11:47:06 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:32:17 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	map_state(t_map *map)
 	size_t	j;
 
 	map_init(map);
+	if (map->height > 32 || map->width > 60)
+		return (1);
 	i = 0;
 	while (map->map[i])
 	{

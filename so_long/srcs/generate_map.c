@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:22:48 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/14 07:54:12 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:10:55 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static int	image_load(t_data *data)
 			"./sprites/chest64.xpm", &data->e.img_w, &data->e.img_h);
 	data->p.img = mlx_xpm_file_to_image(data->mlx,
 			"./sprites/player64.xpm", &data->p.img_w, &data->p.img_h);
+	data->p2.img = mlx_xpm_file_to_image(data->mlx,
+			"./sprites/player64flip.xpm", &data->p2.img_w, &data->p2.img_h);
 	data->f.img = mlx_xpm_file_to_image(data->mlx,
 			"./sprites/floor64.xpm", &data->f.img_w, &data->f.img_h);
 	data->e2.img = mlx_xpm_file_to_image(data->mlx,
