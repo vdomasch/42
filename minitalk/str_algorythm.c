@@ -45,6 +45,7 @@ void	handler(int sig)
 	}
 	if (bits == 8)
 	{
+		printf("%d\n", number);
 		bits_to_str(position, number);
 		bits = 0;
 		number = 0;

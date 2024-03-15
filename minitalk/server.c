@@ -6,61 +6,69 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:59:54 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/14 13:15:31 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:05:46 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-#include <signal.h>
-#include <unistd.h>
 
-void	bits_to_str(int	position, int number)
+void	bits_to_str(int	*position, int number, pid_t client_pid)
 {
 	static char		*str;
 
-	if (position == 0)
+	if (*position == 0)
 	{
 		str = malloc(sizeof(char *) * (number + 1));
 		if (!str)
+		{
+			kill(client_pid, SIGUSR2);
 			return ;
-		str[position] = '\0';
+		}
+		str[number] = '\0';
 	}
 	else
-		str[position] = number;
+		str[*position - 1] = number;
 	if (number == 0)
 	{
 		write(STDIN_FILENO, str, strlen(str));
-		kill(pid, SIGUSR1);
+		*position = -1;
+		//usleep(100);
+		//kill(client_pid, SIGUSR1);
 	}
 }
 
-void	signal_handler(int	sig, siginfo_t *info)
+void	signal_handler(int	sig, siginfo_t *info, void *context)
 {
-	static int	bits;
-	static int	position;
-	int	number;
+	static int	bits = 0;
+	static int	position = 0;
+	static int	number = 0;
 	
-	number = 0;
+	(void*)context;
 	if (sig == SIGUSR1)
 	{
-		printf("SIGUSR1\n");
 		number = number << 1;
 		number += 1;
 		bits++;
 	}
 	if (sig == SIGUSR2)
 	{
-		printf("SIGUSR2\n");
 		number = number << 1;
 		bits++;
 	}
-	if (bits == 8)
+	if (bits == 8 && position > 0)
 	{
-		bits_to_str(position, number);
+		bits_to_str(&position, number, info->si_pid);
 		bits = 0;
 		position++;
+		number = 0;
 	}
-	
+	if (bits == 32)
+	{
+		bits_to_str(&position, number, info->si_pid);
+		position++;
+		bits = 0;
+		number = 0;
+	}
 }
 
 int	main(void)
