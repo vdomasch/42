@@ -6,16 +6,24 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:59:54 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/15 19:05:46 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:15:36 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "../minitalk.h"
 
-void	bits_to_str(int	*position, int number, pid_t client_pid)
+/*void	bits_to_str(int	*position, int number, pid_t client_pid)
 {
 	static char		*str;
 
+	if (number == 0)
+	{
+		usleep(100);
+		kill(client_pid, SIGUSR1);
+		return ;
+	}
+	else
+		write(1, &number, 1);
 	if (*position == 0)
 	{
 		str = malloc(sizeof(char *) * (number + 1));
@@ -32,18 +40,42 @@ void	bits_to_str(int	*position, int number, pid_t client_pid)
 	{
 		write(STDIN_FILENO, str, strlen(str));
 		*position = -1;
-		//usleep(100);
-		//kill(client_pid, SIGUSR1);
+		usleep(100);
+		kill(client_pid, SIGUSR1);
 	}
-}
+}*/
 
 void	signal_handler(int	sig, siginfo_t *info, void *context)
 {
-	static int	bits = 0;
+	static unsigned char	number = 0;
+	static int				bits = 0;
+	static int				client_pid;
+
+	(void)context;
+	if (client_pid == 0)
+		client_pid = info->si_pid;
+	number |= (sig == SIGUSR1);
+	if (++bits == 8)
+	{
+		bits = 0;
+		if (!number)
+		{
+			kill(client_pid, SIGUSR2);
+			client_pid = 0;
+			return ;
+		}
+		printf("%d\n", number);//(1, &number, 1);
+		number = 0;
+		kill(client_pid, SIGUSR1);
+	}
+	else
+		number <<= 1;
+}
+	/*static int	bits = 0;
 	static int	position = 0;
 	static int	number = 0;
 	
-	(void*)context;
+	(void)context;
 	if (sig == SIGUSR1)
 	{
 		number = number << 1;
@@ -69,7 +101,7 @@ void	signal_handler(int	sig, siginfo_t *info, void *context)
 		bits = 0;
 		number = 0;
 	}
-}
+}*/
 
 int	main(void)
 {
