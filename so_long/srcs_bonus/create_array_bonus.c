@@ -59,15 +59,11 @@ static void	save_position(t_map *map, int x, int y, char c)
 	}
 }
 
-int	map_state(t_map *map)
+int	map_state(t_map *map, size_t i, size_t j)
 {
-	size_t	i;
-	size_t	j;
-
 	map_init(map);
 	if (map->height > 32 || map->width > 60)
 		return (1);
-	i = -1;
 	while (map->map[++i])
 	{
 		j = -1;
@@ -110,6 +106,10 @@ static char	*read_file(char *map_extract, int fd)
 		if (map_extract == NULL)
 			return (NULL);
 	}
+	rd = -1;
+	while (map_extract[++rd])
+		if (map_extract[rd] == '\n' && map_extract[rd + 1] == '\n')
+			return (free_all(map_extract, NULL, NULL));
 	return (map_extract);
 }
 

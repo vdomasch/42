@@ -84,8 +84,8 @@ static void	move_right(t_data *data, t_map *m)
 		m->player_x += 1;
 		data->movement += 1;
 	}
-		mlx_put_image_to_window(data->mlx, data->win,
-			data->p.img, m->player_x * 64, m->player_y * 64);
+	mlx_put_image_to_window(data->mlx, data->win,
+		data->p.img, m->player_x * 64, m->player_y * 64);
 }
 
 static void	move_left(t_data *data, t_map *m)
@@ -108,8 +108,8 @@ static void	move_left(t_data *data, t_map *m)
 		m->player_x -= 1;
 		data->movement += 1;
 	}
-		mlx_put_image_to_window(data->mlx, data->win,
-			data->p2.img, m->player_x * 64, m->player_y * 64);
+	mlx_put_image_to_window(data->mlx, data->win,
+		data->p2.img, m->player_x * 64, m->player_y * 64);
 }
 
 void	move_player(int keysym, t_data *data)

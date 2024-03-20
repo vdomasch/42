@@ -121,22 +121,3 @@ char	*get_next_line(int fd)
 		free(stack);
 	return (line);
 }
-
-/*int	main(void)
-{
-	int		i;
-	int		fd;
-	char	*line;
-
-	fd = open("text.txt", O_RDWR);
-	i = 10;
-	while (i)
-	{
-		line = get_next_line(fd);
-		printf("%s", line);
-		free(line);
-		i--;
-	}
-	close(fd);
-	return (0);
-}*/

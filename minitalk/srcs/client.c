@@ -6,30 +6,36 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:11:24 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/18 18:19:34 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:42:15 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-void	handler(int	sig)
+int	g_global;	
+
+void	handler(int	sig, siginfo_t *info, void *context)
 {
 	static int	received;
-	
+
+	g_global = 1;
+	(void)info;
+	(void)context;	
 	if (sig == SIGUSR1)
 		received++;
 	if (sig == SIGUSR2)
 	{
-		printf("%d\n", received);
+		printf("Received: %d\n", received/8);
 		exit(0);
 	}
 }
 
 void	str_to_bits(int pid, char *str)
 {
-	int		i;
+	//int		i;
+	int		bits;
 	//int		size;
-	char	c;
+	unsigned char	c;
 
 	/*size = 0;
 	i = 32;
@@ -43,29 +49,37 @@ void	str_to_bits(int pid, char *str)
 				kill(pid, SIGUSR2);
 			usleep(100);
 	}*/
+	//i = 0;
+	printf("Send: %d\n", (int)strlen(str));
 	while(*str)
 	{
-		i = 8;
-		c = *str++;
-		while (i--)
+		c = *str;
+		bits = 8;
+		while (bits--)
 		{
-			if (c >> i & 1)
+			g_global = 0;
+			if (c >> bits & 1)
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
-			usleep(100);
+			while (!g_global)
+				;
 		}
+		str++;
 	}
-	i = 0;
-	while (i++ < 8)
+	bits = 0;
+	while (bits++ < 8)
 	{
+		g_global = 0;
 		kill(pid, SIGUSR2);
-		usleep(100);
+		while (!g_global)
+			;
 	}
 }
 
 int	main(int argc, char **argv)
 {
+	struct sigaction	sig_action;
 	int pid;
 
 	if (argc != 3)
@@ -73,10 +87,13 @@ int	main(int argc, char **argv)
 	pid = atoi(argv[2]);
 	if (pid < 0)
 		return (write(STDOUT_FILENO, "Invalid PID.\n", 13));
-	signal(SIGUSR1, &handler);
-	signal(SIGUSR2, &handler);
+	sig_action.sa_sigaction = &handler;
+	sigemptyset(&sig_action.sa_mask);
+	sig_action.sa_flags = SA_SIGINFO;
+	sigaction(SIGUSR1, &sig_action, NULL);
+	sigaction(SIGUSR2, &sig_action, NULL);
 	str_to_bits(pid, argv[1]);
 	while(1)
-		pause();
+		;
 	return (0);
 }

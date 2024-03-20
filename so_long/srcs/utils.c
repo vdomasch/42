@@ -12,7 +12,7 @@
 
 #include "../so_long.h"
 
-void	free_all(void *str1, void *str2, char **array)
+void	*free_all(void *str1, void *str2, char **array)
 {
 	int	i;
 
@@ -21,12 +21,12 @@ void	free_all(void *str1, void *str2, char **array)
 	if (str2)
 		free(str2);
 	if (!array)
-		return ;
+		return (NULL);
 	i = 0;
 	while (array[i])
 		free(array[i++]);
 	free(array);
-	return ;
+	return (NULL);
 }
 
 void	clean(t_data *data, t_map *map)

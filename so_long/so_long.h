@@ -77,12 +77,12 @@ typedef struct s_data
 int		check_map(t_map *map);
 
 int		create_array(t_map *map, const char *filename);
-int		map_state(t_map *map);
+int		map_state(t_map *map, size_t i, size_t j);
 
 int		player_dead(t_data *data, t_map *m);
-int	map_gen(t_data *data, t_map	*map);
+int		map_gen(t_data *data, t_map	*map);
 void	put_texture(t_data *data, char c, int h, int w);
-void	free_all(void *str1, void *str2, char **array);
+void	*free_all(void *str1, void *str2, char **array);
 void	clean(t_data *data, t_map *map);
 
 void	move_player(int keysym, t_data *data);

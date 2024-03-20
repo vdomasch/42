@@ -90,7 +90,7 @@ void	move_monster(t_data *data, t_map *m)
 		c = monster_move_left(data, m, m_move);
 	else if (c != 0)
 		c = 0;
-	else 
+	else
 	{
 		c = 1;
 		move_monster(data, m);

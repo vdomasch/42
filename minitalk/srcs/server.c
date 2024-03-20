@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:59:54 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/18 18:15:36 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:42:13 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,10 @@ void	signal_handler(int	sig, siginfo_t *info, void *context)
 {
 	static unsigned char	number = 0;
 	static int				bits = 0;
-	static int				client_pid;
+	static int				client_pid = 0;
 
 	(void)context;
-	if (client_pid == 0)
-		client_pid = info->si_pid;
+	client_pid = info->si_pid;
 	number |= (sig == SIGUSR1);
 	if (++bits == 8)
 	{
@@ -64,12 +63,15 @@ void	signal_handler(int	sig, siginfo_t *info, void *context)
 			client_pid = 0;
 			return ;
 		}
-		printf("%d\n", number);//(1, &number, 1);
+		write(STDIN_FILENO, &number, 1);
 		number = 0;
 		kill(client_pid, SIGUSR1);
 	}
 	else
+	{
 		number <<= 1;
+		kill(client_pid, SIGUSR1);
+	}
 }
 	/*static int	bits = 0;
 	static int	position = 0;
@@ -108,13 +110,13 @@ int	main(void)
 	struct sigaction	sig_action;
 	int					pid;
 	 
-	pid = getpid();
-	printf("Server PID:[%d]\n", pid);
 	sig_action.sa_sigaction = &signal_handler;
 	sig_action.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &sig_action, NULL);
 	sigaction(SIGUSR2, &sig_action, NULL);
+	pid = getpid();
+	printf("Server PID:[%d]\n", pid);
 	while (1)
-		pause();
+		;
 	return (0);
 }

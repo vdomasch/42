@@ -17,7 +17,8 @@ static int	check_filename(char *str)
 	int		i;
 
 	i = ft_strlen(str);
-	if (str[i - 1] == 'r' && str[i - 2] == 'e' && str[i - 3] == 'b' && str[i - 4] == '.')
+	if (str[i - 1] == 'r' && str[i - 2] == 'e'
+		&& str[i - 3] == 'b' && str[i - 4] == '.')
 		return (0);
 	write(STDERR_FILENO, "Invalid map extension.\n", 23);
 	return (1);
@@ -35,10 +36,10 @@ static int	keypress(int keysym, t_data *data)
 	}
 	if (data->map.player_x == data->map.exit_x
 		&& data->map.player_y == data->map.exit_y)
-		{
-			write(STDOUT_FILENO, "You won the game!", 17);
-			mlx_loop_end(data->mlx);
-		}
+	{
+		write(STDOUT_FILENO, "Congratulations!", 16);
+		mlx_loop_end(data->mlx);
+	}
 	if (data->map.m_count == 1)
 		move_monster(data, &data->map);
 	return (0);
@@ -49,10 +50,12 @@ static int	mlx_part(t_data *data)
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		return (1);
-	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "My project!");
+	data->win = mlx_new_window(data->mlx, data->map.width * 64,
+			data->map.height * 64, "My project!");
 	if (!data->win)
 	{
 		mlx_destroy_display(data->mlx);
+		free(data->mlx);
 		return (2);
 	}
 	if (!map_gen(data, &data->map))
@@ -81,12 +84,13 @@ int	main(int argc, char **argv)
 		write (STDERR_FILENO, "Creation map failed.\n", 21);
 		return (3);
 	}
-	if (map_state(&data.map) || check_map(&data.map))
+	if (map_state(&data.map, -1, -1) || check_map(&data.map))
 	{
 		free_all(NULL, NULL, data.map.map);
 		write(STDERR_FILENO, "Map invalid!\n", 13);
 		return (4);
 	}
-	mlx_part(&data);
+	if (mlx_part(&data))
+		free_all(NULL, NULL, data.map.map);
 	return (0);
 }
