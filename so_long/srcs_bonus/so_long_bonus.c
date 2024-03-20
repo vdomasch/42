@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:28 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/15 17:33:09 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:35:33 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	keypress(int keysym, t_data *data)
 	if (data->map.player_x == data->map.exit_x
 		&& data->map.player_y == data->map.exit_y)
 	{
-		write(STDOUT_FILENO, "Congratulations!", 16);
+		write(STDOUT_FILENO, "Congratulations!\n", 17);
 		mlx_loop_end(data->mlx);
 	}
 	if (data->map.m_count == 1)

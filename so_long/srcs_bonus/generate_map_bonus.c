@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:22:48 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/15 17:20:06 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:30:34 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ static int	image_load(t_data *data)
 	data->m2.img = mlx_xpm_file_to_image(data->mlx,
 			"./sprites/mimic_open64.xpm", &data->m2.img_w, &data->m2.img_h);
 	if (!data->w.img || !data->c.img || !data->e.img || !data->p.img
-		|| !data->f.img || !data->e2.img || !data->m.img || !data->m2.img)
+		|| !data->p2.img || !data->f.img || !data->e2.img
+		|| !data->m.img || !data->m2.img)
 		return (1);
 	return (0);
 }

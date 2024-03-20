@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:22:48 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/15 16:10:55 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:31:53 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static int	image_load(t_data *data)
 			"./sprites/floor64.xpm", &data->f.img_w, &data->f.img_h);
 	data->e2.img = mlx_xpm_file_to_image(data->mlx,
 			"./sprites/chest_open64.xpm", &data->e2.img_w, &data->e2.img_h);
-	if (!data->w.img || !data->c.img || !data->e.img
-		|| !data->p.img || !data->f.img || !data->e2.img)
+	if (!data->w.img || !data->c.img || !data->e.img || !data->p.img
+		|| !data->p2.img || !data->f.img || !data->e2.img)
 		return (1);
 	return (0);
 }

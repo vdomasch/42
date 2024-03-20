@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:12:16 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/15 16:32:17 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:08:26 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static char	*read_file(char *map_extract, int fd)
 	while (rd == 1024)
 	{
 		rd = read(fd, buffer, 1024);
-		if (rd < 0)
+		if (rd <= 0)
 		{
 			free(map_extract);
 			return (NULL);
@@ -125,5 +125,7 @@ int	create_array(t_map *map, const char *filename)
 	map->map = ft_split(map_extract, '\n');
 	free(map_extract);
 	close(fd);
+	if (!map->map)
+		return (1);
 	return (0);
 }

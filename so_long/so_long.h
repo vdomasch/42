@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:51:39 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/15 17:19:47 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:43:36 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef struct s_data
 	int			collectible;
 	int			movement;
 }	t_data;
-
 
 int		check_map(t_map *map);
 
