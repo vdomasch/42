@@ -114,13 +114,13 @@ void	move_player(int keysym, t_data *data)
 	char	*move;
 
 	temp = data->movement;
-	if (keysym == XK_w || keysym == XK_Up)
+	if (keysym == XK_w || keysym == XK_Up || keysym == XK_z)
 		move_up(data, &data->map);
 	else if (keysym == XK_s || keysym == XK_Down)
 		move_down(data, &data->map);
 	else if (keysym == XK_d || keysym == XK_Right)
 		move_right(data, &data->map);
-	else if (keysym == XK_a || keysym == XK_Left)
+	else if (keysym == XK_a || keysym == XK_Left || keysym == XK_q)
 		move_left(data, &data->map);
 	if (data->movement != temp)
 	{
