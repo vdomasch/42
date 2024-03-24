@@ -17,27 +17,45 @@ void	signal_handler(int sig, siginfo_t *info, void *context)
 	static unsigned char	number = 0;
 	static int				bits = 0;
 	static int				client_pid = 0;
+	static int				position = 0;
+	static unsigned char	*message;
 
 	(void)context;
-	client_pid = info->si_pid;
+	if (client_pid == 0)
+		client_pid = info->si_pid;
+	//if (info->si_pid != client_pid)
+	//	return ;
 	number |= (sig == SIGUSR1);
-	if (++bits == 8)
+	if (++bits == 8 && position != 0)
 	{
 		bits = 0;
 		if (!number)
 		{
+			write(1, &message, 4);
 			kill(client_pid, SIGUSR2);
 			client_pid = 0;
+			position = 0;
+			free(message);
 			return ;
 		}
-		write(STDIN_FILENO, &number, 1);
+		//write(STDIN_FILENO, &number, 1);
+		message[position - 1] = number;
+		printf("char:%c;position:%d\n", message[position -1], position-1);
 		number = 0;
-		kill(client_pid, SIGUSR1);
+		//kill(client_pid, SIGUSR1);
+		position++;
+	}
+	else if (bits == 32 && position == 0)
+	{
+		message = malloc(sizeof(unsigned char) * (number + 1));
+		number = 0;
+		bits = 0;
+		position++;
 	}
 	else
 	{
 		number <<= 1;
-		kill(client_pid, SIGUSR1);
+		//kill(client_pid, SIGUSR1);
 	}
 }
 

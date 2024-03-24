@@ -34,7 +34,18 @@ void	str_to_bits(int pid, char *str)
 {
 	unsigned char	c;
 	int				bits;
-
+	unsigned int	size;
+	
+	size = strlen(str);
+	bits = 32;
+	while (bits--)
+	{
+		if (size >> bits & 1)
+				kill(pid, SIGUSR1);
+			else
+				kill(pid, SIGUSR2);
+		usleep(100);
+	}
 	while (*str)
 	{
 		c = *str;
@@ -48,7 +59,7 @@ void	str_to_bits(int pid, char *str)
 				kill(pid, SIGUSR2);
 			//while (!g_global)
 			//	;
-			usleep(50);
+			usleep(100);
 		}
 		str++;
 	}
@@ -59,7 +70,7 @@ void	str_to_bits(int pid, char *str)
 		kill(pid, SIGUSR2);
 		//while (!g_global)
 		//	;
-		usleep(50);
+		usleep(100);
 	}
 }
 
