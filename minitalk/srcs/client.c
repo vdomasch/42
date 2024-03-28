@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:11:24 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/28 13:48:27 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:08:31 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,24 @@ int	g_global;
 
 void	handler(int sig, siginfo_t *info, void *context)
 {
+	static size_t	count = 0;
+
 	(void)info;
 	(void)context;
 	if (sig == SIGUSR1)
 	{
-		//write(1, "bits received.\n", 15);
-		//exit(0);
+		ft_putnbr_fd(count, 1);
+		write(1, "\n", 1);
+		count++;
 	}
 	if (sig == SIGUSR2)
 	{
-		write(1, "Message received.\n", 18);
+		if (count == 0)
+			write(1, "Server already used.\n", 21);
+		else if (count == 31)
+			write(1, "Malloc failed.\n", 15);
+		else
+			write(1, "Message received.\n", 18);
 		exit(0);
 	}
 	g_global = 1;
@@ -35,7 +43,7 @@ void	send_size(int pid, const char *str)
 {
 	int	size;
 	int	bits;
-	
+
 	size = 0;
 	while (str[size])
 		size++;
@@ -50,7 +58,6 @@ void	send_size(int pid, const char *str)
 		while (!g_global)
 			;
 	}
-		
 }
 
 void	str_to_bits(int pid, char *str)
@@ -91,10 +98,10 @@ int	main(int argc, char **argv)
 	int					pid;
 
 	if (argc != 3)
-		return (write(STDOUT_FILENO, "Invalid number of arguments.\n", 29));
+		return (write(1, "Invalid number of arguments.\n", 29));
 	pid = ft_atoi(argv[2]);
-	if (pid < 0 /*|| kill(pid, SIGUSR2) == -1*/)
-		return (write(STDOUT_FILENO, "Invalid PID.\n", 13));
+	if (pid < 0 || kill(pid, SIGUSR2) == -1)
+		return (write(1, "Invalid PID.\n", 13));
 	sig_action.sa_sigaction = &handler;
 	sigemptyset(&sig_action.sa_mask);
 	sig_action.sa_flags = SA_SIGINFO;

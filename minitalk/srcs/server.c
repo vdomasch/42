@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:59:54 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/28 13:55:34 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:08:17 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 unsigned char	*g_message;
 
-void	allocate_size(int client_pid, unsigned int *number, int *bits, int *size_status)
+void	allocate_size(int client_pid, unsigned int *number,
+			int *bits, int *size_status)
 {
 	g_message = ft_calloc(sizeof(unsigned char), (*number + 1));
 	if (!g_message)
@@ -29,7 +30,8 @@ void	allocate_size(int client_pid, unsigned int *number, int *bits, int *size_st
 	kill(client_pid, SIGUSR1);
 }
 
-void	message(int *client_pid, unsigned char *number, int *bits, int *position)
+void	message(int *client_pid, unsigned char *number,
+			int *bits, int *position)
 {
 	*bits = 0;
 	if (*number == 0)
@@ -61,6 +63,7 @@ void	signal_handler(int sig, siginfo_t *info, void *context)
 	{
 		client_pid = info->si_pid;
 		size_status = 0;
+		return ;
 	}
 	if (info->si_pid != client_pid)
 		return ;

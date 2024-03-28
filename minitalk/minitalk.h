@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:06:04 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/28 13:55:51 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:24:34 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <string.h>
 # include <stdio.h>
 
-int 	ft_atoi(const char *str);
-void    ft_putnbr_fd(int n, int fd);
-void    *ft_calloc(size_t nmemb, size_t size);
+int		ft_atoi(const char *str);
+void	ft_putnbr_fd(int n, int fd);
+void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif
