@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 10:06:04 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/26 15:35:05 by vdomasch         ###   ########.fr       */
+/*   Created: 2024/03/27 11:53:25 by vdomasch          #+#    #+#             */
+/*   Updated: 2024/03/27 15:31:28 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "../minitalk.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
+int	main(void)
+{
+	struct sigaction	sig_action;
+	int					pid;
 
-# include <string.h>
-# include <stdio.h>
-
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strfreejoin(char *s1, const char *s2);
-size_t	ft_strlen(const char *s);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-
-
-#endif
+	sigemptyset(&sig_action.sa_mask);
+	sig_action.sa_sigaction = &signal_handler;
+	sig_action.sa_flags = SA_SIGINFO;
+	sigaction(SIGUSR1, &sig_action, NULL);
+	sigaction(SIGUSR2, &sig_action, NULL);
+	pid = getpid();
+	printf("Server PID:[%d]\n", pid);
+	while (1)
+		;
+	return (0);
+}

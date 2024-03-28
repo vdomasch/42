@@ -6,7 +6,7 @@
 #    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/13 16:58:39 by vdomasch          #+#    #+#              #
-#    Updated: 2024/03/26 14:22:05 by vdomasch         ###   ########.fr        #
+#    Updated: 2024/03/27 15:18:53 by vdomasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ OBJS_DIR			=	.objs
 HEADERS				=	minitalk.h
 
 SRCS_CLIENT			=	client.c			\
-						utils.c
 
 SRCS_SERVER			=	server.c			\
 						utils.c
