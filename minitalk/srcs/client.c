@@ -6,13 +6,13 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:11:24 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/26 15:21:51 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:48:27 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-//int	g_global;	
+int	g_global;	
 
 void	handler(int sig, siginfo_t *info, void *context)
 {
@@ -20,7 +20,7 @@ void	handler(int sig, siginfo_t *info, void *context)
 	(void)context;
 	if (sig == SIGUSR1)
 	{
-		//write(1, "Malloc failed.\n", 15);
+		//write(1, "bits received.\n", 15);
 		//exit(0);
 	}
 	if (sig == SIGUSR2)
@@ -28,7 +28,7 @@ void	handler(int sig, siginfo_t *info, void *context)
 		write(1, "Message received.\n", 18);
 		exit(0);
 	}
-	//g_global = 1;
+	g_global = 1;
 }
 
 void	send_size(int pid, const char *str)
@@ -42,14 +42,13 @@ void	send_size(int pid, const char *str)
 	bits = 32;
 	while (bits--)
 	{
-		//g_global = 0;
+		g_global = 0;
 		if (size >> bits & 1)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		//while (!g_global)
-		//	;
-		usleep(100);
+		while (!g_global)
+			;
 	}
 		
 }
@@ -66,25 +65,23 @@ void	str_to_bits(int pid, char *str)
 		bits = 8;
 		while (bits--)
 		{
-			//g_global = 0;
+			g_global = 0;
 			if (c >> bits & 1)
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
-			//while (!g_global)
-			//	;
-			usleep(100);
+			while (!g_global)
+				;
 		}
 		str++;
 	}
 	bits = 0;
 	while (bits++ < 8)
 	{
-		//g_global = 0;
+		g_global = 0;
 		kill(pid, SIGUSR2);
-		//while (!g_global)
-		//	;
-		usleep(100);
+		while (!g_global)
+			;
 	}
 }
 
@@ -95,7 +92,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 		return (write(STDOUT_FILENO, "Invalid number of arguments.\n", 29));
-	pid = atoi(argv[2]);
+	pid = ft_atoi(argv[2]);
 	if (pid < 0 /*|| kill(pid, SIGUSR2) == -1*/)
 		return (write(STDOUT_FILENO, "Invalid PID.\n", 13));
 	sig_action.sa_sigaction = &handler;

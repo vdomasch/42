@@ -6,60 +6,71 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:39:41 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/26 15:35:50 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:54:50 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-char	*ft_strfreejoin(char *s1, const char *s2)
+int ft_atoi(const char *str)
 {
-	char	*str;
+    int         sign;
+    long int    number;
+    long int    number_cmp;
+    size_t      i;  
 
-	str = ft_strjoin(s1, s2);
-	if (s1)
-		free(s1);
-	return (str);
+    i = 0;
+    number = 0;
+    sign = 1;
+    while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+        i++;
+    if (str[i] == '-' || str[i] == '+')
+        if (str[i++] == '-')
+            sign = -1; 
+    while (str[i] >= '0' && str[i] <= '9')
+    {   
+        number_cmp = (number * 10) + (str[i++] - 48);
+        if (number > number_cmp && sign > 0)
+            return (-1);
+        if (number > number_cmp && sign < 0)
+            return (0);
+        number = number_cmp;
+    }   
+    return (number * sign);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+void    ft_putnbr_fd(int n, int fd) 
 {
-	size_t	len;
-	char	*str;
+    int sign;
 
-	if (!s1 || !s2)
-		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
-	str = (char *)malloc((len + 1) * sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	while (*s1)
-		*(str++) = *(s1++);
-	while (*s2)
-		*(str++) = *(s2++);
-	*str = '\0';
-	return (str - len);
+    sign = 1;
+    if (n < 0)
+    {   
+        if (n > -10)
+            write(fd, "-", 1); 
+        sign = -1; 
+    }   
+    if (n > 9 || n < -9) 
+        ft_putnbr_fd(n / 10, fd);
+    n = n % 10 * sign + 48; 
+    write(fd, &n, 1); 
 }
 
-size_t	ft_strlen(const char *s)
+void    *ft_calloc(size_t nmemb, size_t size)
 {
-	size_t	i;
+    char    *arr;
+    size_t  i;  
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+    i = 0;
+    if (size == 0 || nmemb == 0)
+        return (malloc(0));
+    if ((nmemb * size) / size != nmemb)
+        return (NULL);
+    arr = malloc(size * nmemb);
+    if (arr == NULL)
+        return (NULL);
+    while (i < nmemb * size)
+        arr[i++] = '\0';
+    return (arr);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	while ((*s1 || *s2) && n)
-	{
-		if (*s1 != *s2)
-			return (*(unsigned char *)s1 - *(unsigned char *)s2);
-		s1++;
-		s2++;
-		n--;
-	}
-	return (0);
-}

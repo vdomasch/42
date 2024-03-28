@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 15:16:47 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/27 16:20:39 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/28 11:20:20 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,34 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strfreejoin(char *s1, const char *s2)
+char	*ft_strfreejoinfifty(char *s1, const char *s2)
 {
 	char	*str;
 
-	str = ft_strjoin(s1, s2);
+	str = ft_strjoinfifty(s1, s2);
 	if (s1)
 		free(s1);
 	return (str);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoinfifty(char const *s1, char const *s2)
 {
-	size_t	len;
 	char	*str;
+	int		i;
+	int		j;
 
 	if (!s1 || !s2)
 		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
-	str = (char *)malloc((len + 1) * sizeof(char));
+	str = (char *)malloc((100) * sizeof(char));
 	if (str == NULL)
 		return (NULL);
-	while (*s1)
-		*(str++) = *(s1++);
-	while (*s2)
-		*(str++) = *(s2++);
-	*str = '\0';
-	return (str - len);
+	i = -1;
+	while (++i < 50)
+		str[i] = s1[i];
+	j = 0;
+	while (j < 49)
+		str[i++] = s2[j++];
+	return (str);
 }
 
 void	*ft_memset(void *s, int c, size_t n)

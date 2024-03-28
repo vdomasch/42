@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:53:27 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/27 16:23:07 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/28 11:10:45 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	alloc_fifty(unsigned int *position, int *bits, unsigned char *c)
 		ft_memset(array, 0, 50);
 	}
 	else
-		g_message = ft_strfreejoin(g_message, array);
+		g_message = ft_strfreejoinfifty(g_message, array);
 	if (!g_message)
 	{
 		*position = 0;
@@ -52,13 +52,15 @@ void	bits_to_str(int sig)
 		bits = 0;
 		if (c == 0)
 		{
-			write(1, g_message, ft_strlen(g_message));
+			write(1, &g_message[0], ft_strlen(g_message));
 			position = 0;
 			free(g_message);
 			return ;
 		}
+		printf("%d, %c\n", position, c);
 		g_message[position] = c;
 		position++;
+		printf ("|position: %d, %c\n",position, c);
 		c = 0;
 	}
 	else
