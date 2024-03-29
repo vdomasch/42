@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:11:24 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/28 18:08:31 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:14:16 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,18 @@
 
 int	g_global;	
 
-void	handler(int sig, siginfo_t *info, void *context)
+void	send_null(int pid)
 {
-	static size_t	count = 0;
+	int	i;
 
-	(void)info;
-	(void)context;
-	if (sig == SIGUSR1)
+	i = 0;
+	while (i++ < 8)
 	{
-		ft_putnbr_fd(count, 1);
-		write(1, "\n", 1);
-		count++;
+		g_global = 0;
+		kill(pid, SIGUSR2);
+		while (!g_global)
+			;
 	}
-	if (sig == SIGUSR2)
-	{
-		if (count == 0)
-			write(1, "Server already used.\n", 21);
-		else if (count == 31)
-			write(1, "Malloc failed.\n", 15);
-		else
-			write(1, "Message received.\n", 18);
-		exit(0);
-	}
-	g_global = 1;
 }
 
 void	send_size(int pid, const char *str)
@@ -58,6 +47,27 @@ void	send_size(int pid, const char *str)
 		while (!g_global)
 			;
 	}
+}
+
+void	handler(int sig, siginfo_t *info, void *context)
+{
+	static size_t	count = 0;
+
+	(void)info;
+	(void)context;
+	if (sig == SIGUSR1)
+		count++;
+	if (sig == SIGUSR2)
+	{
+		if (count == 0)
+			write(1, "Server already used.\n", 21);
+		else if (count == 31)
+			write(1, "Malloc failed.\n", 15);
+		else
+			write(1, "\nMessage received.\n", 19);
+		exit(0);
+	}
+	g_global = 1;
 }
 
 void	str_to_bits(int pid, char *str)
@@ -82,14 +92,7 @@ void	str_to_bits(int pid, char *str)
 		}
 		str++;
 	}
-	bits = 0;
-	while (bits++ < 8)
-	{
-		g_global = 0;
-		kill(pid, SIGUSR2);
-		while (!g_global)
-			;
-	}
+	send_null(pid);
 }
 
 int	main(int argc, char **argv)
@@ -99,15 +102,17 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 		return (write(1, "Invalid number of arguments.\n", 29));
-	pid = ft_atoi(argv[2]);
-	if (pid < 0 || kill(pid, SIGUSR2) == -1)
+	pid = ft_atoi(argv[1]);
+	g_global = 0;
+	if (pid <= 0 || kill(pid, SIGUSR2) == -1)
 		return (write(1, "Invalid PID.\n", 13));
 	sig_action.sa_sigaction = &handler;
 	sigemptyset(&sig_action.sa_mask);
 	sig_action.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &sig_action, NULL);
 	sigaction(SIGUSR2, &sig_action, NULL);
-	str_to_bits(pid, argv[1]);
+	usleep(100);
+	str_to_bits(pid, argv[2]);
 	while (1)
 		;
 	return (0);

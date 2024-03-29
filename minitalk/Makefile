@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/03/13 16:58:39 by vdomasch          #+#    #+#              #
-#    Updated: 2024/03/26 14:22:05 by vdomasch         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 #############################################################################
 #									VARIABLE								#
 #############################################################################
@@ -45,19 +33,19 @@ FLAGS				=	-Wall -Werror -Wextra -g3
 #										RULES								#
 #############################################################################
 
-all					:	$(NAME_CLIENT) $(NAME_SERVER)
+all					:	$(OBJS_DIR) $(NAME_CLIENT) $(NAME_SERVER)
 
-$(NAME_CLIENT)		:	$(OBJS_DIR) $(OBJS_CLIENT) $(HEADERS)
+$(NAME_CLIENT)		:	$(OBJS_CLIENT) $(HEADERS)
 							$(CC) $(FLAGS) $(OBJS_CLIENT) -o $(NAME_CLIENT)
 
-$(NAME_SERVER)		:	$(OBJS_DIR) $(OBJS_SERVER) $(HEADERS)
+$(NAME_SERVER)		:	$(OBJS_SERVER) $(HEADERS)
 							$(CC) $(FLAGS) $(OBJS_SERVER) -o $(NAME_SERVER)
 							
 $(OBJS_DIR)/%.o		:	$(SRCS_DIR)/%.c $(HEADERS)
 							$(CC) $(FLAGS) -c $< -o $@
 
 $(OBJS_DIR)			:
-							mkdir -p $(OBJS_DIR)
+							mkdir -p $(OBJS_DIR)	
 
 #############################################################################
 #									COMMANDS								#
