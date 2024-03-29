@@ -6,11 +6,11 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:11:24 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/29 12:14:16 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:05:00 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitalk.h"
+#include "minitalk.h"
 
 int	g_global;	
 
@@ -60,7 +60,7 @@ void	handler(int sig, siginfo_t *info, void *context)
 	if (sig == SIGUSR2)
 	{
 		if (count == 0)
-			write(1, "Server already used.\n", 21);
+			write(1, "Server already used, try again in a moment.\n", 44);
 		else if (count == 31)
 			write(1, "Malloc failed.\n", 15);
 		else
@@ -104,11 +104,11 @@ int	main(int argc, char **argv)
 		return (write(1, "Invalid number of arguments.\n", 29));
 	pid = ft_atoi(argv[1]);
 	g_global = 0;
-	if (pid <= 0 || kill(pid, SIGUSR2) == -1)
-		return (write(1, "Invalid PID.\n", 13));
 	sig_action.sa_sigaction = &handler;
 	sigemptyset(&sig_action.sa_mask);
 	sig_action.sa_flags = SA_SIGINFO;
+	if (pid <= 0 || kill(pid, SIGUSR2) == -1)
+		return (write(1, "Invalid PID.\n", 13));
 	sigaction(SIGUSR1, &sig_action, NULL);
 	sigaction(SIGUSR2, &sig_action, NULL);
 	usleep(100);

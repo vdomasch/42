@@ -6,11 +6,11 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:39:41 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/29 12:14:28 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:05:12 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitalk.h"
+#include "minitalk.h"
 
 int	ft_atoi(const char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:06:04 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/28 15:24:34 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:03:29 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <signal.h>
-
-# include <string.h>
-# include <stdio.h>
 
 int		ft_atoi(const char *str);
 void	ft_putnbr_fd(int n, int fd);

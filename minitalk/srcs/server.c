@@ -6,13 +6,29 @@
 /*   By: vdomasch <vdomasch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:59:54 by vdomasch          #+#    #+#             */
-/*   Updated: 2024/03/29 12:14:05 by vdomasch         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:07:52 by vdomasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitalk.h"
+#include "minitalk.h"
 
 unsigned char	*g_message;
+
+int	client_pid_checker(int *client_pid, int pid, int *size_status)
+{
+	if (*client_pid == 0)
+	{
+		*client_pid = pid;
+		*size_status = 0;
+		return (1);
+	}
+	if (pid != *client_pid)
+	{
+		kill(pid, SIGUSR2);
+		return (1);
+	}
+	return (0);
+}
 
 void	allocate_size(int client_pid, unsigned int *number,
 			int *bits, int *size_status)
@@ -59,13 +75,7 @@ void	signal_handler(int sig, siginfo_t *info, void *context)
 	static int				size_status = 0;
 
 	(void)context;
-	if (client_pid == 0)
-	{
-		client_pid = info->si_pid;
-		size_status = 0;
-		return ;
-	}
-	if (info->si_pid != client_pid)
+	if (client_pid_checker(&client_pid, info->si_pid, &size_status))
 		return ;
 	number |= (sig == SIGUSR1);
 	if (++bits == 8 && size_status != 0)

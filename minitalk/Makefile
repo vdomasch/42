@@ -27,7 +27,7 @@ OBJS_SERVER			=	$(SRCS_SERVER:%.c=$(OBJS_DIR)/%.o)
 #############################################################################
 
 CC					=	cc
-FLAGS				=	-Wall -Werror -Wextra -g3
+FLAGS				=	-Wall -Werror -Wextra -g3 -I$(HEADER_DIR)
 
 #############################################################################
 #										RULES								#
